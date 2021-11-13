@@ -1,12 +1,24 @@
 package ru.fmt.university.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Course {
     private int id;
     private String name;
     private String description;
     private List<Lesson> lessons;
+
+    public Course(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Course(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -38,5 +50,18 @@ public class Course {
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id && Objects.equals(name, course.name) && Objects.equals(description, course.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
     }
 }

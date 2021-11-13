@@ -10,7 +10,6 @@ import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.models.Course;
 import ru.fmt.university.models.Group;
 import ru.fmt.university.models.Lesson;
-import ru.fmt.university.models.Student;
 
 import java.util.List;
 

@@ -5,7 +5,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DAOException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
@@ -51,7 +50,7 @@ public class StudentRepository {
         return student;
     }
 
-    public Student update(Student student){
+    public Student update(Student student) {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getName(), student.getLastName(), student.getId());
         } catch (DataAccessException e) {
@@ -74,6 +73,25 @@ public class StudentRepository {
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
         }
+    }
+
+    public void updateGroupAssignment(Student student, Group group) {
+        try {
+            jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), group.getId(), student.getId());
+        } catch (DataAccessException e) {
+            throw new DAOException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
+        }
+    }
+
+    public List<Student> getByGroup(int groupId) {
+        List<Student> students;
+        try {
+            students = jdbcTemplate.query(Query.GET_STUDENT_BY_GROUP.getText(),
+                    new Object[]{groupId}, new BeanPropertyRowMapper<>(Student.class));
+        } catch (DataAccessException e) {
+            throw new DAOException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
+        }
+        return students;
     }
 
     public void assignToCourse(Student student, Course course) {
