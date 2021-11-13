@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DAOException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.models.Course;
@@ -14,7 +15,7 @@ import ru.fmt.university.models.Student;
 
 import java.util.List;
 
-@Component
+@Repository
 public class StudentRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -50,6 +51,15 @@ public class StudentRepository {
         return student;
     }
 
+    public Student update(Student student){
+        try {
+            jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getName(), student.getLastName(), student.getId());
+        } catch (DataAccessException e) {
+            throw new DAOException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
+        }
+        return student;
+    }
+
     public void deleteById(int id) {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
@@ -74,13 +84,19 @@ public class StudentRepository {
         }
     }
 
-    public List<Course> getStudentAssignments(Student student) {
-        List<Course> courses;
+    public void deleteFromGroup(Student student, Group group) {
         try {
-            courses = jdbcTemplate.query(Query.GET_STUDENT_ASSIGNMENTS.getText(), new Object[]{student.getId()}, new BeanPropertyRowMapper<>(Course.class));
+            jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), student.getId(), group.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_ASSIGNMENTS, e);
+            throw new DAOException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
         }
-        return courses;
+    }
+
+    public void deleteFromCourse(Student student, Course course) {
+        try {
+            jdbcTemplate.update(Query.DELETE_STUDENT_FROM_COURSE.getText(), student.getId(), course.getId());
+        } catch (DataAccessException e) {
+            throw new DAOException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_COURSE, e);
+        }
     }
 }

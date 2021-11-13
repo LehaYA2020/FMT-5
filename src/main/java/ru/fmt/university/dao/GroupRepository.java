@@ -99,7 +99,7 @@ public class GroupRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_GROUP.getText(), group.getName(), group.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
+            throw new DAOException(MessagesConstants.CANNOT_UPDATE_GROUP, e);
         }
         return group;
     }
