@@ -25,14 +25,25 @@ public enum Query {
     INSERT_TEACHER("INSERT INTO teachers(first_name, last_name, course_id) VALUES(?, ?, ?);"),
     GET_ALL_TEACHERS("SELECT * FROM teachers;"),
     GET_TEACHER_BY_ID("SELECT * FROM teachers WHERE id=?;"),
-    UPDATE_TEACHER_BY_ID("UPDATE teachers set name=?, last_name, course_id WHERE id=?;"),
+    UPDATE_TEACHER_BY_ID("UPDATE teachers set name=?, last_name=?, course_id=? WHERE id=?;"),
 
     GET_ALL_COURSES("SELECT * FROM courses;"),
     GET_COURSE_BY_ID("SELECT courses.id, courses.name, courses.description FROM courses WHERE id = ?;"),
     INSERT_COURSE("INSERT INTO courses(name, description) VALUES(?, ?);"),
     UPDATE_COURSE("UPDATE courses SET name=?, description=? WHERE id=?;"),
     DELETE_COURSE("DELETE FROM courses WHERE id=?;"),
-    GET_COURSES_BY_STUDENT_ID("SELECT * FROM courses, groups_courses WHERE courses.id=groups_courses.course_id AND group_id=?;");
+    GET_COURSES_BY_GROUP_ID("SELECT * FROM courses, groups_courses WHERE courses.id=groups_courses.course_id AND group_id=?;"),
+
+    INSERT_LESSON("INSERT INTO lessons(course_id, teacher_id, class_room, day, time, type) VALUES (?, ?, ?, ?, ?, ?);"),
+    GET_ALL_LESSONS("SELECT * FROM lessons;"),
+    GET_LESSON_BY_ID("SELECT * FROM lessons WHERE id=?;"),
+    DELETE_LESSON("DELETE FROM lessons WHERE id=?;"),
+    UPDATE_LESSON("UPDATE lessons set course_id=?, teacher_id=?, class_room=?, day=?, time=?, type=? WHERE id=?;"),
+    GET_LESSON_BY_STUDENT("SELECT * FROM lessons, lessons_groups, students_groups WHERE students_groups.student_id=? " +
+            "AND lessons_groups.group_id=students_groups.group_id AND lessons.id=lessons_groups.lesson_id;"),
+    GET_LESSON_BY_TEACHER("SELECT * FROM lessons, WHERE teacher_id=?;"),
+    ASSIGN_GROUP_TO_LESSON("INSERT INTO lessons_groups(lesson_id, group_id) VALUES (?, ?);"),
+    DELETE_GROUP_FROM_LESSON("DELETE FROM lessons_groups WHERE lesson_id=?, group_id=?;");
 
     private final String text;
 

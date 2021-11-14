@@ -19,15 +19,13 @@ public class StudentRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Student> insertStudents(List<Student> students) {
+    public Student insertStudents(Student student) {
         try {
-            for (Student s : students) {
-                jdbcTemplate.update(Query.INSERT_STUDENT.getText(), s.getName(), s.getGroup());
-            }
+            jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getName(), student.getGroup());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_STUDENTS_LIST);
+            throw new DAOException(MessagesConstants.CANNOT_INSERT_STUDENT);
         }
-        return students;
+        return student;
     }
 
     public List<Student> getAllStudents() {

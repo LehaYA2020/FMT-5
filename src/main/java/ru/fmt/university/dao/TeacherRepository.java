@@ -16,21 +16,19 @@ public class TeacherRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Teacher> insertTeacher(List<Teacher> teachers){
+    public Teacher insert(Teacher teacher) {
         try {
-            for (Teacher s : teachers) {
-                jdbcTemplate.update(Query.INSERT_TEACHER.getText(), s.getFirstName(), s.getCourse());
-            }
+            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getCourse());
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST);
         }
-        return teachers;
+        return teacher;
     }
 
-    public List<Teacher> getAllTeachers(){
+    public List<Teacher> getAllTeachers() {
         List<Teacher> teachers;
         try {
-            teachers=jdbcTemplate.query(Query.GET_ALL_TEACHERS.getText(), new BeanPropertyRowMapper<>(Teacher.class));
+            teachers = jdbcTemplate.query(Query.GET_ALL_TEACHERS.getText(), new BeanPropertyRowMapper<>(Teacher.class));
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_GET_ALL_TEACHERS);
         }
@@ -45,7 +43,7 @@ public class TeacherRepository {
         }
     }
 
-    public Teacher update(Teacher teacher){
+    public Teacher update(Teacher teacher) {
         try {
             jdbcTemplate.update(Query.UPDATE_TEACHER_BY_ID.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourse().getId(), teacher.getId());
         } catch (DataAccessException e) {

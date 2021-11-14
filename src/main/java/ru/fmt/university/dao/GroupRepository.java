@@ -19,15 +19,14 @@ public class GroupRepository {
     JdbcTemplate jdbcTemplate;
 
 
-    public List<Group> insertGroups(List<Group> groups) {
+    public Group insert(Group group) {
         try {
-            for (Group s : groups) {
-                jdbcTemplate.update(Query.INSERT_GROUP.getText(), s.getName());
-            }
+            jdbcTemplate.update(Query.INSERT_GROUP.getText(), group.getName());
+
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_INSERT_GROUPS);
         }
-        return groups;
+        return group;
     }
 
     public List<Group> getAllGroups() {
@@ -40,7 +39,7 @@ public class GroupRepository {
         return groups;
     }
 
-    public Group getById(int id){
+    public Group getById(int id) {
         Group group;
         try {
             group = jdbcTemplate.queryForObject(Query.DELETE_GROUP.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Group.class));
@@ -50,7 +49,7 @@ public class GroupRepository {
         return group;
     }
 
-    public void delete(int id){
+    public void delete(int id) {
         try {
             jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
         } catch (DataAccessException e) {
@@ -58,36 +57,36 @@ public class GroupRepository {
         }
     }
 
-    public void assignToCourse(Group group, Course course){
-        try{
+    public void assignToCourse(Group group, Course course) {
+        try {
             jdbcTemplate.update(Query.ASSIGN_GROUP_TO_COURSE.getText(), group.getId(), course.getId());
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_ASSIGN_GROUP_TO_COURSE, e);
         }
     }
 
-    public void deleteFromCourse(Group group, Course course){
-        try{
+    public void deleteFromCourse(Group group, Course course) {
+        try {
             jdbcTemplate.update(Query.DELETE_GROUP_FROM_COURSE.getText(), group.getId(), course.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_FROM_COURSE, e);
+            throw new DAOException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_COURSE, e);
         }
     }
 
-    public List<Group> getByLesson(Lesson lesson){
+    public List<Group> getByLesson(Lesson lesson) {
         List<Group> groups;
         try {
-            groups=jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), new Object[]{lesson.getId()},new BeanPropertyRowMapper<>(Group.class));
+            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), new Object[]{lesson.getId()}, new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
         return groups;
     }
 
-    public List<Group> getByCourse(Course course){
+    public List<Group> getByCourse(Course course) {
         List<Group> groups;
         try {
-            groups=jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), new Object[]{course.getId()},new BeanPropertyRowMapper<>(Group.class));
+            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), new Object[]{course.getId()}, new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }

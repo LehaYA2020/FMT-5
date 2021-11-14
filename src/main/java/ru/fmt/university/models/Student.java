@@ -3,7 +3,7 @@ package ru.fmt.university.models;
 public class Student {
     private int id;
     private String name;
-    private  String lastName;
+    private String lastName;
     private Group group;
 
     public int getId() {

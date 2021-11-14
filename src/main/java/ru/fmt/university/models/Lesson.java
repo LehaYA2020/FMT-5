@@ -4,6 +4,15 @@ import java.sql.Time;
 import java.util.List;
 
 public class Lesson {
+    private int id;
+    private Course course;
+    private List<Group> groups;
+    private Teacher teacher;
+    private int classRoom;
+    private Day day;
+    private Time startTime;
+    private LessonType type;
+
     public Lesson(int id, Course course, Teacher teacher, int classRoom, Day day, Time startTime, LessonType type) {
         this.id = id;
         this.course = course;
@@ -77,13 +86,4 @@ public class Lesson {
     public void setType(LessonType type) {
         this.type = type;
     }
-
-    private int id;
-    private Course course;
-    private List<Group> groups;
-    private Teacher teacher;
-    private int classRoom;
-    private Day day;
-    private Time startTime;
-    private LessonType type;
 }
