@@ -58,17 +58,17 @@ public class CourseRepository {
 
     public void delete(int id) {
         try {
-            jdbcTemplate.update(Query.DELETE_COURSE.getText(), new Object[]{id});
+            jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
     }
 
-    public List<Course> getByStudentId(int id) {
+    public List<Course> getByGroupId(int id) {
         List<Course> courses;
 
         try {
-            courses = jdbcTemplate.query(Query.GET_COURSES_BY_STUDENT_ID.getText(),
+            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(),
                     new Object[]{id}, new BeanPropertyRowMapper<>(Course.class));
         } catch (DataAccessException e) {
             throw new DAOException(MessagesConstants.CANNOT_DELETE_COURSE, e);
