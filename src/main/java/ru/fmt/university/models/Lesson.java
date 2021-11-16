@@ -9,16 +9,16 @@ public class Lesson {
     private List<Group> groups;
     private Teacher teacher;
     private int classRoom;
-    private Day day;
+    private DayOfWeek dayOfWeek;
     private Time startTime;
     private LessonType type;
 
-    public Lesson(int id, Course course, Teacher teacher, int classRoom, Day day, Time startTime, LessonType type) {
+    public Lesson(int id, Course course, Teacher teacher, int classRoom, DayOfWeek dayOfWeek, Time startTime, LessonType type) {
         this.id = id;
         this.course = course;
         this.teacher = teacher;
         this.classRoom = classRoom;
-        this.day = day;
+        this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.type = type;
     }
@@ -63,12 +63,12 @@ public class Lesson {
         this.classRoom = classRoom;
     }
 
-    public Day getDay() {
-        return day;
+    public DayOfWeek getDay() {
+        return dayOfWeek;
     }
 
-    public void setDay(Day day) {
-        this.day = day;
+    public void setDay(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public Time getStartTime() {

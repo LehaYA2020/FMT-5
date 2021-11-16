@@ -6,7 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.fmt.university.dao.exceptions.DAOException;
+import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.models.Course;
 import ru.fmt.university.models.Group;
@@ -19,31 +19,31 @@ public class StudentRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public Student insertStudents(Student student) {
+    public Student create(Student student) {
         try {
             jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getName(), student.getGroup());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_STUDENT);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_STUDENT);
         }
         return student;
     }
 
-    public List<Student> getAllStudents() {
+    public List<Student> getAll() {
         List<Student> students;
         try {
             students = jdbcTemplate.query(Query.GET_ALL_STUDENTS.getText(), new BeanPropertyRowMapper<>(Student.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_ALL_STUDENTS, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_ALL_STUDENTS, e);
         }
         return students;
     }
 
-    public Student getStudentById(int id) {
+    public Student getById(int id) {
         Student student;
         try {
             student = jdbcTemplate.queryForObject(Query.GET_STUDENT_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Student.class));
         } catch (EmptyResultDataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_STUDENT_BY_ID, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_STUDENT_BY_ID, e);
         }
         return student;
     }
@@ -52,7 +52,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getName(), student.getLastName(), student.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
         }
         return student;
     }
@@ -61,7 +61,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_STUDENT, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT, e);
         }
     }
 
@@ -69,7 +69,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), student.getId(), group.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
+            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
         }
     }
 
@@ -77,7 +77,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), group.getId(), student.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }
     }
 
@@ -87,7 +87,7 @@ public class StudentRepository {
             students = jdbcTemplate.query(Query.GET_STUDENT_BY_GROUP.getText(),
                     new Object[]{groupId}, new BeanPropertyRowMapper<>(Student.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }
         return students;
     }
@@ -96,7 +96,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.ASSIGN_TO_COURSE.getText(), student.getId(), course.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_ASSIGN_TO_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_TO_COURSE, e);
         }
     }
 
@@ -104,7 +104,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), student.getId(), group.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
         }
     }
 
@@ -112,7 +112,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT_FROM_COURSE.getText(), student.getId(), course.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_COURSE, e);
         }
     }
 }

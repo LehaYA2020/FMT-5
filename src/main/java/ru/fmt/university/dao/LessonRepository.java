@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.fmt.university.dao.exceptions.DAOException;
+import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.models.Group;
 import ru.fmt.university.models.Lesson;
@@ -17,7 +17,7 @@ public class LessonRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public Lesson insert(Lesson lesson) {
+    public Lesson create(Lesson lesson) {
         try {
             jdbcTemplate.update(Query.INSERT_LESSON.getText(), lesson.getCourse().getId(), lesson.getTeacher().getId(),
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(), lesson.getType().toString());
@@ -25,7 +25,7 @@ public class LessonRepository {
                 assignGroups(lesson, lesson.getGroups());
             }
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_LESSON, e);
         }
 
         return lesson;
@@ -36,7 +36,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_ALL_LESSONS.getText(), new BeanPropertyRowMapper<>(Lesson.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_ALL_LESSONS, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_ALL_LESSONS, e);
         }
 
         return lessons;
@@ -47,7 +47,7 @@ public class LessonRepository {
         try {
             lesson = jdbcTemplate.queryForObject(Query.GET_LESSON_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Lesson.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_LESSON_BY_ID, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_ID, e);
         }
 
         return lesson;
@@ -57,7 +57,7 @@ public class LessonRepository {
         try {
             jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
         }
     }
 
@@ -70,7 +70,7 @@ public class LessonRepository {
                 assignGroups(lesson, lesson.getGroups());
             }
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_UPDATE_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_LESSON, e);
         }
 
         return lesson;
@@ -81,7 +81,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_LESSON_BY_STUDENT.getText(), new Object[]{student.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
         }
 
         return lessons;
@@ -92,7 +92,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_LESSON_BY_TEACHER.getText(), new Object[]{teacher.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
         }
 
         return lessons;
@@ -104,7 +104,7 @@ public class LessonRepository {
                 jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lesson.getId(), group.getId());
             }
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
         }
     }
 
@@ -112,7 +112,7 @@ public class LessonRepository {
         try {
             jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lesson.getId(), group.getId());
         } catch (DataAccessException e) {
-            throw  new DAOException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_LESSON, e);
+            throw  new DaoException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_LESSON, e);
         }
     }
 }

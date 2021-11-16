@@ -1,8 +1,6 @@
-package ru.fmt.university.config;
+package ru.fmt.university.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,34 +11,26 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("ru.fmt.university.*")
+@ComponentScan("ru.fmt.university.dao")
 @PropertySource("classpath:database.properties")
-public class AppConfig{
+public class TestAppConfig {
     @Value("${url}")
     private String url;
     @Value("${user}")
     String user;
     @Value("${password}")
     String password;
-    private final String driverClassName = "org.postgresql.Driver";
-
-    private final ApplicationContext applicationContext;
-
-    @Autowired
-    public AppConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(driverClassName);
+        dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setUrl(url);
         dataSource.setUsername(user);
         dataSource.setPassword(password);
         return dataSource;
     }
+
     @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());

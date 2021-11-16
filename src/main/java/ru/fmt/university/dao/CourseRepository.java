@@ -5,7 +5,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.fmt.university.dao.exceptions.DAOException;
+import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.models.Course;
 
@@ -16,11 +16,11 @@ public class CourseRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public Course insert(Course course) {
+    public Course create(Course course) {
         try {
             jdbcTemplate.update(Query.INSERT_COURSE.getText(), course.getName(), course.getDescription());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_COURSE, e);
         }
 
         return course;
@@ -32,7 +32,7 @@ public class CourseRepository {
         try {
             courses = jdbcTemplate.query(Query.GET_ALL_COURSES.getText(), new BeanPropertyRowMapper<>(Course.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_COURSES, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_COURSES, e);
         }
 
         return courses;
@@ -43,7 +43,7 @@ public class CourseRepository {
             return jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(), new Object[]{id},
                     new BeanPropertyRowMapper<>(Course.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
         }
     }
 
@@ -51,7 +51,7 @@ public class CourseRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_COURSE.getText(), course.getName(), course.getDescription(), course.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_UPDATE_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_COURSE, e);
         }
         return course;
     }
@@ -60,7 +60,7 @@ public class CourseRepository {
         try {
             jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
     }
 
@@ -71,7 +71,7 @@ public class CourseRepository {
             courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(),
                     new Object[]{id}, new BeanPropertyRowMapper<>(Course.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
         return courses;
     }

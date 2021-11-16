@@ -5,7 +5,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.fmt.university.dao.exceptions.DAOException;
+import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.models.Course;
 import ru.fmt.university.models.Group;
@@ -19,22 +19,22 @@ public class GroupRepository {
     JdbcTemplate jdbcTemplate;
 
 
-    public Group insert(Group group) {
+    public Group create(Group group) {
         try {
             jdbcTemplate.update(Query.INSERT_GROUP.getText(), group.getName());
 
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_GROUPS);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_GROUPS);
         }
         return group;
     }
 
-    public List<Group> getAllGroups() {
+    public List<Group> getAll() {
         List<Group> groups;
         try {
             groups = jdbcTemplate.query(Query.GET_ALL_GROUPS.getText(), new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_GROUPS, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_GROUPS, e);
         }
         return groups;
     }
@@ -44,7 +44,7 @@ public class GroupRepository {
         try {
             group = jdbcTemplate.queryForObject(Query.DELETE_GROUP.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_GROUP, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP, e);
         }
         return group;
     }
@@ -53,7 +53,7 @@ public class GroupRepository {
         try {
             jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_GROUP_BY_ID, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_GROUP_BY_ID, e);
         }
     }
 
@@ -61,7 +61,7 @@ public class GroupRepository {
         try {
             jdbcTemplate.update(Query.ASSIGN_GROUP_TO_COURSE.getText(), group.getId(), course.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_ASSIGN_GROUP_TO_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUP_TO_COURSE, e);
         }
     }
 
@@ -69,7 +69,7 @@ public class GroupRepository {
         try {
             jdbcTemplate.update(Query.DELETE_GROUP_FROM_COURSE.getText(), group.getId(), course.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_COURSE, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_COURSE, e);
         }
     }
 
@@ -78,7 +78,7 @@ public class GroupRepository {
         try {
             groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), new Object[]{lesson.getId()}, new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
         return groups;
     }
@@ -88,7 +88,7 @@ public class GroupRepository {
         try {
             groups = jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), new Object[]{course.getId()}, new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
         return groups;
     }
@@ -97,7 +97,7 @@ public class GroupRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_GROUP.getText(), group.getName(), group.getId());
         } catch (DataAccessException e) {
-            throw new DAOException(MessagesConstants.CANNOT_UPDATE_GROUP, e);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_GROUP, e);
         }
         return group;
     }
