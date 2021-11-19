@@ -1,12 +1,21 @@
 package ru.fmt.university.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Group {
     private int id;
     private String name;
     private List<Student> students;
     private List<Course> courses;
+
+    public Group(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Group() {
+    }
 
     public int getId() {
         return id;
@@ -38,5 +47,18 @@ public class Group {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return id == group.id && Objects.equals(name, group.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

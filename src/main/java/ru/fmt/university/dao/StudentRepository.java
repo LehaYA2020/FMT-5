@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.models.Course;
 import ru.fmt.university.models.Group;
 import ru.fmt.university.models.Student;
 
@@ -92,27 +91,11 @@ public class StudentRepository {
         return students;
     }
 
-    public void assignToCourse(Student student, Course course) {
-        try {
-            jdbcTemplate.update(Query.ASSIGN_TO_COURSE.getText(), student.getId(), course.getId());
-        } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_TO_COURSE, e);
-        }
-    }
-
     public void deleteFromGroup(Student student, Group group) {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), student.getId(), group.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
-        }
-    }
-
-    public void deleteFromCourse(Student student, Course course) {
-        try {
-            jdbcTemplate.update(Query.DELETE_STUDENT_FROM_COURSE.getText(), student.getId(), course.getId());
-        } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_COURSE, e);
         }
     }
 }

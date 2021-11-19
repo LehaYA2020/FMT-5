@@ -1,10 +1,22 @@
 package ru.fmt.university.models;
 
+import java.util.Objects;
+
 public class Teacher {
     private int id;
     private String firstName;
     private String lastName;
     private Course course;
+
+    public Teacher(int id, String firstName, String lastName, Course course) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.course = course;
+    }
+
+    public Teacher() {
+    }
 
     public int getId() {
         return id;
@@ -36,5 +48,18 @@ public class Teacher {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return id == teacher.id && Objects.equals(firstName, teacher.firstName) && Objects.equals(lastName, teacher.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, course);
     }
 }

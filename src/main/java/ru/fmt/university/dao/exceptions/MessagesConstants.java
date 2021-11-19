@@ -39,6 +39,8 @@ public class MessagesConstants {
     public static final String CANNOT_UPDATE_LESSON = "Can't update lesson by id: ";
     public static final String CANNOT_GET_LESSON_BY_STUDENT = "Can't get lessons by student: ";
     public static final String CANNOT_GET_LESSON_BY_TEACHER = "Can't get lessons by teacher: ";
+    public static final String CANNOT_GET_LESSON_BY_GROUP = "Can't get lessons by group: ";
+    public static final String CANNOT_GET_LESSON_BY_COURSE = "Can't get lessons by course: ";
     public static final String CANNOT_ASSIGN_GROUPS_TO_LESSON = "Can't assign groups to lessons: ";
     public static final String CANNOT_DELETE_GROUP_FROM_LESSON = "Can't delete groups from lessons: ";
 }

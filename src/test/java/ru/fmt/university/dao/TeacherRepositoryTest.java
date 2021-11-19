@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.fmt.university.models.Course;
-import ru.fmt.university.models.Group;
+import ru.fmt.university.models.Teacher;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
@@ -24,9 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestAppConfig.class})
-public class CourseRepositoryTest {
-    private static final List<Course> testCourseList = new LinkedList<>();
-    private static final List<Group> testGroupList = new LinkedList<>();
+public class TeacherRepositoryTest {
     @Autowired
     DataSource dataSource;
     @Autowired
@@ -34,15 +32,19 @@ public class CourseRepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private GroupRepository groupRepository;
+    private TeacherRepository teacherRepository;
     private ScriptRunner scriptRunner;
+    private static final List<Teacher> testTeacherList = new LinkedList<>();
+    private static final List<Course> testCourseList = new LinkedList<>();
 
     @BeforeAll
     public static void prepareList() {
         for (int i = 1; i <= 3; i++) {
             testCourseList.add(new Course(i, "Course-" + i, "forTest"));
-            testGroupList.add(new Group(i, "Group-" + i));
         }
+        testTeacherList.add(new Teacher(1, "T-" + 1, "Teacher", testCourseList.get(0)));
+        testTeacherList.add(new Teacher(2, "T-" + 2, "Teacher", testCourseList.get(0)));
+        testTeacherList.add(new Teacher(3, "T-" + 3, "Teacher", testCourseList.get(1)));
     }
 
     @BeforeEach
@@ -58,38 +60,20 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void getAll_shouldReturnAllCourses() {
-        assertEquals(testCourseList, courseRepository.getAll());
+    public void getAll() {
+        assertEquals(testTeacherList, teacherRepository.getAll());
     }
 
     @Test
-    public void getById_shouldReturnCourseById() {
-        Course expected = testCourseList.get(0);
-
-        assertEquals(expected, courseRepository.getById(1));
+    public void getById() {
+        assertEquals(testTeacherList.get(0), teacherRepository.getById(1));
     }
 
     @Test
-    public void update_shouldUpdateCourse() {
-        Course expected = new Course(1, "Course-" + 1, "updated");
-        courseRepository.update(new Course(1, "Course-1", "updated"));
-        assertEquals(expected, courseRepository.getById(1));
-    }
-
-    @Test
-    public void delete_shouldDeleteCourse() {
-        List<Course> expected = testCourseList.subList(0, 2);
-
-        courseRepository.delete(3);
-
-        assertEquals(expected, courseRepository.getAll());
-    }
-
-    @Test
-    public void getByGroupId() {
-        List<Course> expected = testCourseList.subList(0, 2);
-
-        assertEquals(expected, courseRepository.getByGroupId(1));
+    public void update() {
+        Teacher teacher = new Teacher(2, "T-" + 2, "updated", testCourseList.get(1));
+        teacherRepository.update(teacher);
+        assertEquals(teacher, teacherRepository.getById(2));
     }
 
     @AfterEach

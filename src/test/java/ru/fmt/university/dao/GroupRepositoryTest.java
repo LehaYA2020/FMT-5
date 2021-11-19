@@ -24,9 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestAppConfig.class})
-public class CourseRepositoryTest {
+public class GroupRepositoryTest {
     private static final List<Course> testCourseList = new LinkedList<>();
     private static final List<Group> testGroupList = new LinkedList<>();
+
     @Autowired
     DataSource dataSource;
     @Autowired
@@ -35,6 +36,10 @@ public class CourseRepositoryTest {
     private CourseRepository courseRepository;
     @Autowired
     private GroupRepository groupRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
+    @Autowired
+    private LessonRepository lessonRepository;
     private ScriptRunner scriptRunner;
 
     @BeforeAll
@@ -43,6 +48,7 @@ public class CourseRepositoryTest {
             testCourseList.add(new Course(i, "Course-" + i, "forTest"));
             testGroupList.add(new Group(i, "Group-" + i));
         }
+
     }
 
     @BeforeEach
@@ -58,38 +64,49 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void getAll_shouldReturnAllCourses() {
-        assertEquals(testCourseList, courseRepository.getAll());
+    public void getAll_shouldReturnAllGroups() {
+        assertEquals(testGroupList, groupRepository.getAll());
     }
 
     @Test
-    public void getById_shouldReturnCourseById() {
-        Course expected = testCourseList.get(0);
-
-        assertEquals(expected, courseRepository.getById(1));
+    public void getById() {
+        assertEquals(testGroupList.get(0), groupRepository.getById(1));
     }
 
     @Test
-    public void update_shouldUpdateCourse() {
-        Course expected = new Course(1, "Course-" + 1, "updated");
-        courseRepository.update(new Course(1, "Course-1", "updated"));
-        assertEquals(expected, courseRepository.getById(1));
+    public void delete() {
+        groupRepository.delete(3);
+        assertEquals(testGroupList.subList(0, 2), groupRepository.getAll());
     }
 
     @Test
-    public void delete_shouldDeleteCourse() {
-        List<Course> expected = testCourseList.subList(0, 2);
+    public void update() {
+        Group expected = new Group(1, "updated");
+        groupRepository.update(expected);
 
-        courseRepository.delete(3);
-
-        assertEquals(expected, courseRepository.getAll());
+        assertEquals(expected, groupRepository.getById(1));
     }
 
     @Test
-    public void getByGroupId() {
-        List<Course> expected = testCourseList.subList(0, 2);
+    public void deleteFromCourse() {
+        groupRepository.deleteFromCourse(testGroupList.get(0), testCourseList.get(0));
+        assertEquals(testCourseList.subList(1, 2), courseRepository.getByGroupId(1));
+    }
 
-        assertEquals(expected, courseRepository.getByGroupId(1));
+    @Test
+    public void getByLesson() {
+        assertEquals(testGroupList.subList(0, 2), groupRepository.getByLesson(lessonRepository.getById(2)));
+    }
+
+    @Test
+    public void getByCourse() {
+        assertEquals(testGroupList.subList(0, 2), groupRepository.getByCourse(courseRepository.getById(2)));
+    }
+
+    @Test
+    public void deleteFromLesson() {
+        groupRepository.deleteFromLesson(lessonRepository.getById(2), testGroupList.get(0));
+        assertEquals(testGroupList.subList(1, 2), groupRepository.getByLesson(lessonRepository.getById(2)));
     }
 
     @AfterEach

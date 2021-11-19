@@ -42,9 +42,9 @@ public class GroupRepository {
     public Group getById(int id) {
         Group group;
         try {
-            group = jdbcTemplate.queryForObject(Query.DELETE_GROUP.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Group.class));
+            group = jdbcTemplate.queryForObject(Query.GET_GROUP_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Group.class));
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_GROUP_BY_ID, e);
         }
         return group;
     }
@@ -53,7 +53,7 @@ public class GroupRepository {
         try {
             jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_GET_GROUP_BY_ID, e);
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP, e);
         }
     }
 
@@ -100,5 +100,23 @@ public class GroupRepository {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_GROUP, e);
         }
         return group;
+    }
+
+    public void assignToLesson(Lesson lesson, List<Group> groups) {
+        try {
+            for (Group group : groups) {
+                jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lesson.getId(), group.getId());
+            }
+        } catch (DataAccessException e) {
+            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
+        }
+    }
+
+    public void deleteFromLesson(Lesson lesson, Group group) {
+        try {
+            jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lesson.getId(), group.getId());
+        } catch (DataAccessException e) {
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_LESSON, e);
+        }
     }
 }

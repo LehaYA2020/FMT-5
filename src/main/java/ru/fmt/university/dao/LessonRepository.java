@@ -4,25 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.models.Group;
-import ru.fmt.university.models.Lesson;
-import ru.fmt.university.models.Student;
-import ru.fmt.university.models.Teacher;
+import ru.fmt.university.models.*;
 
 import java.util.List;
 
+@Repository
 public class LessonRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    GroupRepository groupRepository;
 
     public Lesson create(Lesson lesson) {
         try {
             jdbcTemplate.update(Query.INSERT_LESSON.getText(), lesson.getCourse().getId(), lesson.getTeacher().getId(),
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(), lesson.getType().toString());
             if (lesson.getGroups() != null) {
-                assignGroups(lesson, lesson.getGroups());
+                groupRepository.assignToLesson(lesson, lesson.getGroups());
             }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_INSERT_LESSON, e);
@@ -67,7 +68,7 @@ public class LessonRepository {
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(),
                     lesson.getType().toString(), lesson.getId());
             if (lesson.getGroups() != null) {
-                assignGroups(lesson, lesson.getGroups());
+                groupRepository.assignToLesson(lesson, lesson.getGroups());
             }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_LESSON, e);
@@ -98,21 +99,25 @@ public class LessonRepository {
         return lessons;
     }
 
-    public void assignGroups(Lesson lesson, List<Group> groups) {
+    public List<Lesson> getByGroup(Group group) {
+        List<Lesson> lessons;
         try {
-            for (Group group : groups) {
-                jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lesson.getId(), group.getId());
-            }
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_GROUP.getText(), new Object[]{group.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_GROUP, e);
         }
+
+        return lessons;
     }
 
-    public void deleteGroup(Lesson lesson, Group group) {
+    public List<Lesson> getByCourse(Course course) {
+        List<Lesson> lessons;
         try {
-            jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lesson.getId(), group.getId());
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_COURSE.getText(), new Object[]{course.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
         } catch (DataAccessException e) {
-            throw  new DaoException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_LESSON, e);
+            throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_COURSE, e);
         }
+
+        return lessons;
     }
 }

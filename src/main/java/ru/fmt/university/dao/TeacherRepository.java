@@ -18,9 +18,9 @@ public class TeacherRepository {
 
     public Teacher create(Teacher teacher) {
         try {
-            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getCourse());
+            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourse());
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, e);
         }
         return teacher;
     }
@@ -30,7 +30,7 @@ public class TeacherRepository {
         try {
             teachers = jdbcTemplate.query(Query.GET_ALL_TEACHERS.getText(), new BeanPropertyRowMapper<>(Teacher.class));
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_GET_ALL_TEACHERS);
+            throw new DaoException(MessagesConstants.CANNOT_GET_ALL_TEACHERS, e);
         }
         return teachers;
     }
@@ -39,7 +39,7 @@ public class TeacherRepository {
         try {
             return jdbcTemplate.queryForObject(Query.GET_TEACHER_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Teacher.class));
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_GET_TEACHER_BY_ID);
+            throw new DaoException(MessagesConstants.CANNOT_GET_TEACHER_BY_ID, e);
         }
     }
 
@@ -47,7 +47,7 @@ public class TeacherRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_TEACHER_BY_ID.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourse().getId(), teacher.getId());
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_UPDATE_TEACHER_BY_ID);
+            throw new DaoException(MessagesConstants.CANNOT_UPDATE_TEACHER_BY_ID, e);
         }
         return teacher;
     }
