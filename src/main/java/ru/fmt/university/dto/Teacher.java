@@ -1,4 +1,4 @@
-package ru.fmt.university.models;
+package ru.fmt.university.dto;
 
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ public class Teacher {
         this.course = course;
     }
 
-    public Teacher() {
+    private Teacher() {
     }
 
     public int getId() {

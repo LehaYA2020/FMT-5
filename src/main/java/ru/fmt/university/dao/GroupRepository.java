@@ -7,16 +7,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.models.Course;
-import ru.fmt.university.models.Group;
-import ru.fmt.university.models.Lesson;
+import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dto.Course;
+import ru.fmt.university.dto.Group;
+import ru.fmt.university.dto.Lesson;
 
 import java.util.List;
 
 @Repository
 public class GroupRepository {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
 
     public Group create(Group group) {
@@ -42,7 +43,7 @@ public class GroupRepository {
     public Group getById(int id) {
         Group group;
         try {
-            group = jdbcTemplate.queryForObject(Query.GET_GROUP_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Group.class));
+            group = jdbcTemplate.queryForObject(Query.GET_GROUP_BY_ID.getText(), new BeanPropertyRowMapper<>(Group.class), id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_GROUP_BY_ID, e);
         }
@@ -76,7 +77,7 @@ public class GroupRepository {
     public List<Group> getByLesson(Lesson lesson) {
         List<Group> groups;
         try {
-            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), new Object[]{lesson.getId()}, new BeanPropertyRowMapper<>(Group.class));
+            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), new BeanPropertyRowMapper<>(Group.class), lesson.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
@@ -86,7 +87,7 @@ public class GroupRepository {
     public List<Group> getByCourse(Course course) {
         List<Group> groups;
         try {
-            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), new Object[]{course.getId()}, new BeanPropertyRowMapper<>(Group.class));
+            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), new BeanPropertyRowMapper<>(Group.class), course.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }

@@ -1,12 +1,27 @@
-package ru.fmt.university.models;
+package ru.fmt.university.dto;
 
 import java.util.Objects;
 
 public class Student {
     private int id;
-    private String name;
+    private String firstName;
     private String lastName;
     private Group group;
+
+    public Student(String firstName, String lastName, Group group) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.group = group;
+    }
+
+    public Student(int id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    private Student() {
+    }
 
     public int getId() {
         return id;
@@ -16,12 +31,12 @@ public class Student {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public Group getGroup() {
@@ -45,11 +60,11 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && Objects.equals(name, student.name) && group.equals(student.group) && Objects.equals(lastName, student.lastName);
+        return id == student.id && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName);
+        return Objects.hash(id, firstName, lastName);
     }
 }

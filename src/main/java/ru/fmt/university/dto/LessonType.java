@@ -1,4 +1,4 @@
-package ru.fmt.university.models;
+package ru.fmt.university.dto;
 
 public enum LessonType {
     LECTURE, PRACTICE, LAB

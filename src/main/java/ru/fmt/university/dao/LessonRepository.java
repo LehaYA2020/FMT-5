@@ -7,16 +7,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.models.*;
+import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dto.*;
 
 import java.util.List;
 
 @Repository
 public class LessonRepository {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     @Autowired
-    GroupRepository groupRepository;
+    private GroupRepository groupRepository;
 
     public Lesson create(Lesson lesson) {
         try {
@@ -46,7 +47,7 @@ public class LessonRepository {
     public Lesson getById(int id) {
         Lesson lesson;
         try {
-            lesson = jdbcTemplate.queryForObject(Query.GET_LESSON_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Lesson.class));
+            lesson = jdbcTemplate.queryForObject(Query.GET_LESSON_BY_ID.getText(), new BeanPropertyRowMapper<>(Lesson.class), id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_ID, e);
         }
@@ -80,7 +81,7 @@ public class LessonRepository {
     public List<Lesson> getByStudent(Student student) {
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_STUDENT.getText(), new Object[]{student.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_STUDENT.getText(), new BeanPropertyRowMapper<>(Lesson.class), student.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
         }
@@ -91,7 +92,7 @@ public class LessonRepository {
     public List<Lesson> getByTeacher(Teacher teacher) {
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_TEACHER.getText(), new Object[]{teacher.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_TEACHER.getText(), new BeanPropertyRowMapper<>(Lesson.class), teacher.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
         }
@@ -102,7 +103,7 @@ public class LessonRepository {
     public List<Lesson> getByGroup(Group group) {
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_GROUP.getText(), new Object[]{group.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_GROUP.getText(), new BeanPropertyRowMapper<>(Lesson.class), group.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_GROUP, e);
         }
@@ -113,7 +114,7 @@ public class LessonRepository {
     public List<Lesson> getByCourse(Course course) {
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_COURSE.getText(), new Object[]{course.getId()}, new BeanPropertyRowMapper<>(Lesson.class));
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_COURSE.getText(), new BeanPropertyRowMapper<>(Lesson.class), course.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_COURSE, e);
         }

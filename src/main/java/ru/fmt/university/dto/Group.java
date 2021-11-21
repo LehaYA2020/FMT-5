@@ -1,4 +1,4 @@
-package ru.fmt.university.models;
+package ru.fmt.university.dto;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class Group {
         this.name = name;
     }
 
-    public Group() {
+    private Group() {
     }
 
     public int getId() {

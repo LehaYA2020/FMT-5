@@ -7,14 +7,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.models.Teacher;
+import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dto.Teacher;
 
 import java.util.List;
 
 @Repository
 public class TeacherRepository {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     public Teacher create(Teacher teacher) {
         try {
@@ -37,7 +38,7 @@ public class TeacherRepository {
 
     public Teacher getById(int id) {
         try {
-            return jdbcTemplate.queryForObject(Query.GET_TEACHER_BY_ID.getText(), new Object[]{id}, new BeanPropertyRowMapper<>(Teacher.class));
+            return jdbcTemplate.queryForObject(Query.GET_TEACHER_BY_ID.getText(), new BeanPropertyRowMapper<>(Teacher.class), id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_TEACHER_BY_ID, e);
         }

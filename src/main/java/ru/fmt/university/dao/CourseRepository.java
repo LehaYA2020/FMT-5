@@ -7,14 +7,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.models.Course;
+import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dto.Course;
 
 import java.util.List;
 
 @Repository
 public class CourseRepository {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     public Course create(Course course) {
         try {
@@ -40,8 +41,8 @@ public class CourseRepository {
 
     public Course getById(int id) {
         try {
-            return jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(), new Object[]{id},
-                    new BeanPropertyRowMapper<>(Course.class));
+            return jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(),
+                    new BeanPropertyRowMapper<>(Course.class),  id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
         }
@@ -68,8 +69,8 @@ public class CourseRepository {
         List<Course> courses;
 
         try {
-            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(),
-                    new Object[]{id}, new BeanPropertyRowMapper<>(Course.class));
+            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), new BeanPropertyRowMapper<>(Course.class),
+                    id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }

@@ -1,4 +1,4 @@
-package ru.fmt.university.models;
+package ru.fmt.university.dto;
 
 import java.sql.Time;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Lesson {
         this.type = type;
     }
 
-    public Lesson() {
+    private Lesson() {
     }
 
     public int getId() {

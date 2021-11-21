@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.fmt.university.models.Course;
-import ru.fmt.university.models.Teacher;
+import ru.fmt.university.dto.Course;
+import ru.fmt.university.dto.Teacher;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
