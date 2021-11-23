@@ -22,6 +22,9 @@ public class StudentRepository {
     public Student create(Student student) {
         try {
             jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getFirstName(), student.getGroup());
+            if (student.getGroup() != null) {
+                assignToGroup(student, student.getGroup());
+            }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_INSERT_STUDENT);
         }
@@ -51,6 +54,9 @@ public class StudentRepository {
     public Student update(Student student) {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getFirstName(), student.getLastName(), student.getId());
+            if (student.getGroup() != null) {
+                assignToGroup(student, student.getGroup());
+            }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
         }
@@ -81,7 +87,7 @@ public class StudentRepository {
         }
     }
 
-    public List<Student> getByGroup(int groupId) {
+    public List<Student> getByGroupId(int groupId) {
         List<Student> students;
         try {
             students = jdbcTemplate.query(Query.GET_STUDENT_BY_GROUP.getText(), new BeanPropertyRowMapper<>(Student.class), groupId);

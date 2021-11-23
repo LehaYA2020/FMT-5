@@ -37,12 +37,12 @@ public enum Query {
     GET_ALL_LESSONS("SELECT * FROM lessons;"),
     GET_LESSON_BY_ID("SELECT * FROM lessons WHERE id=?;"),
     DELETE_LESSON("DELETE FROM lessons WHERE id=?;"),
-    UPDATE_LESSON("UPDATE lessons set course_id=?, teacher_id=?, class_room=?, day=?, time=?, type=? WHERE id=?;"),
+    UPDATE_LESSON("UPDATE lessons set course_id=?, teacher_id=?, classroom=?, day=?, time=?, type=? WHERE id=?;"),
     GET_LESSON_BY_STUDENT("SELECT lessons.* FROM lessons, lessons_groups, students_groups WHERE students_groups.student_id=? " +
             "AND lessons_groups.group_id=students_groups.group_id AND lessons.id=lessons_groups.lesson_id;"),
-    GET_LESSON_BY_TEACHER("SELECT * FROM lessons, WHERE teacher_id=?;"),
-    GET_LESSON_BY_COURSE("SELECT * FROM lessons, WHERE course_id=?;"),
-    GET_LESSON_BY_GROUP("SELECT lessons.* FROM lessons, lessons_groups, WHERE lessons_groups.lesson_id= lessons.id group_id=?;"),
+    GET_LESSON_BY_TEACHER("SELECT * FROM lessons WHERE teacher_id=?;"),
+    GET_LESSON_BY_COURSE("SELECT * FROM lessons WHERE course_id=?;"),
+    GET_LESSON_BY_GROUP("SELECT lessons.* FROM lessons, lessons_groups WHERE lessons_groups.lesson_id=lessons.id AND group_id=?;"),
     ASSIGN_GROUP_TO_LESSON("INSERT INTO lessons_groups(lesson_id, group_id) VALUES (?, ?);"),
     DELETE_GROUP_FROM_LESSON("DELETE FROM lessons_groups WHERE lesson_id=? AND group_id=?;");
 

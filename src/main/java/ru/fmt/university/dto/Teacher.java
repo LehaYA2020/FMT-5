@@ -18,6 +18,10 @@ public class Teacher {
     private Teacher() {
     }
 
+    public Teacher(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,7 +59,7 @@ public class Teacher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return id == teacher.id && Objects.equals(firstName, teacher.firstName) && Objects.equals(lastName, teacher.lastName);
+        return id == teacher.id && Objects.equals(firstName, teacher.firstName) && Objects.equals(lastName, teacher.lastName) && Objects.equals(course, teacher.course);
     }
 
     @Override

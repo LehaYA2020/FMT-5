@@ -23,6 +23,10 @@ public class Student {
     private Student() {
     }
 
+    public Student(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -60,7 +64,7 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName);
+        return id == student.id && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(group, student.group);
     }
 
     @Override

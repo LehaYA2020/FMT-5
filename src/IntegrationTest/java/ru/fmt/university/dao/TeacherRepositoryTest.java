@@ -40,7 +40,7 @@ public class TeacherRepositoryTest {
     @BeforeAll
     public static void prepareList() {
         for (int i = 1; i <= 3; i++) {
-            testCourseList.add(new Course(i, "Course-" + i, "forTest"));
+            testCourseList.add(new Course(i));
         }
         testTeacherList.add(new Teacher(1, "T-" + 1, "Teacher", testCourseList.get(0)));
         testTeacherList.add(new Teacher(2, "T-" + 2, "Teacher", testCourseList.get(0)));
@@ -66,7 +66,7 @@ public class TeacherRepositoryTest {
 
     @Test
     public void getById() {
-        assertEquals(testTeacherList.get(0), teacherRepository.getById(1));
+        assertEquals(testTeacherList.get(0).getCourse(), teacherRepository.getById(1).getCourse());
     }
 
     @Test

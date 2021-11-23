@@ -23,6 +23,10 @@ public class Course {
     private Course() {
     }
 
+    public Course(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

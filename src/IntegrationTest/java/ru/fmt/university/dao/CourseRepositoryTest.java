@@ -55,6 +55,7 @@ public class CourseRepositoryTest {
         Reader fillDatabaseReader = new BufferedReader(
                 new FileReader(context.getClassLoader().getResource("fillDb.sql").getFile()));
         scriptRunner.runScript(fillDatabaseReader);
+
     }
 
     @Test
