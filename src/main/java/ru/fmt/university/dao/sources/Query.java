@@ -19,12 +19,16 @@ public enum Query {
     DELETE_GROUP_FROM_COURSE("DELETE FROM groups_courses WHERE group_id=? AND course_id=?;"),
     GET_GROUPS_BY_LESSON("SELECT * FROM groups, lessons_groups where lesson_id=? and groups.id=lessons_groups.group_id;"),
     GET_GROUPS_BY_COURSE("SELECT * FROM groups, groups_courses where course_id=? and groups.id=groups_courses.group_id;"),
+    GET_GROUPS_BY_STUDENT("SELECT * FROM groups, students_groups where student_id=? and groups.id=students_groups.group_id;"),
     UPDATE_GROUP("UPDATE groups set name=? WHERE id=?;"),
 
     INSERT_TEACHER("INSERT INTO teachers(first_name, last_name, course_id) VALUES(?, ?, ?);"),
     GET_ALL_TEACHERS("SELECT * FROM teachers;"),
     GET_TEACHER_BY_ID("SELECT * FROM teachers WHERE id=?;"),
     UPDATE_TEACHER_BY_ID("UPDATE teachers set first_name=?, last_name=?, course_id=? WHERE id=?;"),
+    DELETE_TEACHER("DELETE FROM teachers WHERE id=?;"),
+    GET_TEACHERS_BY_COURSE("SELECT * FROM teachers WHERE course_id=?;"),
+    GET_TEACHERS_BY_LESSON("SELECT teachers.* FROM teachers, lessons WHERE lessons.id=? AND teacher_id=teachers.id;"),
 
     GET_ALL_COURSES("SELECT * FROM courses;"),
     GET_COURSE_BY_ID("SELECT courses.id, courses.name, courses.description FROM courses WHERE id = ?;"),

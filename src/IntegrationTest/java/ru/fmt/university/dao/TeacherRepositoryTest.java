@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.fmt.university.dto.Course;
+import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
 
 import javax.sql.DataSource;
@@ -74,6 +75,16 @@ public class TeacherRepositoryTest {
         Teacher teacher = new Teacher(2, "T-" + 2, "updated", testCourseList.get(1));
         teacherRepository.update(teacher);
         assertEquals(teacher, teacherRepository.getById(2));
+    }
+
+    @Test
+    public void getByCourse() {
+        assertEquals(testTeacherList.subList(0,2), teacherRepository.getByCourse(new Course(1)));
+    }
+
+    @Test
+    public void getByLesson() {
+        assertEquals(testTeacherList.get(0), teacherRepository.getByLesson(new Lesson(1)));
     }
 
     @AfterEach

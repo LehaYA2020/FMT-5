@@ -28,6 +28,10 @@ public class Lesson {
     private Lesson() {
     }
 
+    public Lesson(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

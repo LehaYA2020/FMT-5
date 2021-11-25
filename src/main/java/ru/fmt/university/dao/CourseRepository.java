@@ -69,8 +69,7 @@ public class CourseRepository {
         List<Course> courses;
 
         try {
-            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), new BeanPropertyRowMapper<>(Course.class),
-                    id);
+            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), new BeanPropertyRowMapper<>(Course.class), id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }

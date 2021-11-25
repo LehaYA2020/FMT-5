@@ -8,6 +8,8 @@ import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.mappers.TeacherMapper;
 import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dto.Course;
+import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public class TeacherRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    TeacherMapper teacherMapper;
+    private TeacherMapper teacherMapper;
 
     public Teacher create(Teacher teacher) {
         try {
@@ -52,6 +54,34 @@ public class TeacherRepository {
                     teacher.getCourse().getId(), teacher.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_TEACHER_BY_ID, e);
+        }
+        return teacher;
+    }
+
+    public void delete(int id) {
+        try {
+            jdbcTemplate.update(Query.DELETE_TEACHER.getText(), id);
+        } catch (DataAccessException e) {
+            throw new DaoException(MessagesConstants.CANNOT_DELETE_TEACHER, e);
+        }
+    }
+
+    public List<Teacher> getByCourse(Course course) {
+        List<Teacher> teachers;
+        try {
+            teachers = jdbcTemplate.query(Query.GET_TEACHERS_BY_COURSE.getText(), teacherMapper, course.getId());
+        } catch (DataAccessException e) {
+            throw new DaoException(MessagesConstants.CANNOT_GET_TEACHERS_BY_COURSE, e);
+        }
+        return teachers;
+    }
+
+    public Teacher getByLesson(Lesson lesson) {
+        Teacher teacher;
+        try {
+            teacher = jdbcTemplate.queryForObject(Query.GET_TEACHERS_BY_LESSON.getText(), teacherMapper, lesson.getId());
+        } catch (DataAccessException e) {
+            throw new DaoException(MessagesConstants.CANNOT_GET_TEACHERS_BY_LESSON, e);
         }
         return teacher;
     }

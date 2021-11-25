@@ -11,6 +11,7 @@ import ru.fmt.university.dao.sources.Query;
 import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Group;
 import ru.fmt.university.dto.Lesson;
+import ru.fmt.university.dto.Student;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class GroupRepository {
         }
     }
 
-    public List<Group> getByLesson(Lesson lesson) {
+        public List<Group> getByLesson(Lesson lesson) {
         List<Group> groups;
         try {
             groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), new BeanPropertyRowMapper<>(Group.class), lesson.getId());
@@ -82,6 +83,16 @@ public class GroupRepository {
             throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
         return groups;
+    }
+
+    public Group getByStudent(Student student) {
+        Group group;
+        try {
+            group = jdbcTemplate.queryForObject(Query.GET_GROUPS_BY_STUDENT.getText(), new BeanPropertyRowMapper<>(Group.class), student.getId());
+        } catch (DataAccessException e) {
+            throw new DaoException(MessagesConstants.CANNOT_GET_BY_STUDENT, e);
+        }
+        return group;
     }
 
     public List<Group> getByCourse(Course course) {

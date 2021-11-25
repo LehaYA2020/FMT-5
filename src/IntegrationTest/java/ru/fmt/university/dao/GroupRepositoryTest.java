@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Group;
+import ru.fmt.university.dto.Student;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
@@ -71,6 +72,11 @@ public class GroupRepositoryTest {
     @Test
     public void getById() {
         assertEquals(testGroupList.get(0), groupRepository.getById(1));
+    }
+
+    @Test
+    public void getByStudent() {
+        assertEquals(testGroupList.get(0), groupRepository.getByStudent(new Student(1)));
     }
 
     @Test

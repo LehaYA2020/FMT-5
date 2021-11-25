@@ -6,10 +6,8 @@ public class MessagesConstants {
     public static final String CANNOT_ASSIGN_TO_GROUP = "Cannot assign students to group: ";
     public static final String CANNOT_GET_ALL_STUDENTS = "Cannot get all students: ";
     public static final String CANNOT_DELETE_STUDENT_FROM_GROUP = "Cannot delete student from group: ";
-    public static final String CANNOT_DELETE_STUDENT_FROM_COURSE = "Cannot delete student from course: ";
     public static final String CANNOT_UPDATE_STUDENT_ASSIGNMENTS = "Cannot update student assignment to group: ";
     public static final String CANNOT_DELETE_STUDENT = "Cannot delete student: ";
-    public static final String CANNOT_ASSIGN_TO_COURSE = "Cannot assign student to course: ";
     public static final String CANNOT_UPDATE_STUDENT = "Cannot update student: ";
 
     public static final String CANNOT_INSERT_GROUPS = "Cannot insert list of groups: ";
@@ -20,6 +18,7 @@ public class MessagesConstants {
     public static final String CANNOT_UPDATE_GROUP = "Cannot update group: ";
     public static final String CANNOT_DELETE_GROUP_FROM_COURSE = "Cannot delete group from course: ";
     public static final String CANNOT_GET_GROUPS = "Cannot get all groups: ";
+    public static final String CANNOT_GET_BY_STUDENT = "Cannot get group by student: ";
 
     public static final String CANNOT_INSERT_COURSE = "Cannot insert course: ";
     public static final String CANNOT_GET_COURSES = "Cannot get all courses: ";
@@ -30,7 +29,10 @@ public class MessagesConstants {
     public static final String CANNOT_INSERT_TEACHERS_LIST = "Can't insert teacher: ";
     public static final String CANNOT_GET_ALL_TEACHERS = "Can't get all teachers: ";
     public static final String CANNOT_GET_TEACHER_BY_ID = "Can't get teacher by id: ";
-    public static final String CANNOT_UPDATE_TEACHER_BY_ID = "Can't update teacher by id: ";
+    public static final String CANNOT_UPDATE_TEACHER_BY_ID = "Can't update teacher: ";
+    public static final String CANNOT_DELETE_TEACHER = "Can't delete teacher by id: ";
+    public static final String CANNOT_GET_TEACHERS_BY_COURSE = "Can't get teacher by course: ";
+    public static final String CANNOT_GET_TEACHERS_BY_LESSON = "Can't get teacher by lesson: ";
 
     public static final String CANNOT_INSERT_LESSON = "Can't insert lesson: ";
     public static final String CANNOT_GET_ALL_LESSONS = "Can't get all lessons: ";

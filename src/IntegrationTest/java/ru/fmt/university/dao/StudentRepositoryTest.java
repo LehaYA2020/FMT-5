@@ -68,7 +68,7 @@ public class StudentRepositoryTest {
 
     @Test
     public void delete_shouldDeleteFromDb() {
-        studentRepository.deleteById(1);
+        studentRepository.delete(1);
         assertEquals(testStudentList.subList(1,4), studentRepository.getAll());
     }
 

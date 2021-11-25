@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public class StudentRepository {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     public Student create(Student student) {
         try {
@@ -63,7 +63,7 @@ public class StudentRepository {
         return student;
     }
 
-    public void deleteById(int id) {
+    public void delete(int id) {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
         } catch (DataAccessException e) {
