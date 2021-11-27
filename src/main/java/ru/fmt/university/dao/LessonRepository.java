@@ -34,6 +34,7 @@ public class LessonRepository {
 
         return lesson;
     }
+
     public List<Lesson> getAll() {
         List<Lesson> lessons;
         try {

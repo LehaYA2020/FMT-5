@@ -1,47 +1,23 @@
 package ru.fmt.university.dao;
 
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.fmt.university.dao.exceptions.DaoException;
+import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Group;
 import ru.fmt.university.dto.Student;
 
-import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestAppConfig.class})
-public class GroupRepositoryTest {
+public class GroupRepositoryTest extends RepositoryTest {
+    private static final Group FOR_CREATION = new Group(4, "Group-4");
     private static final List<Course> testCourseList = new LinkedList<>();
     private static final List<Group> testGroupList = new LinkedList<>();
 
-    @Autowired
-    DataSource dataSource;
-    @Autowired
-    private ApplicationContext context;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private GroupRepository groupRepository;
-    @Autowired
-    private TeacherRepository teacherRepository;
-    @Autowired
-    private LessonRepository lessonRepository;
-    private ScriptRunner scriptRunner;
 
     @BeforeAll
     public static void prepareList() {
@@ -52,16 +28,20 @@ public class GroupRepositoryTest {
 
     }
 
-    @BeforeEach
-    public void fillDb() throws Exception {
-        scriptRunner = new ScriptRunner(dataSource.getConnection());
-        Reader createDatabaseReader = new BufferedReader(
-                new FileReader(context.getClassLoader().getResource("createTables.sql").getFile()));
-        scriptRunner.runScript(createDatabaseReader);
+    @Test
+    public void create() {
+        groupRepository.create(FOR_CREATION);
+        assertNotEquals(testGroupList, groupRepository.getAll());
 
-        Reader fillDatabaseReader = new BufferedReader(
-                new FileReader(context.getClassLoader().getResource("fillDb.sql").getFile()));
-        scriptRunner.runScript(fillDatabaseReader);
+        assertEquals(FOR_CREATION,groupRepository.getById(FOR_CREATION.getId()));
+    }
+
+    @Test
+    public void create_shouldThrow_DaoException() {
+        Throwable exception = assertThrows(DaoException.class,
+                () -> groupRepository.create(testGroupList.get(0)));
+
+        assertEquals(MessagesConstants.CANNOT_INSERT_GROUPS, exception.getMessage());
     }
 
     @Test
@@ -72,6 +52,28 @@ public class GroupRepositoryTest {
     @Test
     public void getById() {
         assertEquals(testGroupList.get(0), groupRepository.getById(1));
+    }
+
+    @Test
+    public void getById_shouldThrowDaoException() {
+
+
+        Throwable exception = assertThrows(DaoException.class,
+                () -> groupRepository.getById(10));
+
+        assertEquals(MessagesConstants.CANNOT_GET_GROUP_BY_ID, exception.getMessage());
+    }
+
+    @Test
+    public void assignToCourse() {
+        groupRepository.assignToCourse(testGroupList.get(0), testCourseList.get(2));
+        assertEquals(testCourseList, courseRepository.getByGroupId(1));
+    }
+
+    @Test
+    public void assignToLesson() {
+        groupRepository.assignToLesson(lessonRepository.getById(1), testGroupList.subList(1, 2));
+        assertEquals(lessonRepository.getAll(), lessonRepository.getByGroup(testGroupList.get(1)));
     }
 
     @Test
@@ -113,12 +115,5 @@ public class GroupRepositoryTest {
     public void deleteFromLesson() {
         groupRepository.deleteFromLesson(lessonRepository.getById(2), testGroupList.get(0));
         assertEquals(testGroupList.subList(1, 2), groupRepository.getByLesson(lessonRepository.getById(2)));
-    }
-
-    @AfterEach
-    public void clearDatabase() throws Exception {
-        Reader reader = new BufferedReader(
-                new FileReader(context.getClassLoader().getResource("clearDatabase.sql").getFile()));
-        scriptRunner.runScript(reader);
     }
 }

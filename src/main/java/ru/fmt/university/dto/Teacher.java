@@ -22,6 +22,12 @@ public class Teacher {
         this.id = id;
     }
 
+    public Teacher(String firstName, String lastName, Course course) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.course = course;
+    }
+
     public int getId() {
         return id;
     }

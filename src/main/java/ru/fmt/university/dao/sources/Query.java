@@ -37,7 +37,7 @@ public enum Query {
     DELETE_COURSE("DELETE FROM courses WHERE id=?;"),
     GET_COURSES_BY_GROUP_ID("SELECT * FROM courses, groups_courses WHERE courses.id=groups_courses.course_id AND group_id=?;"),
 
-    INSERT_LESSON("INSERT INTO lessons(course_id, teacher_id, class_room, day, time, type) VALUES (?, ?, ?, ?, ?, ?);"),
+    INSERT_LESSON("INSERT INTO lessons(course_id, teacher_id, classroom, day, time, type) VALUES (?, ?, ?, ?, ?, ?);"),
     GET_ALL_LESSONS("SELECT * FROM lessons;"),
     GET_LESSON_BY_ID("SELECT * FROM lessons WHERE id=?;"),
     DELETE_LESSON("DELETE FROM lessons WHERE id=?;"),

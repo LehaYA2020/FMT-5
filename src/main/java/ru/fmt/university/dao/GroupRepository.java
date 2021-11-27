@@ -26,7 +26,7 @@ public class GroupRepository {
             jdbcTemplate.update(Query.INSERT_GROUP.getText(), group.getName());
 
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_INSERT_GROUPS);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_GROUPS, e);
         }
         return group;
     }
@@ -123,6 +123,8 @@ public class GroupRepository {
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
         }
     }
+
+
 
     public void deleteFromLesson(Lesson lesson, Group group) {
         try {

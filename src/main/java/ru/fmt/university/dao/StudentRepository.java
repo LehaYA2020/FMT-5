@@ -21,12 +21,12 @@ public class StudentRepository {
 
     public Student create(Student student) {
         try {
-            jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getFirstName(), student.getGroup());
+            jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getFirstName(), student.getLastName());
             if (student.getGroup() != null) {
                 assignToGroup(student, student.getGroup());
             }
         } catch (DataAccessException e) {
-            throw new DaoException(MessagesConstants.CANNOT_INSERT_STUDENT);
+            throw new DaoException(MessagesConstants.CANNOT_INSERT_STUDENT, e);
         }
         return student;
     }

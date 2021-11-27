@@ -23,7 +23,7 @@ public class TeacherRepository {
 
     public Teacher create(Teacher teacher) {
         try {
-            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourse());
+            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourse().getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, e);
         }
