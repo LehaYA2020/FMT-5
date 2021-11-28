@@ -108,6 +108,6 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return id == lesson.id && classRoom == lesson.classRoom && Objects.equals(course, lesson.course) && Objects.equals(teacher, lesson.teacher) && dayOfWeek == lesson.dayOfWeek && Objects.equals(startTime, lesson.startTime) && type == lesson.type;
+        return id == lesson.id && classRoom == lesson.classRoom && Objects.equals(course.getId(), lesson.course.getId()) && Objects.equals(teacher.getId(), lesson.teacher.getId()) && dayOfWeek == lesson.dayOfWeek && Objects.equals(startTime, lesson.startTime) && type == lesson.type;
     }
 }

@@ -1,6 +1,5 @@
 package ru.fmt.university.dao;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
@@ -8,39 +7,24 @@ import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TeacherRepositoryTest extends RepositoryTest {
-    private static final List<Teacher> testTeacherList = new LinkedList<>();
-    private static final List<Course> testCourseList = new LinkedList<>();
-    private static Teacher forCreation;
+    private static final Teacher FOR_CREATION = new Teacher(4, "T-4", "Teacher", testCourseList.get(1));
 
-    @BeforeAll
-    public static void prepareList() {
-        for (int i = 1; i <= 3; i++) {
-            testCourseList.add(new Course(i));
-        }
-        testTeacherList.add(new Teacher(1, "T-" + 1, "Teacher", testCourseList.get(0)));
-        testTeacherList.add(new Teacher(2, "T-" + 2, "Teacher", testCourseList.get(0)));
-        testTeacherList.add(new Teacher(3, "T-" + 3, "Teacher", testCourseList.get(1)));
-        forCreation = new Teacher(4,"T-4", "Teacher", testCourseList.get(1));
-    }
 
     @Test
     public void create() {
-        teacherRepository.create(forCreation);
+        teacherRepository.create(FOR_CREATION);
         assertNotEquals(testTeacherList, teacherRepository.getAll());
 
-        assertEquals(forCreation,teacherRepository.getById(forCreation.getId()));
+        assertEquals(FOR_CREATION, teacherRepository.getById(FOR_CREATION.getId()));
     }
 
     @Test
     public void create_shouldThrow_DaoException() {
         Throwable exception = assertThrows(DaoException.class,
-                () -> teacherRepository.create(new Teacher(0,"", "", testCourseList.get(0))));
+                () -> teacherRepository.create(new Teacher(0, "", "", testCourseList.get(0))));
 
         assertEquals(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, exception.getMessage());
     }
@@ -52,7 +36,7 @@ public class TeacherRepositoryTest extends RepositoryTest {
 
     @Test
     public void getById() {
-        assertEquals(testTeacherList.get(0).getCourse(), teacherRepository.getById(1).getCourse());
+        assertEquals(testTeacherList.get(0), teacherRepository.getById(1));
     }
 
     @Test

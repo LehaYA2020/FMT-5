@@ -1,37 +1,22 @@
 package ru.fmt.university.dao;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.dto.Group;
 import ru.fmt.university.dto.Student;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class StudentRepositoryTest extends RepositoryTest {
     private static final Student FOR_CREATION = new Student(5, "S-05", "Student");
-    private static final List<Student> testStudentList = new LinkedList<>();
-    private static final List<Group> testGroupList = new LinkedList<>();
-
-    @BeforeAll
-    public static void prepareList() {
-        for (int i = 1; i <= 4; i++) {
-            testStudentList.add(new Student(i, "S-0" + i, "Student"));
-            testGroupList.add(new Group(i, "Group-" + i));
-        }
-    }
 
     @Test
     public void create() {
         studentRepository.create(FOR_CREATION);
         assertNotEquals(testStudentList, studentRepository.getAll());
 
-        assertEquals(FOR_CREATION,studentRepository.getById(FOR_CREATION.getId()));
+        assertEquals(FOR_CREATION, studentRepository.getById(FOR_CREATION.getId()));
     }
 
     @Test
