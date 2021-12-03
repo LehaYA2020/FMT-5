@@ -14,7 +14,8 @@ public class Group {
         this.name = name;
     }
 
-    private Group() {
+    public Group(int id) {
+        this.id = id;
     }
 
     public int getId() {

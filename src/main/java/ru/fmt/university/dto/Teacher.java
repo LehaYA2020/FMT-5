@@ -15,9 +15,6 @@ public class Teacher {
         this.course = course;
     }
 
-    private Teacher() {
-    }
-
     public Teacher(int id) {
         this.id = id;
     }

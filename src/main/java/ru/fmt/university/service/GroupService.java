@@ -1,4 +1,4 @@
-package service;
+package ru.fmt.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -58,7 +58,7 @@ public class GroupService {
     public List<Group> getByCourse(Course course) {
         List<Group> groups = groupRepository.getByCourse(course);
         setStudents(groups);
-        setStudents(groups);
+        setCourses(groups);
         return groups;
     }
 
@@ -73,14 +73,14 @@ public class GroupService {
     public List<Group> getByLesson(Lesson lesson) {
         List<Group> groups = groupRepository.getByLesson(lesson);
         setStudents(groups);
-        setStudents(groups);
+        setCourses(groups);
         return groups;
     }
 
     public Group getByStudent(Student student) {
         Group group = groupRepository.getByStudent(student);
         setStudents(group);
-        setStudents(group);
+        setCourses(group);
         return group;
     }
 

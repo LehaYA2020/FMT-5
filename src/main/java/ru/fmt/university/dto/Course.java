@@ -21,9 +21,6 @@ public class Course {
         this.description = description;
     }
 
-    private Course() {
-    }
-
     public Course(int id) {
         this.id = id;
     }

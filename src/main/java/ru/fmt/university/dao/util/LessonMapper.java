@@ -1,7 +1,7 @@
-package ru.fmt.university.dao.mappers;
+package ru.fmt.university.dao.util;
 
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.LessonType;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 
-@Component
+@Service
 public class LessonMapper implements RowMapper<Lesson> {
 
     @Override

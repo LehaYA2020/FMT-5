@@ -25,9 +25,6 @@ public class Lesson {
         this.type = type;
     }
 
-    private Lesson() {
-    }
-
     public Lesson(int id) {
         this.id = id;
     }

@@ -6,8 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.dao.mappers.LessonMapper;
 import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dao.util.LessonMapper;
 import ru.fmt.university.dto.*;
 
 import java.util.List;

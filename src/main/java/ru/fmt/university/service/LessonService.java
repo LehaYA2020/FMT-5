@@ -1,4 +1,4 @@
-package service;
+package ru.fmt.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,17 +25,27 @@ public class LessonService {
     public Lesson getById(int id) {
         Lesson lesson = lessonRepository.getById(id);
         setGroups(lesson);
+        setCourse(lesson);
+        setTeacher(lesson);
         return lesson;
     }
 
     public List<Lesson> getAll() {
         List<Lesson> lessons = lessonRepository.getAll();
         setGroups(lessons);
+        setCourse(lessons);
+        setTeacher(lessons);
         return lessons;
     }
 
     public Lesson update(Lesson forUpdate) {
-        return lessonRepository.update(forUpdate);
+        Lesson lesson = lessonRepository.update(forUpdate);
+
+        setGroups(lesson);
+        setCourse(lesson);
+        setTeacher(lesson);
+
+        return lesson;
     }
 
     public void delete(int id) {
@@ -44,25 +54,37 @@ public class LessonService {
 
     public List<Lesson> getLessonsByStudent(Student student) {
         List<Lesson> lessons = lessonRepository.getByStudent(student);
+
         setGroups(lessons);
+        setCourse(lessons);
+        setTeacher(lessons);
         return lessons;
     }
 
     public List<Lesson> getLessonsByCourse(Course course) {
         List<Lesson> lessons = lessonRepository.getByCourse(course);
+
         setGroups(lessons);
+        setCourse(lessons);
+        setTeacher(lessons);
         return lessons;
     }
 
     public List<Lesson> getLessonsByGroup(Group group) {
         List<Lesson> lessons = lessonRepository.getByGroup(group);
+
         setGroups(lessons);
+        setCourse(lessons);
+        setTeacher(lessons);
         return lessons;
     }
 
     public List<Lesson> getLessonsByTeacher(Teacher teacher) {
         List<Lesson> lessons = lessonRepository.getByTeacher(teacher);
+
         setGroups(lessons);
+        setCourse(lessons);
+        setTeacher(lessons);
         return lessons;
     }
 
@@ -71,7 +93,7 @@ public class LessonService {
     }
 
     private void setGroups(List<Lesson> lessons) {
-        for (Lesson lesson:lessons) {
+        for (Lesson lesson : lessons) {
             lesson.setGroups(groupService.getByLesson(lesson));
         }
     }
@@ -85,13 +107,13 @@ public class LessonService {
     }
 
     private void setCourse(List<Lesson> lessons) {
-        for (Lesson lesson:lessons) {
+        for (Lesson lesson : lessons) {
             setCourse(lesson);
         }
     }
 
     private void setCourse(List<Lesson> lessons, Course course) {
-        for (Lesson lesson:lessons) {
+        for (Lesson lesson : lessons) {
             setCourse(lesson, course);
         }
     }
@@ -105,7 +127,7 @@ public class LessonService {
     }
 
     private void setTeacher(List<Lesson> lessons) {
-        for (Lesson lesson:lessons) {
+        for (Lesson lesson : lessons) {
             setTeacher(lesson);
         }
     }

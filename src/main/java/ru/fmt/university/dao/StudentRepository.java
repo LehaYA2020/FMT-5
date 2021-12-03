@@ -3,12 +3,12 @@ package ru.fmt.university.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
+import ru.fmt.university.dao.util.StudentMapper;
 import ru.fmt.university.dto.Group;
 import ru.fmt.university.dto.Student;
 
@@ -18,6 +18,8 @@ import java.util.List;
 public class StudentRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    StudentMapper studentMapper;
 
     public Student create(Student student) {
         try {
@@ -34,7 +36,7 @@ public class StudentRepository {
     public List<Student> getAll() {
         List<Student> students;
         try {
-            students = jdbcTemplate.query(Query.GET_ALL_STUDENTS.getText(), new BeanPropertyRowMapper<>(Student.class));
+            students = jdbcTemplate.query(Query.GET_ALL_STUDENTS.getText(), studentMapper);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_ALL_STUDENTS, e);
         }
@@ -44,7 +46,7 @@ public class StudentRepository {
     public Student getById(int id) {
         Student student;
         try {
-            student = jdbcTemplate.queryForObject(Query.GET_STUDENT_BY_ID.getText(), new BeanPropertyRowMapper<>(Student.class), id);
+            student = jdbcTemplate.queryForObject(Query.GET_STUDENT_BY_ID.getText(), studentMapper, id);
         } catch (EmptyResultDataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_STUDENT_BY_ID, e);
         }
@@ -55,7 +57,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getFirstName(), student.getLastName(), student.getId());
             if (student.getGroup() != null) {
-                assignToGroup(student, student.getGroup());
+                updateGroupAssignment(student, student.getGroup());
             }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
@@ -90,7 +92,7 @@ public class StudentRepository {
     public List<Student> getByGroupId(int groupId) {
         List<Student> students;
         try {
-            students = jdbcTemplate.query(Query.GET_STUDENT_BY_GROUP.getText(), new BeanPropertyRowMapper<>(Student.class), groupId);
+            students = jdbcTemplate.query(Query.GET_STUDENT_BY_GROUP.getText(), studentMapper, groupId);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }

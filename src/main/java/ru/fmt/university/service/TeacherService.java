@@ -1,6 +1,7 @@
-package service;
+package ru.fmt.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.fmt.university.dao.TeacherRepository;
 import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Lesson;
@@ -8,6 +9,7 @@ import ru.fmt.university.dto.Teacher;
 
 import java.util.List;
 
+@Component
 public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
@@ -32,8 +34,10 @@ public class TeacherService {
         return teachers;
     }
 
-    public Teacher update(Teacher teacher) {
-        return teacherRepository.update(teacher);
+    public Teacher update(Teacher forUpdate) {
+        Teacher teacher = teacherRepository.update(forUpdate);
+        setCourse(teacher);
+        return teacher;
     }
 
     public void delete(int id) {

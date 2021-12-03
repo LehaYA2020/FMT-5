@@ -14,13 +14,17 @@ public class Student {
         this.group = group;
     }
 
+    public Student(int id,String firstName, String lastName, Group group) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.group = group;
+    }
+
     public Student(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    private Student() {
     }
 
     public Student(int id) {
