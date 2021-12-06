@@ -1,14 +1,11 @@
 package ru.fmt.university.dto;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Course {
     private int id;
     private String name;
     private String description;
-    private List<Lesson> lessons;
-    private List<Group> groups;
 
     public Course(int id, String name, String description) {
         this.id = id;
@@ -47,22 +44,6 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
-
-    public List<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
     }
 
     @Override

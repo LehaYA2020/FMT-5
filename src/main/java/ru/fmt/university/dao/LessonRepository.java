@@ -23,11 +23,8 @@ public class LessonRepository {
 
     public Lesson create(Lesson lesson) {
         try {
-            jdbcTemplate.update(Query.INSERT_LESSON.getText(), lesson.getCourse().getId(), lesson.getTeacher().getId(),
+            jdbcTemplate.update(Query.INSERT_LESSON.getText(), lesson.getCourseId(), lesson.getTeacherId(),
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(), lesson.getType().toString());
-            if (lesson.getGroups() != null) {
-                groupRepository.assignToLesson(lesson, lesson.getGroups());
-            }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_INSERT_LESSON, e);
         }
@@ -67,12 +64,9 @@ public class LessonRepository {
 
     public Lesson update(Lesson lesson) {
         try {
-            jdbcTemplate.update(Query.UPDATE_LESSON.getText(), lesson.getCourse().getId(), lesson.getTeacher().getId(),
+            jdbcTemplate.update(Query.UPDATE_LESSON.getText(), lesson.getCourseId(), lesson.getTeacherId(),
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(),
                     lesson.getType().toString(), lesson.getId());
-            if (lesson.getGroups() != null) {
-                groupRepository.assignToLesson(lesson, lesson.getGroups());
-            }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_LESSON, e);
         }

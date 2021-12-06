@@ -1,4 +1,4 @@
-package ru.fmt.university.services;
+package ru.fmt.university.service;
 
 import org.junit.jupiter.api.Test;
 import ru.fmt.university.dto.Lesson;
@@ -22,11 +22,9 @@ public class TeacherServiceTest extends ServiceTest{
     @Test
     public void getAll() {
         when(teacherRepository.getAll()).thenReturn(teachers);
-        when(courseServiceMock.getById(1)).thenReturn(course);
 
         List<Teacher> actual = teacherService.getAll();
 
-        verify(courseServiceMock).getById(1);
         verify(teacherRepository).getAll();
 
         assertEquals(teachers, actual);
@@ -35,24 +33,20 @@ public class TeacherServiceTest extends ServiceTest{
     @Test
     public void getById() {
         when(teacherRepository.getById(1)).thenReturn(teacher);
-        when(courseServiceMock.getById(1)).thenReturn(course);
 
         Teacher actual = teacherService.getById(1);
 
         verify(teacherRepository).getById(1);
-        verify(courseServiceMock).getById(1);
          assertEquals(teacher, actual);
     }
 
     @Test
     public void update() {
-        when(courseServiceMock.getById(1)).thenReturn(course);
         when(teacherRepository.update(teacher)).thenReturn(teacher);
 
         Teacher actual = teacherService.update(teacher);
 
         verify(teacherRepository).update(teacher);
-        verify(courseServiceMock).getById(1);
         assertEquals(teacher, actual);
     }
 
@@ -65,13 +59,11 @@ public class TeacherServiceTest extends ServiceTest{
 
     @Test
     public void getByCourse() {
-        when(courseServiceMock.getById(1)).thenReturn(course);
         when(teacherRepository.getByCourse(course)).thenReturn(teachers);
 
         List<Teacher> actual = teacherService.getByCourse(course);
 
         verify(teacherRepository).getByCourse(course);
-        verify(courseServiceMock).getById(1);
 
         assertEquals(teachers, actual);
     }
@@ -89,11 +81,9 @@ public class TeacherServiceTest extends ServiceTest{
     @Test
     public void grtByLesson() {
         when(teacherRepository.getByLesson(lesson)).thenReturn(teacher);
-        when(courseServiceMock.getById(1)).thenReturn(course);
 
         Teacher actual = teacherService.getByLesson(lesson);
 
-        verify(courseServiceMock).getById(1);
         verify(teacherRepository).getByLesson(lesson);
 
         assertEquals(teacher, actual);

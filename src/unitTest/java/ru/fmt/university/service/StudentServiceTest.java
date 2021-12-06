@@ -1,4 +1,4 @@
-package ru.fmt.university.services;
+package ru.fmt.university.service;
 
 import org.junit.jupiter.api.Test;
 import ru.fmt.university.dto.Lesson;
@@ -21,36 +21,30 @@ public class StudentServiceTest extends ServiceTest{
     @Test
     public void getAll() {
         when(studentRepository.getAll()).thenReturn(students);
-        when(groupServiceMock.getByStudent(student)).thenReturn(group);
 
         List<Student> actual = studentService.getAll();
 
         verify(studentRepository).getAll();
-        verify(groupServiceMock).getByStudent(student);
         assertEquals(students, actual);
     }
 
     @Test
     public void getById() {
         when(studentRepository.getById(1)).thenReturn(student);
-        when(groupServiceMock.getByStudent(student)).thenReturn(group);
 
         Student actual = studentService.getById(1);
 
         verify(studentRepository).getById(1);
-        verify(groupServiceMock).getByStudent(student);
         assertEquals(student, actual);
     }
 
     @Test
     public void update() {
         when(studentRepository.update(student)).thenReturn(student);
-        when(groupServiceMock.getByStudent(student)).thenReturn(group);
 
         Student actual = studentService.update(student);
 
         verify(studentRepository).update(student);
-        verify(groupServiceMock).getByStudent(student);
         assertEquals(student, actual);
     }
 
@@ -63,13 +57,13 @@ public class StudentServiceTest extends ServiceTest{
     @Test
     public void assignToGroup() {
         studentService.assignStudentToGroup(student, group);
-        verify(studentRepository).assignToGroup(student, group);
+        verify(studentRepository).assignToGroup(student, group.getId());
     }
 
     @Test
     public void deleteFromGroup() {
         studentService.updateGroupAssignment(student, group);
-        verify(studentRepository).updateGroupAssignment(student, group);
+        verify(studentRepository).updateGroupAssignment(student, group.getId());
     }
 
     @Test
@@ -85,12 +79,10 @@ public class StudentServiceTest extends ServiceTest{
     @Test
     public void getByGroup() {
         when(studentRepository.getByGroupId(1)).thenReturn(students);
-        when(groupServiceMock.getByStudent(student)).thenReturn(group);
 
         List<Student> actual = studentService.getByGroup(1);
 
         verify(studentRepository).getByGroupId(1);
-        verify(groupServiceMock).getByStudent(student);
         assertEquals(students, actual);
     }
 }

@@ -14,8 +14,6 @@ public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
-    private CourseService courseService;
-    @Autowired
     private LessonService lessonService;
 
     public void create(Teacher teacher) {
@@ -23,21 +21,15 @@ public class TeacherService {
     }
 
     public Teacher getById(int id) {
-        Teacher teacher = teacherRepository.getById(id);
-        setCourse(teacher);
-        return teacher;
+        return teacherRepository.getById(id);
     }
 
     public List<Teacher> getAll() {
-        List<Teacher> teachers = teacherRepository.getAll();
-        setCourse(teachers);
-        return teachers;
+        return teacherRepository.getAll();
     }
 
     public Teacher update(Teacher forUpdate) {
-        Teacher teacher = teacherRepository.update(forUpdate);
-        setCourse(teacher);
-        return teacher;
+        return teacherRepository.update(forUpdate);
     }
 
     public void delete(int id) {
@@ -45,28 +37,14 @@ public class TeacherService {
     }
 
     public Teacher getByLesson(Lesson lesson) {
-        Teacher teacher = teacherRepository.getByLesson(lesson);
-        setCourse(teacher);
-        return teacher;
+        return teacherRepository.getByLesson(lesson);
     }
 
     public List<Teacher> getByCourse(Course course) {
-        List<Teacher> teachers = teacherRepository.getByCourse(course);
-        setCourse(teachers);
-        return teachers;
+        return teacherRepository.getByCourse(course);
     }
 
     public List<Lesson> getSchedule(Teacher teacher) {
         return lessonService.getLessonsByTeacher(teacher);
-    }
-
-    private void setCourse(Teacher teacher) {
-        teacher.setCourse(courseService.getById(teacher.getCourse().getId()));
-    }
-
-    private void setCourse(List<Teacher> teachers) {
-        for (Teacher teacher:teachers) {
-            setCourse(teacher);
-        }
     }
 }

@@ -24,15 +24,11 @@ public class StudentService {
     }
 
     public Student getById(int id) {
-        Student student = studentRepository.getById(id);
-        setGroup(student);
-        return student;
+        return studentRepository.getById(id);
     }
 
     public List<Student> getAll() {
-        List<Student> students = studentRepository.getAll();
-        setGroup(students);
-        return students;
+        return studentRepository.getAll();
     }
 
     public void delete(int id) {
@@ -40,46 +36,22 @@ public class StudentService {
     }
 
     public Student update(Student forUpdate) {
-        Student student = studentRepository.update(forUpdate);
-        setGroup(student);
-        return student;
+        return studentRepository.update(forUpdate);
     }
 
     public void assignStudentToGroup(Student student, Group group) {
-        studentRepository.assignToGroup(student, group);
+        studentRepository.assignToGroup(student, group.getId());
     }
 
     public void updateGroupAssignment(Student student, Group group) {
-        studentRepository.updateGroupAssignment(student, group);
+        studentRepository.updateGroupAssignment(student, group.getId());
     }
 
     public List<Student> getByGroup(int id) {
-        List<Student> students = studentRepository.getByGroupId(id);
-        setGroup(students);
-        return students;
+        return studentRepository.getByGroupId(id);
     }
 
     public List<Lesson> getSchedule(Student student) {
         return lessonService.getLessonsByStudent(student);
-    }
-
-    private void setGroup(Student student, Group group) {
-        student.setGroup(group);
-    }
-
-    private void setGroup(List<Student> students, Group group) {
-        for (Student student : students) {
-            student.setGroup(group);
-        }
-    }
-
-    private void setGroup(Student student) {
-        student.setGroup(groupService.getByStudent(student));
-    }
-
-    private void setGroup(List<Student> students) {
-        for (Student student : students) {
-            setGroup(student);
-        }
     }
 }

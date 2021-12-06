@@ -2,23 +2,21 @@ package ru.fmt.university.dto;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Objects;
 
 public class Lesson {
     private int id;
-    private Course course;
-    private List<Group> groups;
-    private Teacher teacher;
+    private int courseId;
+    private int teacherId;
     private int classRoom;
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LessonType type;
 
-    public Lesson(int id, Course course, Teacher teacher, int classRoom, DayOfWeek dayOfWeek, LocalTime startTime, LessonType type) {
+    public Lesson(int id, int courseId, int teacherId, int classRoom, DayOfWeek dayOfWeek, LocalTime startTime, LessonType type) {
         this.id = id;
-        this.course = course;
-        this.teacher = teacher;
+        this.courseId = courseId;
+        this.teacherId = teacherId;
         this.classRoom = classRoom;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
@@ -37,28 +35,20 @@ public class Lesson {
         this.id = id;
     }
 
-    public Course getCourse() {
-        return course;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public int getTeacherId() {
+        return teacherId;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 
     public int getClassRoom() {
@@ -97,7 +87,7 @@ public class Lesson {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, course, groups, teacher, classRoom, dayOfWeek, startTime, type);
+        return Objects.hash(id, courseId, teacherId, classRoom, dayOfWeek, startTime, type);
     }
 
     @Override
@@ -105,6 +95,6 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return id == lesson.id && classRoom == lesson.classRoom && Objects.equals(course.getId(), lesson.course.getId()) && Objects.equals(teacher.getId(), lesson.teacher.getId()) && dayOfWeek == lesson.dayOfWeek && Objects.equals(startTime, lesson.startTime) && type == lesson.type;
+        return id == lesson.id && classRoom == lesson.classRoom && Objects.equals(courseId, lesson.courseId) && Objects.equals(teacherId, lesson.teacherId) && dayOfWeek == lesson.dayOfWeek && Objects.equals(startTime, lesson.startTime) && type == lesson.type;
     }
 }

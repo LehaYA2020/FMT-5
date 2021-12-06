@@ -24,17 +24,11 @@ public class GroupService {
     }
 
     public Group getById(int id) {
-        Group group = groupRepository.getById(id);
-        setStudents(group);
-        setCourses(group);
-        return group;
+        return groupRepository.getById(id);
     }
 
     public List<Group> getAll() {
-        List<Group> groups = groupRepository.getAll();
-        setStudents(groups);
-        setCourses(groups);
-        return groups;
+        return groupRepository.getAll();
     }
 
     public Group update(Group forUpdate) {
@@ -56,10 +50,7 @@ public class GroupService {
     }
 
     public List<Group> getByCourse(Course course) {
-        List<Group> groups = groupRepository.getByCourse(course);
-        setStudents(groups);
-        setCourses(groups);
-        return groups;
+        return groupRepository.getByCourse(course);
     }
 
     public void assignToLesson(Lesson lesson, List<Group> groups) {
@@ -71,36 +62,10 @@ public class GroupService {
     }
 
     public List<Group> getByLesson(Lesson lesson) {
-        List<Group> groups = groupRepository.getByLesson(lesson);
-        setStudents(groups);
-        setCourses(groups);
-        return groups;
+        return groupRepository.getByLesson(lesson);
     }
 
     public Group getByStudent(Student student) {
-        Group group = groupRepository.getByStudent(student);
-        setStudents(group);
-        setCourses(group);
-        return group;
-    }
-
-    private void setStudents(Group group) {
-        group.setStudents(studentService.getByGroup(group.getId()));
-    }
-
-    private void setStudents(List<Group> groups) {
-        for (Group group:groups) {
-            setStudents(group);
-        }
-    }
-
-    private void setCourses(Group group) {
-        group.setCourses(courseService.getByGroupId(group.getId()));
-    }
-
-    private void setCourses(List<Group> groups) {
-        for (Group group:groups) {
-            setCourses(group);
-        }
+        return groupRepository.getByStudent(student);
     }
 }

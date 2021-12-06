@@ -6,23 +6,23 @@ public class Teacher {
     private int id;
     private String firstName;
     private String lastName;
-    private Course course;
+    private int courseId;
 
-    public Teacher(int id, String firstName, String lastName, Course course) {
+    public Teacher(int id, String firstName, String lastName, int courseId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.course = course;
+        this.courseId = courseId;
     }
 
     public Teacher(int id) {
         this.id = id;
     }
 
-    public Teacher(String firstName, String lastName, Course course) {
+    public Teacher(String firstName, String lastName, int courseId) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.course = course;
+        this.courseId = courseId;
     }
 
     public int getId() {
@@ -41,12 +41,12 @@ public class Teacher {
         this.firstName = firstName;
     }
 
-    public Course getCourse() {
-        return course;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public String getLastName() {
@@ -62,11 +62,11 @@ public class Teacher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return id == teacher.id && Objects.equals(firstName, teacher.firstName) && Objects.equals(lastName, teacher.lastName) && Objects.equals(course.getId(), teacher.course.getId());
+        return id == teacher.id && Objects.equals(firstName, teacher.firstName) && Objects.equals(lastName, teacher.lastName) && Objects.equals(courseId, teacher.courseId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, course);
+        return Objects.hash(id, firstName, lastName, courseId);
     }
 }

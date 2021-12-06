@@ -1,4 +1,4 @@
-package ru.fmt.university.services;
+package ru.fmt.university.service;
 
 import org.junit.jupiter.api.Test;
 import ru.fmt.university.dto.Group;
@@ -19,35 +19,23 @@ public class GroupServiceTest extends ServiceTest{
 
     @Test
     public void getAll() {
-        when(studentServiceMock.getByGroup(1)).thenReturn(students);
-        when(courseServiceMock.getByGroupId(1)).thenReturn(courses);
         when(groupRepository.getAll()).thenReturn(groups);
 
         List<Group> actual = groupService.getAll();
 
 
         verify(groupRepository).getAll();
-        verify(courseServiceMock).getByGroupId(1);
-        verify(courseServiceMock).getByGroupId(1);
         assertEquals(groups, actual);
-        assertEquals(courses, actual.get(0).getCourses());
-        assertEquals(students, actual.get(0).getStudents());
     }
 
     @Test
     public void getById() {
         when(groupRepository.getById(1)).thenReturn(group);
-        when(courseServiceMock.getByGroupId(1)).thenReturn(courses);
-        when(studentServiceMock.getByGroup(1)).thenReturn(students);
 
         Group actual = groupService.getById(1);
 
         verify(groupRepository).getById(1);
-        verify(studentServiceMock).getByGroup(1);
-        verify(courseServiceMock).getByGroupId(1);
         assertEquals(group, actual);
-        assertEquals(courses, actual.getCourses());
-        assertEquals(students, actual.getStudents());
     }
 
     @Test
@@ -67,52 +55,34 @@ public class GroupServiceTest extends ServiceTest{
     @Test
     public void getByCourse() {
         when(groupRepository.getByCourse(course)).thenReturn(groups);
-        when(courseServiceMock.getByGroupId(1)).thenReturn(courses);
-        when(studentServiceMock.getByGroup(1)).thenReturn(students);
 
         List<Group> actual = groupService.getByCourse(course);
 
 
         verify(groupRepository).getByCourse(course);
-        verify(courseServiceMock).getByGroupId(1);
-        verify(studentServiceMock).getByGroup(1);
         assertEquals(groups, actual);
-        assertEquals(courses, actual.get(0).getCourses());
-        assertEquals(students, actual.get(0).getStudents());
     }
 
     @Test
     public void getByStudent() {
         when(groupRepository.getByStudent(student)).thenReturn(group);
-        when(courseServiceMock.getByGroupId(1)).thenReturn(courses);
-        when(studentServiceMock.getByGroup(1)).thenReturn(students);
 
         Group actual = groupService.getByStudent(student);
 
 
         verify(groupRepository).getByStudent(student);
-        verify(courseServiceMock).getByGroupId(1);
-        verify(studentServiceMock).getByGroup(1);
         assertEquals(group, actual);
-        assertEquals(courses, actual.getCourses());
-        assertEquals(students, actual.getStudents());
     }
 
     @Test
     public void getByLesson() {
         when(groupRepository.getByLesson(lesson)).thenReturn(groups);
-        when(courseServiceMock.getByGroupId(1)).thenReturn(courses);
-        when(studentServiceMock.getByGroup(1)).thenReturn(students);
 
         List<Group> actual = groupService.getByLesson(lesson);
 
 
         verify(groupRepository).getByLesson(lesson);
-        verify(courseServiceMock).getByGroupId(1);
-        verify(studentServiceMock).getByGroup(1);
         assertEquals(groups, actual);
-        assertEquals(courses, actual.get(0).getCourses());
-        assertEquals(students, actual.get(0).getStudents());
     }
 
     @Test

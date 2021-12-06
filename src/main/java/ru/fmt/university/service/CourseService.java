@@ -11,27 +11,17 @@ import java.util.List;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
-    @Autowired
-    private LessonService lessonService;
-    @Autowired
-    private GroupService groupService;
 
     public void create(Course course) {
         courseRepository.create(course);
     }
 
     public List<Course> getAll() {
-        List<Course> courses = courseRepository.getAll();
-            fillGroups(courses);
-            fillLessons(courses);
-        return courses;
+        return courseRepository.getAll();
     }
 
     public Course getById(int id) {
-        Course course = courseRepository.getById(id);
-        fillGroups(course);
-        fillLessons(course);
-        return course;
+        return courseRepository.getById(id);
     }
 
     public Course update(Course forUpdate) {
@@ -44,30 +34,9 @@ public class CourseService {
     }
 
     public List<Course> getByGroupId(int id) {
-        List<Course> courses = courseRepository.getByGroupId(id);
-            fillGroups(courses);
-            fillLessons(courses);
-        return courses;
+        return courseRepository.getByGroupId(id);
     }
 
-    private void fillLessons(Course course) {
-        course.setLessons(lessonService.getLessonsByCourse(course));
-    }
 
-    private void fillGroups(Course course) {
-        course.setGroups(groupService.getByCourse(course));
-    }
-
-    private void fillLessons(List<Course> courses) {
-        for(Course course:courses) {
-            fillLessons(course);
-        }
-    }
-
-    private void fillGroups(List<Course> courses) {
-        for(Course course:courses) {
-            fillGroups(course);
-        }
-    }
 
 }

@@ -1,4 +1,4 @@
-package ru.fmt.university.services;
+package ru.fmt.university.service;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

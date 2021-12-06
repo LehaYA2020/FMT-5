@@ -19,13 +19,13 @@ public class StudentRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    StudentMapper studentMapper;
+    private StudentMapper studentMapper;
 
     public Student create(Student student) {
         try {
             jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getFirstName(), student.getLastName());
-            if (student.getGroup() != null) {
-                assignToGroup(student, student.getGroup());
+            if (student.getGroupId() != 0) {
+                assignToGroup(student, student.getGroupId());
             }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_INSERT_STUDENT, e);
@@ -56,8 +56,8 @@ public class StudentRepository {
     public Student update(Student student) {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getFirstName(), student.getLastName(), student.getId());
-            if (student.getGroup() != null) {
-                updateGroupAssignment(student, student.getGroup());
+            if (student.getGroupId() != 0) {
+                updateGroupAssignment(student, student.getGroupId());
             }
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
@@ -73,17 +73,17 @@ public class StudentRepository {
         }
     }
 
-    public void assignToGroup(Student student, Group group) {
+    public void assignToGroup(Student student, int groupId) {
         try {
-            jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), student.getId(), group.getId());
+            jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), student.getId(), groupId);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
         }
     }
 
-    public void updateGroupAssignment(Student student, Group group) {
+    public void updateGroupAssignment(Student student, int groupId) {
         try {
-            jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), group.getId(), student.getId());
+            jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), groupId, student.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }

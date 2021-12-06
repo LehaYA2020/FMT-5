@@ -1,6 +1,7 @@
 package ru.fmt.university.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Student;
 
 import java.util.List;
-
+@Lazy
 @Repository
 public class GroupRepository {
     @Autowired
@@ -124,8 +125,6 @@ public class GroupRepository {
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
         }
     }
-
-
 
     public void deleteFromLesson(Lesson lesson, Group group) {
         try {

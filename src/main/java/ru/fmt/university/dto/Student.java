@@ -6,19 +6,19 @@ public class Student {
     private int id;
     private String firstName;
     private String lastName;
-    private Group group;
+    private int groupId;
 
-    public Student(String firstName, String lastName, Group group) {
+    public Student(String firstName, String lastName, int groupId) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.group = group;
+        this.groupId = groupId;
     }
 
-    public Student(int id,String firstName, String lastName, Group group) {
+    public Student(int id,String firstName, String lastName, int groupId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.group = group;
+        this.groupId = groupId;
     }
 
     public Student(int id, String firstName, String lastName) {
@@ -47,12 +47,12 @@ public class Student {
         this.firstName = firstName;
     }
 
-    public Group getGroup() {
-        return group;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public String getLastName() {
@@ -68,7 +68,7 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(group, student.group);
+        return id == student.id && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(groupId, student.groupId);
     }
 
     @Override

@@ -10,7 +10,7 @@ import ru.fmt.university.dto.Teacher;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TeacherRepositoryTest extends RepositoryTest {
-    private static final Teacher FOR_CREATION = new Teacher(4, "T-4", "Teacher", testCourseList.get(1));
+    private static final Teacher FOR_CREATION = new Teacher(4, "T-4", "Teacher", testCourseList.get(1).getId());
 
 
     @Test
@@ -24,7 +24,7 @@ public class TeacherRepositoryTest extends RepositoryTest {
     @Test
     public void create_shouldThrow_DaoException() {
         Throwable exception = assertThrows(DaoException.class,
-                () -> teacherRepository.create(new Teacher(0, "", "", testCourseList.get(0))));
+                () -> teacherRepository.create(new Teacher(0, "", "", testCourseList.get(0).getId())));
 
         assertEquals(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, exception.getMessage());
     }
@@ -47,7 +47,7 @@ public class TeacherRepositoryTest extends RepositoryTest {
 
     @Test
     public void update() {
-        Teacher teacher = new Teacher(2, "T-" + 2, "updated", testCourseList.get(1));
+        Teacher teacher = new Teacher(2, "T-" + 2, "updated", testCourseList.get(1).getId());
         teacherRepository.update(teacher);
         assertEquals(teacher, teacherRepository.getById(2));
     }

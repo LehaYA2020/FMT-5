@@ -23,7 +23,7 @@ public class TeacherRepository {
 
     public Teacher create(Teacher teacher) {
         try {
-            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourse().getId());
+            jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourseId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, e);
         }
@@ -51,7 +51,7 @@ public class TeacherRepository {
     public Teacher update(Teacher teacher) {
         try {
             jdbcTemplate.update(Query.UPDATE_TEACHER_BY_ID.getText(), teacher.getFirstName(), teacher.getLastName(),
-                    teacher.getCourse().getId(), teacher.getId());
+                    teacher.getCourseId(), teacher.getId());
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_TEACHER_BY_ID, e);
         }

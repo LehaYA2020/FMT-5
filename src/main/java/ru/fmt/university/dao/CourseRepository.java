@@ -15,9 +15,9 @@ import java.util.List;
 @Repository
 public class CourseRepository {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
     CourseMapper courseMapper;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public Course create(Course course) {
         try {
@@ -31,7 +31,6 @@ public class CourseRepository {
 
     public List<Course> getAll() {
         List<Course> courses;
-
         try {
             courses = jdbcTemplate.query(Query.GET_ALL_COURSES.getText(), courseMapper);
         } catch (DataAccessException e) {
@@ -42,12 +41,14 @@ public class CourseRepository {
     }
 
     public Course getById(int id) {
+        Course course;
         try {
-            return jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(),
-                    courseMapper,  id);
+            course = jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(),
+                    courseMapper, id);
         } catch (DataAccessException e) {
             throw new DaoException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
         }
+        return course;
     }
 
     public Course update(Course course) {

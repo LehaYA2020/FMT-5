@@ -1,6 +1,5 @@
-package ru.fmt.university.services;
+package ru.fmt.university.service;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -10,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.fmt.university.dao.*;
 import ru.fmt.university.dto.*;
-import ru.fmt.university.service.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -26,8 +24,8 @@ public abstract class ServiceTest {
     protected static Course course = new Course(1, "Test", "Course");
     protected static Group group = new Group(1, "Test");
     protected static Student student = new Student(1, "fName", "lName");
-    protected static Teacher teacher = new Teacher(1, "TestT", "lName", course);
-    protected static Lesson lesson = new Lesson(1, course, teacher, 10, DayOfWeek.MONDAY,
+    protected static Teacher teacher = new Teacher(1, "TestT", "lName", course.getId());
+    protected static Lesson lesson = new Lesson(1, course.getId(), teacher.getId(), 10, DayOfWeek.MONDAY,
             LocalTime.of(9, 30, 0), LessonType.LECTURE);
     protected static List<Lesson> lessons = singletonList(lesson);
     protected static List<Teacher> teachers = singletonList(teacher);
@@ -69,21 +67,4 @@ public abstract class ServiceTest {
     protected StudentRepository studentRepository;
     @Mock
     protected TeacherRepository teacherRepository;
-
-    @BeforeAll
-    protected static void prepare() {
-        lesson.setCourse(course);
-        lesson.setGroups(groups);
-        lesson.setTeacher(teacher);
-
-        course.setLessons(lessons);
-        course.setGroups(groups);
-
-        group.setCourses(courses);
-        group.setStudents(students);
-
-        student.setGroup(group);
-
-        teacher.setCourse(course);
-    }
 }

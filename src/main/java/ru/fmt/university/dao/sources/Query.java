@@ -1,7 +1,7 @@
 package ru.fmt.university.dao.sources;
 
 public enum Query {
-    GET_ALL_STUDENTS("SELECT students.id, students.first_name, students.last_name, students_groups.group_id FROM students LEFT JOIN students_groups on students_groups.student_id = students.id;"),
+    GET_ALL_STUDENTS("SELECT id, first_name,last_name, group_id FROM students LEFT JOIN students_groups on students_groups.student_id = students.id;"),
     GET_STUDENT_BY_ID("SELECT students.id, students.first_name, students.last_name, students_groups.group_id FROM students LEFT JOIN students_groups on students_groups.student_id = students.id WHERE students.id = ?;"),
     DELETE_STUDENT("DELETE FROM students WHERE id = ?;"),
     GET_STUDENT_BY_GROUP("SELECT * FROM students, students_groups WHERE students_groups.group_id=?AND students.id=students_groups.student_id;"),

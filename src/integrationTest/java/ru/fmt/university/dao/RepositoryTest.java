@@ -55,19 +55,21 @@ public abstract class RepositoryTest {
             testGroupList.add(new Group(i, "Group-" + i));
         }
         for (int i = 1; i <= 4; i++) {
-            testStudentList.add(new Student(i, "S-0" + i, "Student"));
+            testStudentList.add(new Student(i, "S-0" + i, "Student", 1));
         }
 
+        testStudentList.get(2).setGroupId(2);
+        testStudentList.get(3).setGroupId(0);
 
-        testTeacherList.add(new Teacher(1, "T-" + 1, "Teacher", testCourseList.get(0)));
-        testTeacherList.add(new Teacher(2, "T-" + 2, "Teacher", testCourseList.get(0)));
-        testTeacherList.add(new Teacher(3, "T-" + 3, "Teacher", testCourseList.get(1)));
+        testTeacherList.add(new Teacher(1, "T-" + 1, "Teacher", testCourseList.get(0).getId()));
+        testTeacherList.add(new Teacher(2, "T-" + 2, "Teacher", testCourseList.get(0).getId()));
+        testTeacherList.add(new Teacher(3, "T-" + 3, "Teacher", testCourseList.get(1).getId()));
 
-        testLessonList.add(new Lesson(1, testCourseList.get(0), new Teacher(1), 10,
+        testLessonList.add(new Lesson(1, testCourseList.get(0).getId(), new Teacher(1).getId(), 10,
                 DayOfWeek.MONDAY, LocalTime.of(9, 30, 0), LessonType.LECTURE));
-        testLessonList.add(new Lesson(2, testCourseList.get(1), new Teacher(1), 10,
+        testLessonList.add(new Lesson(2, testCourseList.get(1).getId(), new Teacher(1).getId(), 10,
                 DayOfWeek.TUESDAY, LocalTime.of(9, 30, 0), LessonType.LECTURE));
-        testLessonList.add(new Lesson(3, testCourseList.get(1), new Teacher(2), 20,
+        testLessonList.add(new Lesson(3, testCourseList.get(1).getId(), 2, 20,
                 DayOfWeek.FRIDAY, LocalTime.of(9, 30, 0), LessonType.LECTURE));
     }
 
