@@ -21,17 +21,17 @@ import static java.util.Collections.singletonList;
 @ContextConfiguration(classes = {ServiceTestConfig.class})
 public abstract class ServiceTest {
 
-    protected static Course course = new Course(1, "Test", "Course");
-    protected static Group group = new Group(1, "Test");
-    protected static Student student = new Student(1, "fName", "lName");
-    protected static Teacher teacher = new Teacher(1, "TestT", "lName", course.getId());
-    protected static Lesson lesson = new Lesson(1, course.getId(), teacher.getId(), 10, DayOfWeek.MONDAY,
+    protected static Course expectedCourse = new Course(1, "Test", "Course");
+    protected static Group expectedGroup = new Group(1, "Test");
+    protected static Student expectedStudent = new Student(1, "fName", "lName");
+    protected static Teacher expectedTeacher = new Teacher(1, "TestT", "lName", expectedCourse.getId());
+    protected static Lesson expectedLesson = new Lesson(1, expectedCourse.getId(), expectedTeacher.getId(), 10, DayOfWeek.MONDAY,
             LocalTime.of(9, 30, 0), LessonType.LECTURE);
-    protected static List<Lesson> lessons = singletonList(lesson);
-    protected static List<Teacher> teachers = singletonList(teacher);
-    protected static List<Course> courses = singletonList(course);
-    protected static List<Group> groups = singletonList(group);
-    protected static List<Student> students = singletonList(student);
+    protected static List<Lesson> expectedLessons = singletonList(expectedLesson);
+    protected static List<Teacher> expectedTeachers = singletonList(expectedTeacher);
+    protected static List<Course> expectedCourses = singletonList(expectedCourse);
+    protected static List<Group> expectedGroups = singletonList(expectedGroup);
+    protected static List<Student> expectedStudents = singletonList(expectedStudent);
     @InjectMocks
     @Autowired
     protected CourseService courseService;
@@ -48,15 +48,7 @@ public abstract class ServiceTest {
     @Autowired
     protected TeacherService teacherService;
     @Mock
-    protected CourseService courseServiceMock;
-    @Mock
-    protected GroupService groupServiceMock;
-    @Mock
     protected LessonService lessonServiceMock;
-    @Mock
-    protected StudentService studentServiceMock;
-    @Mock
-    protected TeacherService teacherServiceMock;
     @Mock
     protected CourseRepository courseRepository;
     @Mock

@@ -13,76 +13,76 @@ import static org.mockito.Mockito.when;
 public class StudentServiceTest extends ServiceTest{
 
     @Test
-    public void create() {
-        studentService.create(student);
-        verify(studentRepository).create(student);
+    public void create_shouldCallStudentRepositoryCreatedMethod() {
+        studentService.create(expectedStudent);
+        verify(studentRepository).create(expectedStudent);
     }
 
     @Test
-    public void getAll() {
-        when(studentRepository.getAll()).thenReturn(students);
+    public void getAll_shouldCallStudentRepositoryGetAllMethod() {
+        when(studentRepository.getAll()).thenReturn(expectedStudents);
 
-        List<Student> actual = studentService.getAll();
+        List<Student> actualStudents = studentService.getAll();
 
         verify(studentRepository).getAll();
-        assertEquals(students, actual);
+        assertEquals(expectedStudents, actualStudents);
     }
 
     @Test
-    public void getById() {
-        when(studentRepository.getById(1)).thenReturn(student);
+    public void getById_shouldCallStudentRepositoryGetByIdMethod() {
+        when(studentRepository.getById(1)).thenReturn(expectedStudent);
 
-        Student actual = studentService.getById(1);
+        Student actualStudent = studentService.getById(1);
 
         verify(studentRepository).getById(1);
-        assertEquals(student, actual);
+        assertEquals(expectedStudent, actualStudent);
     }
 
     @Test
-    public void update() {
-        when(studentRepository.update(student)).thenReturn(student);
+    public void update_shouldCallStudentRepositoryUpdateMethod() {
+        when(studentRepository.update(expectedStudent)).thenReturn(expectedStudent);
 
-        Student actual = studentService.update(student);
+        Student updatedStudent = studentService.update(expectedStudent);
 
-        verify(studentRepository).update(student);
-        assertEquals(student, actual);
+        verify(studentRepository).update(expectedStudent);
+        assertEquals(expectedStudent, updatedStudent);
     }
 
     @Test
-    public void delete() {
+    public void delete_shouldCallStudentRepositoryDeleteMethod() {
         studentService.delete(1);
         verify(studentRepository).delete(1);
     }
 
     @Test
-    public void assignToGroup() {
-        studentService.assignStudentToGroup(student, group);
-        verify(studentRepository).assignToGroup(student, group.getId());
+    public void assignToGroup_shouldCallStudentRepositoryGetByIdMethod() {
+        studentService.assignStudentToGroup(expectedStudent, expectedGroup);
+        verify(studentRepository).assignToGroup(expectedStudent, expectedGroup.getId());
     }
 
     @Test
-    public void deleteFromGroup() {
-        studentService.updateGroupAssignment(student, group);
-        verify(studentRepository).updateGroupAssignment(student, group.getId());
+    public void deleteFromGroup_shouldCallStudentRepositoryDeleteFromGroupMethod() {
+        studentService.updateGroupAssignment(expectedStudent, expectedGroup);
+        verify(studentRepository).updateGroupAssignment(expectedStudent, expectedGroup.getId());
     }
 
     @Test
-    public void getSchedule() {
-        when(lessonServiceMock.getLessonsByStudent(student)).thenReturn(lessons);
+    public void getSchedule_shouldCallLessonServiceGetLessonsByStudentMethod() {
+        when(lessonServiceMock.getLessonsByStudent(expectedStudent)).thenReturn(expectedLessons);
 
-        List<Lesson> actual = studentService.getSchedule(student);
+        List<Lesson> actualStudents = studentService.getSchedule(expectedStudent);
 
-        verify(lessonServiceMock).getLessonsByStudent(student);
-        assertEquals(lessons, actual);
+        verify(lessonServiceMock).getLessonsByStudent(expectedStudent);
+        assertEquals(expectedLessons, actualStudents);
     }
 
     @Test
-    public void getByGroup() {
-        when(studentRepository.getByGroupId(1)).thenReturn(students);
+    public void getByGroup_shouldCallStudentRepositoryGetByGroupMethod() {
+        when(studentRepository.getByGroupId(1)).thenReturn(expectedStudents);
 
-        List<Student> actual = studentService.getByGroup(1);
+        List<Student> actualStudents = studentService.getByGroup(1);
 
         verify(studentRepository).getByGroupId(1);
-        assertEquals(students, actual);
+        assertEquals(expectedStudents, actualStudents);
     }
 }

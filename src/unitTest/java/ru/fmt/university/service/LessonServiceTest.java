@@ -12,91 +12,91 @@ import static org.mockito.Mockito.when;
 public class LessonServiceTest extends ServiceTest {
 
     @Test
-    public void create() {
-        lessonService.create(lesson);
-        verify(lessonRepository).create(lesson);
+    public void create_shouldCallLessonRepositoryCreateMethod() {
+        lessonService.create(expectedLesson);
+        verify(lessonRepository).create(expectedLesson);
     }
 
     @Test
-    public void getAll() {
-        when(lessonRepository.getAll()).thenReturn(lessons);
+    public void getAll_shouldCallLessonRepositoryGetAllMethod() {
+        when(lessonRepository.getAll()).thenReturn(expectedLessons);
 
-        List<Lesson> actual = lessonService.getAll();
+        List<Lesson> actualLessons = lessonService.getAll();
 
         verify(lessonRepository).getAll();
 
-        assertEquals(lessons, actual);
+        assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
-    public void getById() {
-        when(lessonRepository.getById(1)).thenReturn(lesson);
+    public void getById_shouldCallLessonRepositoryGetByIdMethod() {
+        when(lessonRepository.getById(1)).thenReturn(expectedLesson);
 
-        Lesson actual = lessonService.getById(1);
+        Lesson actualLesson = lessonService.getById(1);
 
         verify(lessonRepository).getById(1);
 
-        assertEquals(lesson, actual);
+        assertEquals(expectedLesson, actualLesson);
     }
 
     @Test
-    public void update() {
-        when(lessonRepository.update(lesson)).thenReturn(lesson);
+    public void update_shouldCallLessonRepositoryUpdateMethod() {
+        when(lessonRepository.update(expectedLesson)).thenReturn(expectedLesson);
 
-        Lesson actual = lessonService.update(lesson);
+        Lesson updatedLesson = lessonService.update(expectedLesson);
 
-        verify(lessonRepository).update(lesson);
+        verify(lessonRepository).update(expectedLesson);
 
-        assertEquals(lesson, actual);
+        assertEquals(expectedLesson, updatedLesson);
     }
 
     @Test
-    public void delete() {
+    public void delete_shouldCallLessonRepositoryDeleteMethod() {
         lessonService.delete(1);
         verify(lessonRepository).delete(1);
     }
 
     @Test
-    public void getByStudent() {
-        when(lessonRepository.getByStudent(student)).thenReturn(lessons);
+    public void getByStudent_shouldCallLessonRepositoryGetByStudentMethod() {
+        when(lessonRepository.getByStudent(expectedStudent)).thenReturn(expectedLessons);
 
-        List<Lesson> actual = lessonService.getLessonsByStudent(student);
+        List<Lesson> actualLessons = lessonService.getLessonsByStudent(expectedStudent);
 
-        verify(lessonRepository).getByStudent(student);
+        verify(lessonRepository).getByStudent(expectedStudent);
 
-        assertEquals(lessons, actual);
+        assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
-    public void getByCourse() {
-        when(lessonRepository.getByCourse(course)).thenReturn(lessons);
+    public void getByCourse_shouldCallLessonRepositoryGetByCourseMethod() {
+        when(lessonRepository.getByCourse(expectedCourse)).thenReturn(expectedLessons);
 
-        List<Lesson> actual = lessonService.getLessonsByCourse(course);
+        List<Lesson> actualLessons = lessonService.getLessonsByCourse(expectedCourse);
 
-        verify(lessonRepository).getByCourse(course);
+        verify(lessonRepository).getByCourse(expectedCourse);
 
-        assertEquals(lessons, actual);
+        assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
-    public void getByGroup() {
-        when(lessonRepository.getByGroup(group)).thenReturn(lessons);
+    public void getByGroup_shouldCallLessonRepositoryGetByGroupMethod() {
+        when(lessonRepository.getByGroup(expectedGroup)).thenReturn(expectedLessons);
 
-        List<Lesson> actual = lessonService.getLessonsByGroup(group);
+        List<Lesson> actualLessons = lessonService.getLessonsByGroup(expectedGroup);
 
-        verify(lessonRepository).getByGroup(group);
+        verify(lessonRepository).getByGroup(expectedGroup);
 
-        assertEquals(lessons, actual);
+        assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
-    public void getByTeacher() {
-        when(lessonRepository.getByTeacher(teacher)).thenReturn(lessons);
+    public void getByTeacher_shouldCallLessonRepositoryGetByTeacherMethod() {
+        when(lessonRepository.getByTeacher(expectedTeacher)).thenReturn(expectedLessons);
 
-        List<Lesson> actual = lessonService.getLessonsByTeacher(teacher);
+        List<Lesson> actualLessons = lessonService.getLessonsByTeacher(expectedTeacher);
 
-        verify(lessonRepository).getByTeacher(teacher);
+        verify(lessonRepository).getByTeacher(expectedTeacher);
 
-        assertEquals(lessons, actual);
+        assertEquals(expectedLessons, actualLessons);
     }
 }
