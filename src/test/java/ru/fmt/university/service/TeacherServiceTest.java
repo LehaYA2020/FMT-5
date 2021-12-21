@@ -10,12 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TeacherServiceTest extends ServiceTest{
+public class TeacherServiceTest extends ServiceTest {
 
     @Test
     public void create_shouldCallTeacherRepositoryCreateMethod() {
         teacherService.create(expectedTeacher);
-
         verify(teacherRepository).create(expectedTeacher);
     }
 
@@ -37,7 +36,7 @@ public class TeacherServiceTest extends ServiceTest{
         Teacher actualTeacher = teacherService.getById(1);
 
         verify(teacherRepository).getById(1);
-         assertEquals(expectedTeacher, actualTeacher);
+        assertEquals(expectedTeacher, actualTeacher);
     }
 
     @Test
@@ -53,7 +52,6 @@ public class TeacherServiceTest extends ServiceTest{
     @Test
     public void delete_shouldCallTeacherRepositoryDeleteMethod() {
         teacherService.delete(1);
-
         verify(teacherRepository).delete(1);
     }
 
@@ -64,7 +62,6 @@ public class TeacherServiceTest extends ServiceTest{
         List<Teacher> actualTeachers = teacherService.getByCourse(expectedCourse);
 
         verify(teacherRepository).getByCourse(expectedCourse);
-
         assertEquals(expectedTeachers, actualTeachers);
     }
 
@@ -85,7 +82,6 @@ public class TeacherServiceTest extends ServiceTest{
         Teacher actualTeacher = teacherService.getByLesson(expectedLesson);
 
         verify(teacherRepository).getByLesson(expectedLesson);
-
         assertEquals(expectedTeacher, actualTeacher);
     }
 }

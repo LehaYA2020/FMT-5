@@ -46,7 +46,6 @@ public class LessonServiceTest extends ServiceTest {
         Lesson updatedLesson = lessonService.update(expectedLesson);
 
         verify(lessonRepository).update(expectedLesson);
-
         assertEquals(expectedLesson, updatedLesson);
     }
 
@@ -63,7 +62,6 @@ public class LessonServiceTest extends ServiceTest {
         List<Lesson> actualLessons = lessonService.getLessonsByStudent(expectedStudent);
 
         verify(lessonRepository).getByStudent(expectedStudent);
-
         assertEquals(expectedLessons, actualLessons);
     }
 
@@ -74,7 +72,6 @@ public class LessonServiceTest extends ServiceTest {
         List<Lesson> actualLessons = lessonService.getLessonsByCourse(expectedCourse);
 
         verify(lessonRepository).getByCourse(expectedCourse);
-
         assertEquals(expectedLessons, actualLessons);
     }
 
@@ -85,7 +82,6 @@ public class LessonServiceTest extends ServiceTest {
         List<Lesson> actualLessons = lessonService.getLessonsByGroup(expectedGroup);
 
         verify(lessonRepository).getByGroup(expectedGroup);
-
         assertEquals(expectedLessons, actualLessons);
     }
 
@@ -96,7 +92,6 @@ public class LessonServiceTest extends ServiceTest {
         List<Lesson> actualLessons = lessonService.getLessonsByTeacher(expectedTeacher);
 
         verify(lessonRepository).getByTeacher(expectedTeacher);
-
         assertEquals(expectedLessons, actualLessons);
     }
 }

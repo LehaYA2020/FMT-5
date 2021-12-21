@@ -1,5 +1,6 @@
 package ru.fmt.university.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fmt.university.dao.GroupRepository;
@@ -11,23 +12,23 @@ import ru.fmt.university.dto.Student;
 import java.util.List;
 
 @Component
+@Log4j2
 public class GroupService {
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private CourseService courseService;
 
     public Group create(Group group) {
+        log.debug("GroupService calls groupRepository.create({}).", group.getId());
         return groupRepository.create(group);
     }
 
     public Group getById(int id) {
+        log.debug("GroupService calls groupRepository.getById({}).", id);
         return groupRepository.getById(id);
     }
 
     public List<Group> getAll() {
+        log.debug("GroupService calls groupRepository.getAll().");
         return groupRepository.getAll();
     }
 
@@ -36,6 +37,7 @@ public class GroupService {
     }
 
     public void delete(int id) {
+        log.debug("GroupService calls groupRepository.delete({}).", id);
         groupRepository.delete(id);
     }
 
@@ -50,6 +52,7 @@ public class GroupService {
     }
 
     public List<Group> getByCourse(Course course) {
+        log.debug("GroupService calls groupRepository.getByCourse({}).", course);
         return groupRepository.getByCourse(course);
     }
 

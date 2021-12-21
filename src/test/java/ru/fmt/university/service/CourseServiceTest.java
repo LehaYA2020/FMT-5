@@ -14,6 +14,7 @@ public class CourseServiceTest extends ServiceTest {
     @Test
     public void create_shouldCallCourseRepositoryCreateMethod() {
         courseService.create(expectedCourse);
+
         verify(courseRepository).create(expectedCourse);
     }
 
@@ -40,7 +41,9 @@ public class CourseServiceTest extends ServiceTest {
     @Test
     public void update_shouldCallCourseRepositoryUpdateMethod() {
         when(courseRepository.update(expectedCourse)).thenReturn(expectedCourse);
+
         Course updatedCourse = courseService.update(expectedCourse);
+
         verify(courseRepository).update(expectedCourse);
         assertEquals(expectedCourse, updatedCourse);
     }
@@ -48,14 +51,18 @@ public class CourseServiceTest extends ServiceTest {
     @Test
     public void delete_shouldCallCourseRepositoryDeleteMethod() {
         doNothing().when(courseRepository).delete(1);
+
         courseService.delete(1);
+
         verify(courseRepository).delete(1);
     }
 
     @Test
     public void getByGroupId_shouldCallCourseRepositoryGetByGroupIdMethod() {
         when(courseRepository.getByGroupId(1)).thenReturn(expectedCourses);
+
         List<Course> actualCourses = courseService.getByGroupId(1);
+
         verify(courseRepository).getByGroupId(1);
         assertEquals(expectedCourses, actualCourses);
     }

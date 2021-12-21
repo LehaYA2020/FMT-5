@@ -1,0 +1,48 @@
+<configuration debug="true">
+    <Properties>
+    <property name = "LOGS" value = "./logs" />
+    <property name = "ARCHIVE" value = "${LOGS}/archived" />
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+        </Console>
+
+        <RollingFile name="Dao-File"
+                     fileName="${LOGS}/dao.log"
+                     filePattern="${ARCHIVE}/dao/dao-logger-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout>
+                <Pattern>%-8.8relative %d{ISO8601} [%25.25thread] %-5level %42.42c{1} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                        size="300 MB" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="Service-File"
+              fileName="${LOGS}/service.log"
+              filePattern="${ARCHIVE}/service/service-logger-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout>
+                <Pattern>%-8.8relative %d{ISO8601} [%25.25thread] %-5level %29.29c{1} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                        size="300 MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+        </Root>
+        <Logger name="ru.fmt.university.dao" level="TRACE">
+            <AppenderRef ref="Dao-File"/>
+        </Logger>
+        <Logger name="ru.fmt.university.service" level="DEBUG">
+            <AppenderRef ref="Service-File"/>
+        </Logger>
+    </Loggers>
+</configuration>

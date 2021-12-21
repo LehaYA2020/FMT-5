@@ -16,8 +16,8 @@ public class TeacherRepositoryTest extends RepositoryTest {
     @Test
     public void create() {
         teacherRepository.create(FOR_CREATION);
-        assertNotEquals(testTeacherList, teacherRepository.getAll());
 
+        assertNotEquals(testTeacherList, teacherRepository.getAll());
         assertEquals(FOR_CREATION, teacherRepository.getById(FOR_CREATION.getId()));
     }
 
@@ -64,8 +64,6 @@ public class TeacherRepositoryTest extends RepositoryTest {
 
     @Test
     public void getById_shouldThrowDaoException() {
-
-
         Throwable exception = assertThrows(DaoException.class,
                 () -> teacherRepository.getById(10));
 
@@ -74,8 +72,6 @@ public class TeacherRepositoryTest extends RepositoryTest {
 
     @Test
     public void delete_shouldThrowDaoException() {
-
-
         Throwable exception = assertThrows(DaoException.class,
                 () -> teacherRepository.delete(1));
 
