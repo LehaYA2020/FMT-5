@@ -23,7 +23,6 @@ public class GroupServiceTest extends ServiceTest{
 
         List<Group> actualGroup = groupService.getAll();
 
-
         verify(groupRepository).getAll();
         assertEquals(expectedGroups, actualGroup);
     }
@@ -41,7 +40,9 @@ public class GroupServiceTest extends ServiceTest{
     @Test
     public void update_shouldCallGroupRepositoryUpdateMethod() {
         when(groupRepository.update(expectedGroup)).thenReturn(expectedGroup);
+
         Group updatedGroup = groupService.update(expectedGroup);
+
         verify(groupRepository).update(expectedGroup);
         assertEquals(expectedGroup, updatedGroup);
     }
@@ -49,6 +50,7 @@ public class GroupServiceTest extends ServiceTest{
     @Test
     public void delete_shouldCallGroupRepositoryDeleteMethod() {
         groupService.delete(1);
+
         verify(groupRepository).delete(1);
     }
 
@@ -57,7 +59,6 @@ public class GroupServiceTest extends ServiceTest{
         when(groupRepository.getByCourse(expectedCourse)).thenReturn(expectedGroups);
 
         List<Group> actualGroups = groupService.getByCourse(expectedCourse);
-
 
         verify(groupRepository).getByCourse(expectedCourse);
         assertEquals(expectedGroups, actualGroups);
@@ -69,7 +70,6 @@ public class GroupServiceTest extends ServiceTest{
 
         Group actualGroup = groupService.getByStudent(expectedStudent);
 
-
         verify(groupRepository).getByStudent(expectedStudent);
         assertEquals(expectedGroup, actualGroup);
     }
@@ -80,7 +80,6 @@ public class GroupServiceTest extends ServiceTest{
 
         List<Group> actualGroups = groupService.getByLesson(expectedLesson);
 
-
         verify(groupRepository).getByLesson(expectedLesson);
         assertEquals(expectedGroups, actualGroups);
     }
@@ -88,24 +87,28 @@ public class GroupServiceTest extends ServiceTest{
     @Test
     public void assignToCourse_shouldCallGroupRepositoryAssignToCourseMethod() {
         groupService.assignToCourses(expectedGroup, expectedCourses);
+
         verify(groupRepository).assignToCourse(expectedGroup, expectedCourse);
     }
 
     @Test
     public void deleteFromCourse_shouldCallGroupRepositoryDeleteFromCourseMethod() {
         groupService.deleteFromCourse(expectedGroup, expectedCourse);
+
         verify(groupRepository).deleteFromCourse(expectedGroup, expectedCourse);
     }
 
     @Test
     public void assignToLesson_shouldCallGroupRepositoryAssignToLessonMethod() {
         groupService.assignToLesson(expectedLesson, expectedGroups);
+
         verify(groupRepository).assignToLesson(expectedLesson, expectedGroups);
     }
 
     @Test
     public void deleteFromLesson_shouldCallGroupRepositoryDeleteFromLessonMethod() {
         groupService.deleteFromLesson(expectedLesson, expectedGroup);
+
         verify(groupRepository).deleteFromLesson(expectedLesson, expectedGroup);
     }
 }

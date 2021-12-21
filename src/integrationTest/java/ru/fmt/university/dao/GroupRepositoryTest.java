@@ -39,8 +39,6 @@ public class GroupRepositoryTest extends RepositoryTest {
 
     @Test
     public void getById_shouldThrowDaoException() {
-
-
         Throwable exception = assertThrows(DaoException.class,
                 () -> groupRepository.getById(10));
 

@@ -22,6 +22,7 @@ public class StudentRepositoryTest extends RepositoryTest {
     @Test
     public void create_shouldThrow_DaoException() {
         assertEquals(4, studentRepository.getAll().size());
+
         Throwable exception = assertThrows(DaoException.class,
                 () -> studentRepository.create(new Student(0, "", "234")));
 
@@ -40,8 +41,6 @@ public class StudentRepositoryTest extends RepositoryTest {
 
     @Test
     public void getById_shouldThrowDaoException() {
-
-
         Throwable exception = assertThrows(DaoException.class,
                 () -> studentRepository.getById(10));
 

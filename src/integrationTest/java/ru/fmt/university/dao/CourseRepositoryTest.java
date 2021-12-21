@@ -11,15 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CourseRepositoryTest extends RepositoryTest {
-
     private static final Course FOR_CREATION = new Course(4, "Course-" + 4, "forTest");
-
 
     @Test
     public void create() {
         courseRepository.create(FOR_CREATION);
-        assertNotEquals(testCourseList, courseRepository.getAll());
 
+        assertNotEquals(testCourseList, courseRepository.getAll());
         assertEquals(FOR_CREATION, courseRepository.getById(FOR_CREATION.getId()));
     }
 
@@ -37,8 +35,6 @@ public class CourseRepositoryTest extends RepositoryTest {
 
     @Test
     public void getById_shouldThrowDaoException() {
-
-
         Throwable exception = assertThrows(DaoException.class,
                 () -> courseRepository.getById(10));
 
