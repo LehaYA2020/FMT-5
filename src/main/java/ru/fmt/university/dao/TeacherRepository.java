@@ -28,7 +28,7 @@ public class TeacherRepository {
         try {
             jdbcTemplate.update(Query.INSERT_TEACHER.getText(), teacher.getFirstName(), teacher.getLastName(), teacher.getCourseId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, e);
             throw new DaoException(MessagesConstants.CANNOT_INSERT_TEACHERS_LIST, e);
         }
         log.debug("Teacher {} created.", teacher);
@@ -41,7 +41,7 @@ public class TeacherRepository {
         try {
             teachers = jdbcTemplate.query(Query.GET_ALL_TEACHERS.getText(), teacherMapper);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_ALL_TEACHERS, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_ALL_TEACHERS, e);
         }
         log.debug("{} found", teachers);
@@ -54,7 +54,7 @@ public class TeacherRepository {
         try {
             teacher = jdbcTemplate.queryForObject(Query.GET_TEACHER_BY_ID.getText(), teacherMapper, id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_TEACHER_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_TEACHER_BY_ID, e);
         }
         log.debug("Teacher {} found", teacher);
@@ -67,7 +67,7 @@ public class TeacherRepository {
             jdbcTemplate.update(Query.UPDATE_TEACHER_BY_ID.getText(), teacher.getFirstName(), teacher.getLastName(),
                     teacher.getCourseId(), teacher.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_UPDATE_TEACHER_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_TEACHER_BY_ID, e);
         }
         log.debug("Teacher with id {} updated", teacher.getId());
@@ -79,7 +79,7 @@ public class TeacherRepository {
         try {
             jdbcTemplate.update(Query.DELETE_TEACHER.getText(), id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_DELETE_TEACHER, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_TEACHER, e);
         }
         log.debug("Teacher with id {} deleted", id);
@@ -91,7 +91,7 @@ public class TeacherRepository {
         try {
             teachers = jdbcTemplate.query(Query.GET_TEACHERS_BY_COURSE.getText(), teacherMapper, course.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_TEACHERS_BY_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_TEACHERS_BY_COURSE, e);
         }
         log.debug("Teachers {} found", teachers);
@@ -104,7 +104,7 @@ public class TeacherRepository {
         try {
             teacher = jdbcTemplate.queryForObject(Query.GET_TEACHERS_BY_LESSON.getText(), teacherMapper, lesson.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_TEACHERS_BY_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_TEACHERS_BY_LESSON, e);
         }
         log.debug("Teacher {} found", teacher);

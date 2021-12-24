@@ -26,7 +26,7 @@ public class CourseRepository {
         try {
             jdbcTemplate.update(Query.INSERT_COURSE.getText(), course.getName(), course.getDescription());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_INSERT_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_INSERT_COURSE, e);
         }
         log.debug("{} created", course);
@@ -39,7 +39,7 @@ public class CourseRepository {
         try {
             courses = jdbcTemplate.query(Query.GET_ALL_COURSES.getText(), courseMapper);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_COURSES, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_COURSES, e);
         }
         log.trace("Found {} courses", courses.size());
@@ -53,7 +53,7 @@ public class CourseRepository {
             course = jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(),
                     courseMapper, id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
         }
         log.debug("Found {}.", course);
@@ -65,7 +65,7 @@ public class CourseRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_COURSE.getText(), course.getName(), course.getDescription(), course.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_UPDATE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_COURSE, e);
         }
         log.debug("Course updated {}", course);
@@ -77,7 +77,7 @@ public class CourseRepository {
         try {
             jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_DELETE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
         log.debug("Course with id={} deleted.", id);
@@ -89,7 +89,7 @@ public class CourseRepository {
         try {
             courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), courseMapper, id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_DELETE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
         log.debug("Found {}", courses);
