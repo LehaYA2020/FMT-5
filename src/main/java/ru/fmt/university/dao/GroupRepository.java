@@ -136,7 +136,7 @@ public class GroupRepository {
     }
 
     public Group update(Group group) {
-        log.debug("update({}).", group);
+        log.trace("update({}).", group);
         try {
             jdbcTemplate.update(Query.UPDATE_GROUP.getText(), group.getName(), group.getId());
         } catch (DataAccessException e) {
@@ -148,7 +148,7 @@ public class GroupRepository {
     }
 
     public void assignToLesson(Lesson lesson, List<Group> groups) {
-        log.debug("assignToLesson({}, {})", lesson, groups);
+        log.trace("assignToLesson({}, {})", lesson, groups);
         try {
             for (Group group : groups) {
                 jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lesson.getId(), group.getId());
@@ -161,7 +161,7 @@ public class GroupRepository {
     }
 
     public void deleteFromLesson(Lesson lesson, Group group) {
-        log.debug("deleteFromLesson({}, {})", lesson, group);
+        log.trace("deleteFromLesson({}, {})", lesson, group);
         try {
             jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lesson.getId(), group.getId());
         } catch (DataAccessException e) {
