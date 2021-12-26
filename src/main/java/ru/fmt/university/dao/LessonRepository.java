@@ -29,7 +29,7 @@ public class LessonRepository {
             jdbcTemplate.update(Query.INSERT_LESSON.getText(), lesson.getCourseId(), lesson.getTeacherId(),
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(), lesson.getType().toString());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_INSERT_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_INSERT_LESSON, e);
         }
         log.debug("Created {}.", lesson);
@@ -43,7 +43,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_ALL_LESSONS.getText(), lessonMapper);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_ALL_LESSONS, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_ALL_LESSONS, e);
         }
         log.debug("Found {}.", lessons);
@@ -57,7 +57,7 @@ public class LessonRepository {
         try {
             lesson = jdbcTemplate.queryForObject(Query.GET_LESSON_BY_ID.getText(), lessonMapper, id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_LESSON_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_ID, e);
         }
         log.debug("Found {}.", lesson);
@@ -70,7 +70,7 @@ public class LessonRepository {
         try {
             jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
         }
         log.debug("Lesson with id={} deleted.", id);
@@ -83,7 +83,7 @@ public class LessonRepository {
                     lesson.getClassRoom(), lesson.getDay().toString(), lesson.getStartTime(),
                     lesson.getType().toString(), lesson.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_UPDATE_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_LESSON, e);
         }
         log.debug("Lesson {} updated.", lesson);
@@ -97,7 +97,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_LESSON_BY_STUDENT.getText(), lessonMapper, student.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
         }
         log.debug("Found {} by student {}.", lessons, student);
@@ -111,7 +111,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_LESSON_BY_TEACHER.getText(), lessonMapper, teacher.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
         }
         log.debug("Found {} by teacher {}.", lessons, teacher);
@@ -125,7 +125,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_LESSON_BY_GROUP.getText(), lessonMapper, group.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_LESSON_BY_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_GROUP, e);
         }
         log.debug("Found {} by group {}.", lessons, group);
@@ -139,7 +139,7 @@ public class LessonRepository {
         try {
             lessons = jdbcTemplate.query(Query.GET_LESSON_BY_COURSE.getText(), lessonMapper, course.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_LESSON_BY_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_COURSE, e);
         }
         log.debug("Found {} by course {}.", lessons, course);

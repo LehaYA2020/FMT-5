@@ -31,7 +31,7 @@ public class StudentRepository {
                 assignToGroup(student, student.getGroupId());
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_INSERT_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_INSERT_STUDENT, e);
         }
         log.debug("{} created", student);
@@ -44,7 +44,7 @@ public class StudentRepository {
         try {
             students = jdbcTemplate.query(Query.GET_ALL_STUDENTS.getText(), studentMapper);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_ALL_STUDENTS, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_ALL_STUDENTS, e);
         }
         log.debug("Found {}", students);
@@ -57,7 +57,7 @@ public class StudentRepository {
         try {
             student = jdbcTemplate.queryForObject(Query.GET_STUDENT_BY_ID.getText(), studentMapper, id);
         } catch (EmptyResultDataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_GET_STUDENT_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_STUDENT_BY_ID, e);
         }
         log.debug("Found {}", student);
@@ -72,7 +72,7 @@ public class StudentRepository {
                 updateGroupAssignment(student, student.getGroupId());
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
         }
         log.debug("Student with id={} updated", student.getId());
@@ -85,7 +85,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_DELETE_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT, e);
         }
         log.debug("Student with id={} deleted", id);
@@ -96,7 +96,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), student.getId(), groupId);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
         }
         log.debug("Student's {} assigned to group with id = {}", student, groupId);
@@ -107,7 +107,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), groupId, student.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }
         log.debug("Student's {} group assignments updated with {}", student, groupId);
@@ -119,7 +119,7 @@ public class StudentRepository {
         try {
             students = jdbcTemplate.query(Query.GET_STUDENT_BY_GROUP.getText(), studentMapper, groupId);
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }
         log.debug("Students {} found by {}", students, groupId);
@@ -132,7 +132,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), student.getId(), group.getId());
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
+            log.error(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
         }
         log.debug("Student {} deleted from Group {})", student, group);
