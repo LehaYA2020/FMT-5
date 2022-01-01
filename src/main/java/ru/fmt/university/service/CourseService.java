@@ -34,16 +34,13 @@ public class CourseService {
         return courseRepository.update(forUpdate);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.debug("CourseService calls courseRepository.delete({}).", id);
-        courseRepository.delete(id);
+        return  courseRepository.delete(id);
     }
 
     public List<Course> getByGroupId(int id) {
         log.debug("CourseService calls courseRepository.getByGroupId({}).", id);
         return courseRepository.getByGroupId(id);
     }
-
-
-
 }

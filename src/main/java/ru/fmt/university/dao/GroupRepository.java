@@ -63,15 +63,17 @@ public class GroupRepository {
         return group;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
+        int flag;
         log.trace("delete({})", id);
         try {
-            jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
+            flag = jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP, e);
         }
         log.debug("Group with id={}.", id);
+        return flag > 0;
     }
 
     public void assignToCourse(Group group, Course course) {
@@ -153,7 +155,8 @@ public class GroupRepository {
             for (Group group : groups) {
                 jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lesson.getId(), group.getId());
             }
-        } catch (DataAccessException e) {ANNOT_ASSIGN_GROUPS_TO_LESSON, e);
+        } catch (DataAccessException e) {
+            log.error(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
         }
         log.debug("Groups {} assigned to lesson {})", groups, lesson);

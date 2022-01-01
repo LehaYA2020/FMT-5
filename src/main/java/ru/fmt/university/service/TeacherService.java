@@ -38,9 +38,9 @@ public class TeacherService {
         return teacherRepository.update(forUpdate);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.debug("TeacherService calls teacherRepository.delete({}).", id);
-        teacherRepository.delete(id);
+        return teacherRepository.delete(id);
     }
 
     public Teacher getByLesson(Lesson lesson) {

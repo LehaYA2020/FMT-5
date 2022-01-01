@@ -34,9 +34,9 @@ public class LessonService {
         return lessonRepository.update(forUpdate);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.debug("LessonService calls lessonRepository.delete({}).", id);
-        lessonRepository.delete(id);
+        return lessonRepository.delete(id);
     }
 
     public List<Lesson> getLessonsByStudent(Student student) {

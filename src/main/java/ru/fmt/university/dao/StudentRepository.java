@@ -80,15 +80,17 @@ public class StudentRepository {
         return student;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
+        int flag;
         log.trace("delete({})", id);
         try {
-            jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
+            flag = jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT, e);
         }
         log.debug("Student with id={} deleted", id);
+        return flag > 0;
     }
 
     public void assignToGroup(Student student, int groupId) {

@@ -74,15 +74,17 @@ public class TeacherRepository {
         return teacher;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
+        int flag;
         log.trace("delete({})", id);
         try {
-            jdbcTemplate.update(Query.DELETE_TEACHER.getText(), id);
+            flag = jdbcTemplate.update(Query.DELETE_TEACHER.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_TEACHER, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_TEACHER, e);
         }
         log.debug("Teacher with id {} deleted", id);
+        return  flag > 0;
     }
 
     public List<Teacher> getByCourse(Course course) {

@@ -1,16 +1,34 @@
 package ru.fmt.university.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Objects;
 
+@Getter
+@Setter
+@Accessors(chain = true)
+@Entity
+@Table(name = "lessons")
 public class Lesson {
+    @Id
+    @GeneratedValue
     private int id;
+    @Column(name="course_id")
     private int courseId;
+    @Column(name="teacher_id")
     private int teacherId;
+    @Column(name="classroom")
     private int classRoom;
+    @Column(name="day")
     private DayOfWeek dayOfWeek;
+    @Column(name="time")
     private LocalTime startTime;
+    @Column(name="type")
     private LessonType type;
 
     public Lesson(int id, int courseId, int teacherId, int classRoom, DayOfWeek dayOfWeek, LocalTime startTime, LessonType type) {

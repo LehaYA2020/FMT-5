@@ -36,9 +36,9 @@ public class GroupService {
         return groupRepository.update(forUpdate);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.debug("GroupService calls groupRepository.delete({}).", id);
-        groupRepository.delete(id);
+        return groupRepository.delete(id);
     }
 
     public void assignToCourses(Group group, List<Course> courses) {

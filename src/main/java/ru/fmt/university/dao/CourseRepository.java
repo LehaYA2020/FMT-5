@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class CourseRepository {
+public class CourseRepository{
     @Autowired
     private CourseMapper courseMapper;
     @Autowired
@@ -50,8 +50,7 @@ public class CourseRepository {
         log.trace("getById({}).", id);
         Course course;
         try {
-            course = jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(),
-                    courseMapper, id);
+            course = jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(), courseMapper, id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
@@ -72,15 +71,17 @@ public class CourseRepository {
         return course;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
+        int flag;
         log.trace("delete({}).", id);
         try {
-            jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
+            flag = jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
         log.debug("Course with id={} deleted.", id);
+        return flag>0;
     }
 
     public List<Course> getByGroupId(int id) {

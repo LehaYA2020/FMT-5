@@ -1,10 +1,24 @@
 package ru.fmt.university.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Getter
+@Setter
+@Accessors(chain = true)
+@Entity
+@Table(name = "courses")
 public class Course {
+    @Id
+    @GeneratedValue
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
 
     public Course(int id, String name, String description) {

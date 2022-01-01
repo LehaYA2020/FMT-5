@@ -65,15 +65,17 @@ public class LessonRepository {
         return lesson;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
+        int flag;
         log.trace("delete({}).", id);
         try {
-            jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
+            flag = jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
         }
         log.debug("Lesson with id={} deleted.", id);
+        return flag > 0;
     }
 
     public Lesson update(Lesson lesson) {
