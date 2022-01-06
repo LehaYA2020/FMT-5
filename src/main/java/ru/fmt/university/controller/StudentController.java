@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class StudentController {
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
 
     @PostMapping(value = "/students")
     public ResponseEntity<?> create(@RequestBody Student student) {
@@ -24,9 +24,9 @@ public class StudentController {
     public ResponseEntity<List<Student>> getAll() {
         final List<Student> students = studentService.getAll();
 
-        return students != null &&  !students.isEmpty()
-                ? new ResponseEntity<>(students, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return students.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                :  new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/students/{id}")
@@ -51,16 +51,27 @@ public class StudentController {
         final boolean deleted = studentService.delete(id);
 
         return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping("/courses/{groupId}")
-    public ResponseEntity<List<Student>> getByGroupId(@PathVariable(name = "groupId") int id) {
-        final List<Student> students = studentService.getByGroup(id);
+    @GetMapping("/students/{groupId}")
+    public ResponseEntity<List<Student>> getByGroupId(@PathVariable(name = "groupId") int groupId) {
+        final List<Student> students = studentService.getByGroup(groupId);
 
-        return students != null && !students.isEmpty()
+        return !students.isEmpty()
                 ? new ResponseEntity<>(students, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/students/{studentId}/{groupId}")
+    public ResponseEntity<?> assignStudentToGroup(@PathVariable(name = "studentId") int studentId, @PathVariable(name = "groupId") int groupId) {
+        final boolean assigned = studentService.assignStudentToGroup(studentId, groupId);
+
+        return assigned
+                ? new ResponseEntity<>(HttpStatus.ACCEPTED)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    }
+
+
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fmt.university.dto.*;
+import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.service.LessonService;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class LessonController {
     @Autowired
-    LessonService lessonService;
+    private LessonService lessonService;
 
     @PostMapping(value = "/lessons")
     public ResponseEntity<?> create(@RequestBody Lesson lesson) {
@@ -24,9 +24,9 @@ public class LessonController {
     public ResponseEntity<List<Lesson>> getAll() {
         final List<Lesson> lessons = lessonService.getAll();
 
-        return lessons != null &&  !lessons.isEmpty()
-                ? new ResponseEntity<>(lessons, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return lessons.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                :  new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
     @GetMapping("/lessons/{id}")
@@ -51,40 +51,40 @@ public class LessonController {
         final boolean deleted = lessonService.delete(id);
 
         return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping("/lessons/{student}")
-    public ResponseEntity<List<Lesson>> getByStudent(@PathVariable(name = "student") Student student) {
-        final List<Lesson> lessons = lessonService.getLessonsByStudent(student);
+    @GetMapping("/lessons/{studentId}")
+    public ResponseEntity<List<Lesson>> getLessonByStudent(@PathVariable(name = "studentId") int studentId) {
+        final List<Lesson> lessons = lessonService.getLessonsByStudent(studentId);
 
         return lessons != null && !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/lessons/{group}")
-    public ResponseEntity<List<Lesson>> getByGroup(@PathVariable(name = "group") Group group) {
-        final List<Lesson> lessons = lessonService.getLessonsByGroup(group);
+    @GetMapping("/lessons/{groupId}")
+    public ResponseEntity<List<Lesson>> getLessonByGroup(@PathVariable(name = "groupId") int groupId) {
+        final List<Lesson> lessons = lessonService.getLessonsByGroup(groupId);
 
         return lessons != null && !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/lessons/{teacher}")
-    public ResponseEntity<List<Lesson>> getByTeacher(@PathVariable(name = "teacher") Teacher teacher) {
-        final List<Lesson> lessons = lessonService.getLessonsByTeacher(teacher);
+    @GetMapping("/lessons/{teacherId}")
+    public ResponseEntity<List<Lesson>> getLessonByTeacher(@PathVariable(name = "teacherId") int teacherId) {
+        final List<Lesson> lessons = lessonService.getLessonsByTeacher(teacherId);
 
         return lessons != null && !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/lessons/{course}")
-    public ResponseEntity<List<Lesson>> getByCourse(@PathVariable(name = "course") Course course) {
-        final List<Lesson> lessons = lessonService.getLessonsByCourse(course);
+    @GetMapping("/lessons/{courseId}")
+    public ResponseEntity<List<Lesson>> getLessonByCourse(@PathVariable(name = "courseId") int courseId) {
+        final List<Lesson> lessons = lessonService.getLessonsByCourse(courseId);
 
         return lessons != null && !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)

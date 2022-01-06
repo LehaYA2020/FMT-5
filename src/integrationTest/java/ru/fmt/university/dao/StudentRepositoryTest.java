@@ -62,7 +62,7 @@ public class StudentRepositoryTest extends RepositoryTest {
 
     @Test
     public void assignToGroup_shouldAssignToGroup() {
-        studentRepository.assignToGroup(testStudentList.get(3), testGroupList.get(2).getId());
+        studentRepository.assignToGroup(testStudentList.get(3).getId(), testGroupList.get(2).getId());
         testStudentList.get(3).setGroupId(3);
         assertEquals(testStudentList.subList(3, 4), studentRepository.getByGroupId(3));
         testStudentList.get(3).setGroupId(0);
@@ -70,7 +70,7 @@ public class StudentRepositoryTest extends RepositoryTest {
 
     @Test
     public void updateGroupAssignment_shouldUpdateGroupAssignment() {
-        studentRepository.updateGroupAssignment(testStudentList.get(1), testGroupList.get(1).getId());
+        studentRepository.updateGroupAssignment(testStudentList.get(1).getId(), testGroupList.get(1).getId());
         testStudentList.get(1).setGroupId(2);
         assertEquals(testStudentList.subList(1,2).get(0).getGroupId(), studentRepository.getByGroupId(2).get(0).getGroupId());
         testStudentList.get(1).setGroupId(1);
@@ -83,7 +83,7 @@ public class StudentRepositoryTest extends RepositoryTest {
 
     @Test
     public void deleteFromGroup_shouldDeleteFromGroup() {
-        studentRepository.deleteFromGroup(testStudentList.get(0), testGroupList.get(0));
+        studentRepository.deleteFromGroup(testStudentList.get(0).getId(), testGroupList.get(0).getId());
         assertEquals(testStudentList.subList(1, 2), studentRepository.getByGroupId(1));
     }
 }

@@ -57,41 +57,41 @@ public class LessonServiceTest extends ServiceTest {
 
     @Test
     public void getByStudent_shouldCallLessonRepositoryGetByStudentMethod() {
-        when(lessonRepository.getByStudent(expectedStudent)).thenReturn(expectedLessons);
+        when(lessonRepository.getByStudent(expectedStudent.getId())).thenReturn(expectedLessons);
 
-        List<Lesson> actualLessons = lessonService.getLessonsByStudent(expectedStudent);
+        List<Lesson> actualLessons = lessonService.getLessonsByStudent(expectedStudent.getId());
 
-        verify(lessonRepository).getByStudent(expectedStudent);
+        verify(lessonRepository).getByStudent(expectedStudent.getId());
         assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
     public void getByCourse_shouldCallLessonRepositoryGetByCourseMethod() {
-        when(lessonRepository.getByCourse(expectedCourse)).thenReturn(expectedLessons);
+        when(lessonRepository.getByCourse(expectedCourse.getId())).thenReturn(expectedLessons);
 
-        List<Lesson> actualLessons = lessonService.getLessonsByCourse(expectedCourse);
+        List<Lesson> actualLessons = lessonService.getLessonsByCourse(expectedCourse.getId());
 
-        verify(lessonRepository).getByCourse(expectedCourse);
+        verify(lessonRepository).getByCourse(expectedCourse.getId());
         assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
     public void getByGroup_shouldCallLessonRepositoryGetByGroupMethod() {
-        when(lessonRepository.getByGroup(expectedGroup)).thenReturn(expectedLessons);
+        when(lessonRepository.getByGroup(expectedGroup.getId())).thenReturn(expectedLessons);
 
-        List<Lesson> actualLessons = lessonService.getLessonsByGroup(expectedGroup);
+        List<Lesson> actualLessons = lessonService.getLessonsByGroup(expectedGroup.getId());
 
-        verify(lessonRepository).getByGroup(expectedGroup);
+        verify(lessonRepository).getByGroup(expectedGroup.getId());
         assertEquals(expectedLessons, actualLessons);
     }
 
     @Test
     public void getByTeacher_shouldCallLessonRepositoryGetByTeacherMethod() {
-        when(lessonRepository.getByTeacher(expectedTeacher)).thenReturn(expectedLessons);
+        when(lessonRepository.getByTeacher(expectedTeacher.getId())).thenReturn(expectedLessons);
 
-        List<Lesson> actualLessons = lessonService.getLessonsByTeacher(expectedTeacher);
+        List<Lesson> actualLessons = lessonService.getLessonsByTeacher(expectedTeacher.getId());
 
-        verify(lessonRepository).getByTeacher(expectedTeacher);
+        verify(lessonRepository).getByTeacher(expectedTeacher.getId());
         assertEquals(expectedLessons, actualLessons);
     }
 }

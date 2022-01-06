@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class GroupServiceTest extends ServiceTest{
+public class GroupServiceTest extends ServiceTest {
 
     @Test
     public void create_shouldCallGroupRepositoryCreateMethod() {
@@ -56,59 +56,63 @@ public class GroupServiceTest extends ServiceTest{
 
     @Test
     public void getByCourse_shouldCallGroupRepositoryGetByCourseMethod() {
-        when(groupRepository.getByCourse(expectedCourse)).thenReturn(expectedGroups);
+        when(groupRepository.getByCourse(expectedCourse.getId())).thenReturn(expectedGroups);
 
-        List<Group> actualGroups = groupService.getByCourse(expectedCourse);
+        List<Group> actualGroups = groupService.getByCourse(expectedCourse.getId());
 
-        verify(groupRepository).getByCourse(expectedCourse);
+        verify(groupRepository).getByCourse(expectedCourse.getId());
         assertEquals(expectedGroups, actualGroups);
     }
 
     @Test
     public void getByStudent_shouldCallGroupRepositoryGetByStudentMethod() {
-        when(groupRepository.getByStudent(expectedStudent)).thenReturn(expectedGroup);
+        when(groupRepository.getByStudent(expectedStudent.getId())).thenReturn(expectedGroup);
 
-        Group actualGroup = groupService.getByStudent(expectedStudent);
+        Group actualGroup = groupService.getByStudent(expectedStudent.getId());
 
-        verify(groupRepository).getByStudent(expectedStudent);
+        verify(groupRepository).getByStudent(expectedStudent.getId());
         assertEquals(expectedGroup, actualGroup);
     }
 
     @Test
     public void getByLesson_shouldCallGroupRepositoryGetByLessonMethod() {
-        when(groupRepository.getByLesson(expectedLesson)).thenReturn(expectedGroups);
+        when(groupRepository.getByLesson(expectedLesson.getId())).thenReturn(expectedGroups);
 
-        List<Group> actualGroups = groupService.getByLesson(expectedLesson);
+        List<Group> actualGroups = groupService.getByLesson(expectedLesson.getId());
 
-        verify(groupRepository).getByLesson(expectedLesson);
+        verify(groupRepository).getByLesson(expectedLesson.getId());
         assertEquals(expectedGroups, actualGroups);
     }
 
     @Test
     public void assignToCourse_shouldCallGroupRepositoryAssignToCourseMethod() {
-        groupService.assignToCourses(expectedGroup, expectedCourses);
+        groupService.assignToCourse(expectedGroup.getId(), expectedCourse.getId());
 
-        verify(groupRepository).assignToCourse(expectedGroup, expectedCourse);
+        verify(groupRepository).assignToCourse(expectedGroup.getId(), expectedCourse.getId());
     }
 
     @Test
     public void deleteFromCourse_shouldCallGroupRepositoryDeleteFromCourseMethod() {
-        groupService.deleteFromCourse(expectedGroup, expectedCourse);
+        groupService.deleteFromCourse(expectedGroup.getId(), expectedCourse.getId());
 
-        verify(groupRepository).deleteFromCourse(expectedGroup, expectedCourse);
+        verify(groupRepository).deleteFromCourse(expectedGroup.getId(), expectedCourse.getId());
     }
 
     @Test
     public void assignToLesson_shouldCallGroupRepositoryAssignToLessonMethod() {
-        groupService.assignToLesson(expectedLesson, expectedGroups);
+        for (Group group : expectedGroups) {
+            groupService.assignToLesson(expectedLesson.getId(), group.getId());
+        }
 
-        verify(groupRepository).assignToLesson(expectedLesson, expectedGroups);
+        for (Group group : expectedGroups) {
+            verify(groupRepository).assignToLesson(expectedLesson.getId(), group.getId());
+        }
     }
 
     @Test
     public void deleteFromLesson_shouldCallGroupRepositoryDeleteFromLessonMethod() {
-        groupService.deleteFromLesson(expectedLesson, expectedGroup);
+        groupService.deleteFromLesson(expectedLesson.getId(), expectedGroup.getId());
 
-        verify(groupRepository).deleteFromLesson(expectedLesson, expectedGroup);
+        verify(groupRepository).deleteFromLesson(expectedLesson.getId(), expectedGroup.getId());
     }
 }

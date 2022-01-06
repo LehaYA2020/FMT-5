@@ -4,7 +4,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fmt.university.dao.TeacherRepository;
-import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
 
@@ -43,18 +42,18 @@ public class TeacherService {
         return teacherRepository.delete(id);
     }
 
-    public Teacher getByLesson(Lesson lesson) {
-        log.debug("TeacherService calls teacherRepository.getByLesson({}).", lesson);
-        return teacherRepository.getByLesson(lesson);
+    public Teacher getByLesson(int lessonId) {
+        log.debug("TeacherService calls teacherRepository.getByLesson({}).", lessonId);
+        return teacherRepository.getByLesson(lessonId);
     }
 
-    public List<Teacher> getByCourse(Course course) {
-        log.debug("TeacherService calls teacherRepository.getByCourse({}).", course);
-        return teacherRepository.getByCourse(course);
+    public List<Teacher> getByCourse(int courseId) {
+        log.debug("TeacherService calls teacherRepository.getByCourse({}).", courseId);
+        return teacherRepository.getByCourse(courseId);
     }
 
-    public List<Lesson> getSchedule(Teacher teacher) {
-        log.debug("StudentService calls lessonService.getLessonsByStudent({}).", teacher.getId());
-        return lessonService.getLessonsByTeacher(teacher);
+    public List<Lesson> getSchedule(int teacherId) {
+        log.debug("StudentService calls lessonService.getLessonsByStudent({}).", teacherId);
+        return lessonService.getLessonsByTeacher(teacherId);
     }
 }

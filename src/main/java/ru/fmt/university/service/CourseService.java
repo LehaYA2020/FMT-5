@@ -15,7 +15,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     public void create(Course course) {
-        log.debug("CourseService calls c0pourseRepository.create({}).", course.getId());
+        log.debug("CourseService calls courseRepository.create({}).", course.getId());
         courseRepository.create(course);
     }
 
@@ -36,7 +36,7 @@ public class CourseService {
 
     public boolean delete(int id) {
         log.debug("CourseService calls courseRepository.delete({}).", id);
-        return  courseRepository.delete(id);
+        return courseRepository.delete(id);
     }
 
     public List<Course> getByGroupId(int id) {

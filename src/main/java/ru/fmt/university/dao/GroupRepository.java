@@ -9,10 +9,7 @@ import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
 import ru.fmt.university.dao.util.GroupMapper;
-import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Group;
-import ru.fmt.university.dto.Lesson;
-import ru.fmt.university.dto.Student;
 
 import java.util.List;
 
@@ -64,76 +61,77 @@ public class GroupRepository {
     }
 
     public boolean delete(int id) {
-        int flag;
         log.trace("delete({})", id);
         try {
-            flag = jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
+            jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP, e);
         }
         log.debug("Group with id={}.", id);
-        return flag > 0;
+        return true;
     }
 
-    public void assignToCourse(Group group, Course course) {
-        log.trace("assignToCourse({},{})", group, course);
+    public boolean assignToCourse(int groupId, int courseId) {
+        log.trace("assignToCourse({},{})", groupId, courseId);
         try {
-            jdbcTemplate.update(Query.ASSIGN_GROUP_TO_COURSE.getText(), group.getId(), course.getId());
+            jdbcTemplate.update(Query.ASSIGN_GROUP_TO_COURSE.getText(), groupId, courseId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_ASSIGN_GROUP_TO_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUP_TO_COURSE, e);
         }
-        log.debug("Group {} assigned to course {}", group, course);
+        log.debug("Group {} assigned to course {}", groupId, courseId);
+        return true;
     }
 
-    public void deleteFromCourse(Group group, Course course) {
-        log.trace("deleteFromCourse({}, {})", group, course);
+    public boolean deleteFromCourse(int groupId, int courseId) {
+        log.trace("deleteFromCourse({}, {})", groupId, courseId);
         try {
-            jdbcTemplate.update(Query.DELETE_GROUP_FROM_COURSE.getText(), group.getId(), course.getId());
+            jdbcTemplate.update(Query.DELETE_GROUP_FROM_COURSE.getText(), groupId, courseId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_GROUP_FROM_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_COURSE, e);
         }
-        log.debug("Course {} deleted from Course {}", group, course);
+        log.debug("Course {} deleted from Course {}", groupId, courseId);
+        return true;
     }
 
-    public List<Group> getByLesson(Lesson lesson) {
-        log.trace("getByLesson({})", lesson.getId());
+    public List<Group> getByLesson(int lessonId) {
+        log.trace("getByLesson({})", lessonId);
         List<Group> groups;
         try {
-            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), groupMapper, lesson.getId());
+            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_LESSON.getText(), groupMapper, lessonId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_BY_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
-        log.debug("Found {} by {}", groups, lesson);
+        log.debug("Found {} by {}", groups, lessonId);
         return groups;
     }
 
-    public Group getByStudent(Student student) {
-        log.trace("getByStudent({})", student);
+    public Group getByStudent(int studentId) {
+        log.trace("getByStudent({})", studentId);
         Group group;
         try {
-            group = jdbcTemplate.queryForObject(Query.GET_GROUPS_BY_STUDENT.getText(), groupMapper, student.getId());
+            group = jdbcTemplate.queryForObject(Query.GET_GROUPS_BY_STUDENT.getText(), groupMapper, studentId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_BY_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_BY_STUDENT, e);
         }
-        log.debug("Found {} by {}", group, student);
+        log.debug("Found {} by {}", group, studentId);
         return group;
     }
 
-    public List<Group> getByCourse(Course course) {
-        log.trace("getByCourse({})", course);
+    public List<Group> getByCourse(int courseId) {
+        log.trace("getByCourse({})", courseId);
         List<Group> groups;
         try {
-            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), groupMapper, course.getId());
+            groups = jdbcTemplate.query(Query.GET_GROUPS_BY_COURSE.getText(), groupMapper, courseId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_BY_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_BY_LESSON, e);
         }
-        log.debug("Found {} by {}", groups, course);
+        log.debug("Found {} by {}", groups, courseId);
         return groups;
     }
 
@@ -149,27 +147,27 @@ public class GroupRepository {
         return group;
     }
 
-    public void assignToLesson(Lesson lesson, List<Group> groups) {
-        log.trace("assignToLesson({}, {})", lesson, groups);
+    public boolean assignToLesson(int lessonId, int groupId) {
+        log.trace("assignToLesson({}, {})", lessonId, groupId);
         try {
-            for (Group group : groups) {
-                jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lesson.getId(), group.getId());
-            }
+                jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lessonId, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_GROUPS_TO_LESSON, e);
         }
-        log.debug("Groups {} assigned to lesson {})", groups, lesson);
+        log.debug("Groups {} assigned to lesson {})", groupId, lessonId);
+        return true;
     }
 
-    public void deleteFromLesson(Lesson lesson, Group group) {
-        log.trace("deleteFromLesson({}, {})", lesson, group);
+    public boolean deleteFromLesson(int lessonId, int groupId) {
+        log.trace("deleteFromLesson({}, {})", lessonId, groupId);
         try {
-            jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lesson.getId(), group.getId());
+            jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lessonId, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_GROUP_FROM_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_GROUP_FROM_LESSON, e);
         }
-        log.debug("Group {} deleted from lesson {})", group, lesson);
+        log.debug("Group {} deleted from lesson {})", groupId, lessonId);
+        return true;
     }
 }

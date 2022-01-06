@@ -4,7 +4,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fmt.university.dao.StudentRepository;
-import ru.fmt.university.dto.Group;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Student;
 
@@ -43,23 +42,28 @@ public class StudentService {
         return studentRepository.update(forUpdate);
     }
 
-    public void assignStudentToGroup(Student student, Group group) {
-        log.debug("StudentService calls studentRepository.assignToGroup({},{}).", student.getId(), group.getId());
-        studentRepository.assignToGroup(student, group.getId());
+    public boolean assignStudentToGroup(int studentId, int groupId) {
+        log.debug("StudentService calls studentRepository.assignToGroup({},{}).", studentId, groupId);
+        return studentRepository.assignToGroup(studentId, groupId);
     }
 
-    public void updateGroupAssignment(Student student, Group group) {
-        log.debug("StudentService calls studentRepository.updateGroupAssignment({},{}).", student.getId(), group.getId());
-        studentRepository.updateGroupAssignment(student, group.getId());
+    public boolean updateGroupAssignment(int studentId, int groupId) {
+        log.debug("StudentService calls studentRepository.updateGroupAssignment({},{}).", studentId, groupId);
+        return studentRepository.updateGroupAssignment(studentId, groupId);
     }
 
-    public List<Student> getByGroup(int id) {
-        log.debug("StudentService calls studentRepository.getByGroupId({}).", id);
-        return studentRepository.getByGroupId(id);
+    public List<Student> getByGroup(int groupId) {
+        log.debug("StudentService calls studentRepository.getByGroupId({}).", groupId);
+        return studentRepository.getByGroupId(groupId);
     }
 
-    public List<Lesson> getSchedule(Student student) {
-        log.debug("StudentService calls lessonService.getLessonsByStudent({}).", student.getId());
-        return lessonService.getLessonsByStudent(student);
+    public boolean deleteFromGroup(int studentId, int groupId) {
+        log.debug("StudentService calls studentRepository.deleteFromGroup({},{}).", studentId, groupId);
+        return studentRepository.deleteFromGroup(studentId, groupId);
+    }
+
+    public List<Lesson> getSchedule(int studentId) {
+        log.debug("StudentService calls lessonService.getLessonsByStudent({}).", studentId);
+        return lessonService.getLessonsByStudent(studentId);
     }
 }

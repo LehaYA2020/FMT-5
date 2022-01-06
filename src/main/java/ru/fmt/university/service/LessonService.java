@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fmt.university.dao.LessonRepository;
-import ru.fmt.university.dto.*;
+import ru.fmt.university.dto.Lesson;
 
 import java.util.List;
 
@@ -39,23 +39,23 @@ public class LessonService {
         return lessonRepository.delete(id);
     }
 
-    public List<Lesson> getLessonsByStudent(Student student) {
-        log.debug("LessonService calls lessonRepository.getByStudent({}).", student);
-        return lessonRepository.getByStudent(student);
+    public List<Lesson> getLessonsByStudent(int studentId) {
+        log.debug("LessonService calls lessonRepository.getByStudent({}).", studentId);
+        return lessonRepository.getByStudent(studentId);
     }
 
-    public List<Lesson> getLessonsByCourse(Course course) {
-        log.debug("LessonService calls lessonRepository.getByCourse({}).", course);
-        return lessonRepository.getByCourse(course);
+    public List<Lesson> getLessonsByCourse(int courseId) {
+        log.debug("LessonService calls lessonRepository.getByCourse({}).", courseId);
+        return lessonRepository.getByCourse(courseId);
     }
 
-    public List<Lesson> getLessonsByGroup(Group group) {
-        log.debug("LessonService calls lessonRepository.getByGroup({}).", group);
-        return lessonRepository.getByGroup(group);
+    public List<Lesson> getLessonsByGroup(int groupId) {
+        log.debug("LessonService calls lessonRepository.getByGroup({}).", groupId);
+        return lessonRepository.getByGroup(groupId);
     }
 
-    public List<Lesson> getLessonsByTeacher(Teacher teacher) {
-        log.debug("LessonService calls lessonRepository.getByTeacher({}).", teacher);
-        return lessonRepository.getByTeacher(teacher);
+    public List<Lesson> getLessonsByTeacher(int teacherId) {
+        log.debug("LessonService calls lessonRepository.getByTeacher({}).", teacherId);
+        return lessonRepository.getByTeacher(teacherId);
     }
 }

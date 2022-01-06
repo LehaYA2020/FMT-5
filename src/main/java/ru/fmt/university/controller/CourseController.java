@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 public class CourseController {
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
 
     @PostMapping(value = "/courses")
     public ResponseEntity<?> create(@RequestBody Course course) {
@@ -25,9 +25,9 @@ public class CourseController {
     public ResponseEntity<List<Course>> getAll() {
         final List<Course> courses = courseService.getAll();
 
-        return courses != null &&  !courses.isEmpty()
-                ? new ResponseEntity<>(courses, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return courses.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                :  new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @GetMapping("/courses/{id}")
@@ -61,7 +61,7 @@ public class CourseController {
         final boolean deleted = courseService.delete(id);
 
         return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 }

@@ -9,7 +9,7 @@ import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
 import ru.fmt.university.dao.util.LessonMapper;
-import ru.fmt.university.dto.*;
+import ru.fmt.university.dto.Lesson;
 
 import java.util.List;
 
@@ -18,8 +18,6 @@ import java.util.List;
 public class LessonRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private GroupRepository groupRepository;
     @Autowired
     private LessonMapper lessonMapper;
 
@@ -66,16 +64,15 @@ public class LessonRepository {
     }
 
     public boolean delete(int id) {
-        int flag;
         log.trace("delete({}).", id);
         try {
-            flag = jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
+            jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_LESSON_BY_ID, e);
         }
         log.debug("Lesson with id={} deleted.", id);
-        return flag > 0;
+        return true;
     }
 
     public Lesson update(Lesson lesson) {
@@ -93,58 +90,58 @@ public class LessonRepository {
         return lesson;
     }
 
-    public List<Lesson> getByStudent(Student student) {
-        log.trace("getByStudent({})", student);
+    public List<Lesson> getByStudent(int studentId) {
+        log.trace("getByStudent({})", studentId);
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_STUDENT.getText(), lessonMapper, student.getId());
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_STUDENT.getText(), lessonMapper, studentId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_STUDENT, e);
         }
-        log.debug("Found {} by student {}.", lessons, student);
+        log.debug("Found {} by student {}.", lessons, studentId);
 
         return lessons;
     }
 
-    public List<Lesson> getByTeacher(Teacher teacher) {
-        log.trace("getByTeacher({})", teacher);
+    public List<Lesson> getByTeacher(int teacherId) {
+        log.trace("getByTeacher({})", teacherId);
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_TEACHER.getText(), lessonMapper, teacher.getId());
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_TEACHER.getText(), lessonMapper, teacherId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_TEACHER, e);
         }
-        log.debug("Found {} by teacher {}.", lessons, teacher);
+        log.debug("Found {} by teacher {}.", lessons, teacherId);
 
         return lessons;
     }
 
-    public List<Lesson> getByGroup(Group group) {
-        log.trace("getByGroup({})", group);
+    public List<Lesson> getByGroup(int groupId) {
+        log.trace("getByGroup({})", groupId);
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_GROUP.getText(), lessonMapper, group.getId());
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_GROUP.getText(), lessonMapper, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_LESSON_BY_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_GROUP, e);
         }
-        log.debug("Found {} by group {}.", lessons, group);
+        log.debug("Found {} by group {}.", lessons, groupId);
 
         return lessons;
     }
 
-    public List<Lesson> getByCourse(Course course) {
-        log.trace("getByCourse({})", course);
+    public List<Lesson> getByCourse(int courseId) {
+        log.trace("getByCourse({})", courseId);
         List<Lesson> lessons;
         try {
-            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_COURSE.getText(), lessonMapper, course.getId());
+            lessons = jdbcTemplate.query(Query.GET_LESSON_BY_COURSE.getText(), lessonMapper, courseId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_LESSON_BY_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_LESSON_BY_COURSE, e);
         }
-        log.debug("Found {} by course {}.", lessons, course);
+        log.debug("Found {} by course {}.", lessons, courseId);
 
         return lessons;
     }

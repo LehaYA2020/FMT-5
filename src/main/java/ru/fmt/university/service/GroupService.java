@@ -4,10 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fmt.university.dao.GroupRepository;
-import ru.fmt.university.dto.Course;
 import ru.fmt.university.dto.Group;
-import ru.fmt.university.dto.Lesson;
-import ru.fmt.university.dto.Student;
 
 import java.util.List;
 
@@ -33,6 +30,7 @@ public class GroupService {
     }
 
     public Group update(Group forUpdate) {
+        log.debug("GroupService calls groupRepository.update({}).", forUpdate);
         return groupRepository.update(forUpdate);
     }
 
@@ -41,34 +39,37 @@ public class GroupService {
         return groupRepository.delete(id);
     }
 
-    public void assignToCourses(Group group, List<Course> courses) {
-        for (Course course:courses) {
-            groupRepository.assignToCourse(group, course);
-        }
+    public boolean assignToCourse(int groupId, int courseId) {
+        log.debug("GroupService calls groupRepository.assignToCourse({}, {}).", groupId, courseId);
+        return groupRepository.assignToCourse(groupId, courseId);
     }
 
-    public void deleteFromCourse(Group group, Course course) {
-        groupRepository.deleteFromCourse(group, course);
+    public boolean deleteFromCourse(int groupId, int courseId) {
+        log.debug("GroupService calls groupRepository.deleteFromCourse({}, {}).", groupId, courseId);
+        return groupRepository.deleteFromCourse(groupId, courseId);
     }
 
-    public List<Group> getByCourse(Course course) {
-        log.debug("GroupService calls groupRepository.getByCourse({}).", course);
-        return groupRepository.getByCourse(course);
+    public List<Group> getByCourse(int courseId) {
+        log.debug("GroupService calls groupRepository.getByCourse({}).", courseId);
+        return groupRepository.getByCourse(courseId);
     }
 
-    public void assignToLesson(Lesson lesson, List<Group> groups) {
-        groupRepository.assignToLesson(lesson, groups);
+    public boolean assignToLesson(int lessonId, int groupId) {
+        log.debug("GroupService calls groupRepository.deleteFromLesson({}, {}).", lessonId, groupId);
+        return groupRepository.assignToLesson(lessonId, groupId);
     }
 
-    public void deleteFromLesson(Lesson lesson, Group group) {
-        groupRepository.deleteFromLesson(lesson, group);
+    public boolean deleteFromLesson(int lessonId, int groupId) {
+        log.debug("GroupService calls groupRepository.deleteFromLesson({}, {}).", lessonId, groupId);
+        return groupRepository.deleteFromLesson(lessonId, groupId);
     }
 
-    public List<Group> getByLesson(Lesson lesson) {
-        return groupRepository.getByLesson(lesson);
+    public List<Group> getByLesson(int lessonId) {
+        log.debug("GroupService calls groupRepository.getByCourse({}).", lessonId);
+        return groupRepository.getByLesson(lessonId);
     }
 
-    public Group getByStudent(Student student) {
-        return groupRepository.getByStudent(student);
+    public Group getByStudent(int studentId) {
+        return groupRepository.getByStudent(studentId);
     }
 }

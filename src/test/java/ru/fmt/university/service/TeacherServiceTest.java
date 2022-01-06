@@ -57,31 +57,31 @@ public class TeacherServiceTest extends ServiceTest {
 
     @Test
     public void getByCourse_shouldCallTeacherRepositoryGetByCourseMethod() {
-        when(teacherRepository.getByCourse(expectedCourse)).thenReturn(expectedTeachers);
+        when(teacherRepository.getByCourse(expectedCourse.getId())).thenReturn(expectedTeachers);
 
-        List<Teacher> actualTeachers = teacherService.getByCourse(expectedCourse);
+        List<Teacher> actualTeachers = teacherService.getByCourse(expectedCourse.getId());
 
-        verify(teacherRepository).getByCourse(expectedCourse);
+        verify(teacherRepository).getByCourse(expectedCourse.getId());
         assertEquals(expectedTeachers, actualTeachers);
     }
 
     @Test
     public void getSchedule_shouldCallTeacherRepositoryGetScheduleMethod() {
-        when(lessonServiceMock.getLessonsByTeacher(expectedTeacher)).thenReturn(expectedLessons);
+        when(lessonServiceMock.getLessonsByTeacher(expectedTeacher.getId())).thenReturn(expectedLessons);
 
-        List<Lesson> actualTeachers = teacherService.getSchedule(expectedTeacher);
+        List<Lesson> actualTeachers = teacherService.getSchedule(expectedTeacher.getId());
 
-        verify(lessonServiceMock).getLessonsByTeacher(expectedTeacher);
+        verify(lessonServiceMock).getLessonsByTeacher(expectedTeacher.getId());
         assertEquals(expectedLessons, actualTeachers);
     }
 
     @Test
     public void getByLesson_shouldCallTeacherRepositoryGetByLessonMethod() {
-        when(teacherRepository.getByLesson(expectedLesson)).thenReturn(expectedTeacher);
+        when(teacherRepository.getByLesson(expectedLesson.getId())).thenReturn(expectedTeacher);
 
-        Teacher actualTeacher = teacherService.getByLesson(expectedLesson);
+        Teacher actualTeacher = teacherService.getByLesson(expectedLesson.getId());
 
-        verify(teacherRepository).getByLesson(expectedLesson);
+        verify(teacherRepository).getByLesson(expectedLesson.getId());
         assertEquals(expectedTeacher, actualTeacher);
     }
 }

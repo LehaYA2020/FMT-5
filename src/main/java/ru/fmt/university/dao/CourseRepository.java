@@ -72,23 +72,22 @@ public class CourseRepository{
     }
 
     public boolean delete(int id) {
-        int flag;
         log.trace("delete({}).", id);
         try {
-            flag = jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
+            jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
         log.debug("Course with id={} deleted.", id);
-        return flag>0;
+        return true;
     }
 
-    public List<Course> getByGroupId(int id) {
+    public List<Course> getByGroupId(int groupId) {
         List<Course> courses;
-        log.trace("getByGroupIa({}).", id);
+        log.trace("getByGroupIa({}).", groupId);
         try {
-            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), courseMapper, id);
+            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), courseMapper, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);

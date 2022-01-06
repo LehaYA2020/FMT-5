@@ -6,7 +6,8 @@ import ru.fmt.university.dto.Course;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 public class CourseServiceTest extends ServiceTest {
@@ -50,8 +51,6 @@ public class CourseServiceTest extends ServiceTest {
 
     @Test
     public void delete_shouldCallCourseRepositoryDeleteMethod() {
-        doNothing().when(courseRepository).delete(1);
-
         courseService.delete(1);
 
         verify(courseRepository).delete(1);

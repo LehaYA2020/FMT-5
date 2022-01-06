@@ -1,26 +1,11 @@
 package ru.fmt.university.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import javax.persistence.*;
 import java.util.Objects;
 
-@Getter
-@Setter
-@Accessors(chain = true)
-@Entity
-@Table(name = "students")
 public class Student {
-    @Id
-    @GeneratedValue
     private int id;
-    @Column(name="first_name")
     private String firstName;
-    @Column(name="last_name")
     private String lastName;
-    @Column(name="group_id")
     private int groupId;
 
     public Student(String firstName, String lastName, int groupId) {

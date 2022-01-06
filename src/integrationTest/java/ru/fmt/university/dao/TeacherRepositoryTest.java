@@ -3,8 +3,6 @@ package ru.fmt.university.dao;
 import org.junit.jupiter.api.Test;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
-import ru.fmt.university.dto.Course;
-import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,12 +52,12 @@ public class TeacherRepositoryTest extends RepositoryTest {
 
     @Test
     public void getByCourse() {
-        assertEquals(testTeacherList.subList(0, 2), teacherRepository.getByCourse(new Course(1)));
+        assertEquals(testTeacherList.subList(0, 2), teacherRepository.getByCourse(1));
     }
 
     @Test
     public void getByLesson() {
-        assertEquals(testTeacherList.get(0), teacherRepository.getByLesson(new Lesson(1)));
+        assertEquals(testTeacherList.get(0), teacherRepository.getByLesson(1));
     }
 
     @Test
