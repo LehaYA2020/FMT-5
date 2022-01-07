@@ -43,7 +43,7 @@ public class CourseController {
     public ResponseEntity<List<Course>> getByGroupId(@PathVariable(name = "groupId") int groupId) {
         final List<Course> courses = courseService.getByGroupId(groupId);
 
-        return courses != null
+        return !courses.isEmpty()
                 ? new ResponseEntity<>(courses, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

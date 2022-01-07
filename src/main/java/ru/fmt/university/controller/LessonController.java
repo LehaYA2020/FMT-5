@@ -59,7 +59,7 @@ public class LessonController {
     public ResponseEntity<List<Lesson>> getLessonByStudent(@PathVariable(name = "studentId") int studentId) {
         final List<Lesson> lessons = lessonService.getLessonsByStudent(studentId);
 
-        return lessons != null && !lessons.isEmpty()
+        return !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -68,7 +68,7 @@ public class LessonController {
     public ResponseEntity<List<Lesson>> getLessonByGroup(@PathVariable(name = "groupId") int groupId) {
         final List<Lesson> lessons = lessonService.getLessonsByGroup(groupId);
 
-        return lessons != null && !lessons.isEmpty()
+        return !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -77,7 +77,7 @@ public class LessonController {
     public ResponseEntity<List<Lesson>> getLessonByTeacher(@PathVariable(name = "teacherId") int teacherId) {
         final List<Lesson> lessons = lessonService.getLessonsByTeacher(teacherId);
 
-        return lessons != null && !lessons.isEmpty()
+        return !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -86,7 +86,7 @@ public class LessonController {
     public ResponseEntity<List<Lesson>> getLessonByCourse(@PathVariable(name = "courseId") int courseId) {
         final List<Lesson> lessons = lessonService.getLessonsByCourse(courseId);
 
-        return lessons != null && !lessons.isEmpty()
+        return !lessons.isEmpty()
                 ? new ResponseEntity<>(lessons, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
