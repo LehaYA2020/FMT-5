@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fmt.university.dto.Group;
-import ru.fmt.university.service.GroupService;
+import ru.fmt.university.service.implementation.GroupService;
 
 import java.util.List;
 

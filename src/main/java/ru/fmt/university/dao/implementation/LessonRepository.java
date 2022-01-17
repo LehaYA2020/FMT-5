@@ -1,10 +1,11 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.ILessonRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class LessonRepository {
+public class LessonRepository implements ILessonRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -49,7 +50,7 @@ public class LessonRepository {
         return lessons;
     }
 
-    public Lesson getById(int id) {
+    public Lesson getById(Integer id) {
         log.trace("getById({}).", id);
         Lesson lesson;
         try {
@@ -63,7 +64,7 @@ public class LessonRepository {
         return lesson;
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({}).", id);
         try {
             jdbcTemplate.update(Query.DELETE_LESSON.getText(), id);
@@ -90,7 +91,7 @@ public class LessonRepository {
         return lesson;
     }
 
-    public List<Lesson> getByStudent(int studentId) {
+    public List<Lesson> getByStudent(Integer studentId) {
         log.trace("getByStudent({})", studentId);
         List<Lesson> lessons;
         try {
@@ -104,7 +105,7 @@ public class LessonRepository {
         return lessons;
     }
 
-    public List<Lesson> getByTeacher(int teacherId) {
+    public List<Lesson> getByTeacher(Integer teacherId) {
         log.trace("getByTeacher({})", teacherId);
         List<Lesson> lessons;
         try {
@@ -118,7 +119,7 @@ public class LessonRepository {
         return lessons;
     }
 
-    public List<Lesson> getByGroup(int groupId) {
+    public List<Lesson> getByGroup(Integer groupId) {
         log.trace("getByGroup({})", groupId);
         List<Lesson> lessons;
         try {
@@ -132,7 +133,7 @@ public class LessonRepository {
         return lessons;
     }
 
-    public List<Lesson> getByCourse(int courseId) {
+    public List<Lesson> getByCourse(Integer courseId) {
         log.trace("getByCourse({})", courseId);
         List<Lesson> lessons;
         try {

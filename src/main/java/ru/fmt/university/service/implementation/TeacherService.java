@@ -1,28 +1,30 @@
-package ru.fmt.university.service;
+package ru.fmt.university.service.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.fmt.university.dao.TeacherRepository;
+import ru.fmt.university.dao.ITeacherRepository;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
+import ru.fmt.university.service.ILessonService;
+import ru.fmt.university.service.ITeacherService;
 
 import java.util.List;
 
 @Component
 @Log4j2
-public class TeacherService {
+public class TeacherService implements ITeacherService {
     @Autowired
-    private TeacherRepository teacherRepository;
+    private ITeacherRepository teacherRepository;
     @Autowired
-    private LessonService lessonService;
+    private ILessonService lessonService;
 
     public void create(Teacher teacher) {
         log.debug("TeacherService calls teacherRepository.create({}).", teacher.getId());
         teacherRepository.create(teacher);
     }
 
-    public Teacher getById(int id) {
+    public Teacher getById(Integer id) {
         log.debug("TeacherService calls teacherRepository.getById({}).", id);
         return teacherRepository.getById(id);
     }
@@ -37,22 +39,22 @@ public class TeacherService {
         return teacherRepository.update(forUpdate);
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.debug("TeacherService calls teacherRepository.delete({}).", id);
         return teacherRepository.delete(id);
     }
 
-    public Teacher getByLesson(int lessonId) {
+    public Teacher getByLesson(Integer lessonId) {
         log.debug("TeacherService calls teacherRepository.getByLesson({}).", lessonId);
         return teacherRepository.getByLesson(lessonId);
     }
 
-    public List<Teacher> getByCourse(int courseId) {
+    public List<Teacher> getByCourse(Integer courseId) {
         log.debug("TeacherService calls teacherRepository.getByCourse({}).", courseId);
         return teacherRepository.getByCourse(courseId);
     }
 
-    public List<Lesson> getSchedule(int teacherId) {
+    public List<Lesson> getSchedule(Integer teacherId) {
         log.debug("StudentService calls lessonService.getLessonsByStudent({}).", teacherId);
         return lessonService.getLessonsByTeacher(teacherId);
     }

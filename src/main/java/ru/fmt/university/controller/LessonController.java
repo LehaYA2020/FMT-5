@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fmt.university.dto.Lesson;
-import ru.fmt.university.service.LessonService;
+import ru.fmt.university.service.implementation.LessonService;
 
 import java.util.List;
 

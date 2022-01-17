@@ -1,25 +1,26 @@
-package ru.fmt.university.service;
+package ru.fmt.university.service.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.fmt.university.dao.LessonRepository;
+import ru.fmt.university.dao.ILessonRepository;
 import ru.fmt.university.dto.Lesson;
+import ru.fmt.university.service.ILessonService;
 
 import java.util.List;
 
 @Component
 @Log4j2
-public class LessonService {
+public class LessonService implements ILessonService {
     @Autowired
-    private LessonRepository lessonRepository;
+    private ILessonRepository lessonRepository;
 
-    public Lesson create(Lesson lesson) {
+    public void create(Lesson lesson) {
         log.debug("LessonService calls lessonRepository.create({}).", lesson.getId());
-        return lessonRepository.create(lesson);
+        lessonRepository.create(lesson);
     }
 
-    public Lesson getById(int id) {
+    public Lesson getById(Integer id) {
         log.debug("LessonService calls lessonRepository.getById({}).", id);
         return lessonRepository.getById(id);
     }
@@ -34,27 +35,27 @@ public class LessonService {
         return lessonRepository.update(forUpdate);
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.debug("LessonService calls lessonRepository.delete({}).", id);
         return lessonRepository.delete(id);
     }
 
-    public List<Lesson> getLessonsByStudent(int studentId) {
+    public List<Lesson> getLessonsByStudent(Integer studentId) {
         log.debug("LessonService calls lessonRepository.getByStudent({}).", studentId);
         return lessonRepository.getByStudent(studentId);
     }
 
-    public List<Lesson> getLessonsByCourse(int courseId) {
+    public List<Lesson> getLessonsByCourse(Integer courseId) {
         log.debug("LessonService calls lessonRepository.getByCourse({}).", courseId);
         return lessonRepository.getByCourse(courseId);
     }
 
-    public List<Lesson> getLessonsByGroup(int groupId) {
+    public List<Lesson> getLessonsByGroup(Integer groupId) {
         log.debug("LessonService calls lessonRepository.getByGroup({}).", groupId);
         return lessonRepository.getByGroup(groupId);
     }
 
-    public List<Lesson> getLessonsByTeacher(int teacherId) {
+    public List<Lesson> getLessonsByTeacher(Integer teacherId) {
         log.debug("LessonService calls lessonRepository.getByTeacher({}).", teacherId);
         return lessonRepository.getByTeacher(teacherId);
     }

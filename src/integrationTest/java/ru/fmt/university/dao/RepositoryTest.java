@@ -31,15 +31,15 @@ public abstract class RepositoryTest {
     protected static final List<Lesson> testLessonList = new LinkedList<>();
 
     @Autowired
-    protected CourseRepository courseRepository;
+    protected ICourseRepository courseRepository;
     @Autowired
-    protected GroupRepository groupRepository;
+    protected IGroupRepository groupRepository;
     @Autowired
-    protected LessonRepository lessonRepository;
+    protected ILessonRepository lessonRepository;
     @Autowired
-    protected StudentRepository studentRepository;
+    protected IStudentRepository studentRepository;
     @Autowired
-    protected TeacherRepository teacherRepository;
+    protected ITeacherRepository teacherRepository;
 
     @Autowired
     protected DataSource dataSource;

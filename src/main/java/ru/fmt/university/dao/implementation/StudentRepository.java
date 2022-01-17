@@ -1,4 +1,4 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.IStudentRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class StudentRepository {
+public class StudentRepository implements IStudentRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -50,7 +51,7 @@ public class StudentRepository {
         return students;
     }
 
-    public Student getById(int id) {
+    public Student getById(Integer id) {
         log.trace("getById({})", id);
         Student student;
         try {
@@ -79,7 +80,7 @@ public class StudentRepository {
         return student;
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({})", id);
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
@@ -91,7 +92,7 @@ public class StudentRepository {
         return true;
     }
 
-    public boolean assignToGroup(int studentId, int groupId) {
+    public boolean assignToGroup(Integer studentId, Integer groupId) {
         log.trace("assignToGroup({}, {})", studentId, groupId);
         try {
             jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), studentId, groupId);
@@ -103,7 +104,7 @@ public class StudentRepository {
         return true;
     }
 
-    public boolean updateGroupAssignment(int studentId, int groupId) {
+    public boolean updateGroupAssignment(Integer studentId, Integer groupId) {
         log.trace("updateGroupAssignments({}, {})", studentId, groupId);
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), groupId, studentId);
@@ -115,7 +116,7 @@ public class StudentRepository {
         return true;
     }
 
-    public List<Student> getByGroupId(int groupId) {
+    public List<Student> getByGroupId(Integer groupId) {
         log.trace("getByGroupId({})", groupId);
         List<Student> students;
         try {
@@ -129,7 +130,7 @@ public class StudentRepository {
         return students;
     }
 
-    public boolean deleteFromGroup(int studentId, int groupId) {
+    public boolean deleteFromGroup(Integer studentId, Integer groupId) {
         log.trace("deleteFromGroup({}, {})", studentId, groupId);
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), studentId, groupId);

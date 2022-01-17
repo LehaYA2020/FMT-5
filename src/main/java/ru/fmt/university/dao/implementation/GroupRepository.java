@@ -1,10 +1,11 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.IGroupRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class GroupRepository {
+public class GroupRepository  implements IGroupRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -47,7 +48,7 @@ public class GroupRepository {
         return groups;
     }
 
-    public Group getById(int id) {
+    public Group getById(Integer id) {
         log.trace("getById({})", id);
         Group group;
         try {
@@ -60,7 +61,7 @@ public class GroupRepository {
         return group;
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({})", id);
         try {
             jdbcTemplate.update(Query.DELETE_GROUP.getText(), id);
@@ -72,7 +73,7 @@ public class GroupRepository {
         return true;
     }
 
-    public boolean assignToCourse(int groupId, int courseId) {
+    public boolean assignToCourse(Integer groupId, Integer courseId) {
         log.trace("assignToCourse({},{})", groupId, courseId);
         try {
             jdbcTemplate.update(Query.ASSIGN_GROUP_TO_COURSE.getText(), groupId, courseId);
@@ -84,7 +85,7 @@ public class GroupRepository {
         return true;
     }
 
-    public boolean deleteFromCourse(int groupId, int courseId) {
+    public boolean deleteFromCourse(Integer groupId, Integer courseId) {
         log.trace("deleteFromCourse({}, {})", groupId, courseId);
         try {
             jdbcTemplate.update(Query.DELETE_GROUP_FROM_COURSE.getText(), groupId, courseId);
@@ -122,7 +123,7 @@ public class GroupRepository {
         return group;
     }
 
-    public List<Group> getByCourse(int courseId) {
+    public List<Group> getByCourse(Integer courseId) {
         log.trace("getByCourse({})", courseId);
         List<Group> groups;
         try {
@@ -147,7 +148,7 @@ public class GroupRepository {
         return group;
     }
 
-    public boolean assignToLesson(int lessonId, int groupId) {
+    public boolean assignToLesson(Integer lessonId, Integer groupId) {
         log.trace("assignToLesson({}, {})", lessonId, groupId);
         try {
                 jdbcTemplate.update(Query.ASSIGN_GROUP_TO_LESSON.getText(), lessonId, groupId);
@@ -159,7 +160,7 @@ public class GroupRepository {
         return true;
     }
 
-    public boolean deleteFromLesson(int lessonId, int groupId) {
+    public boolean deleteFromLesson(Integer lessonId, Integer groupId) {
         log.trace("deleteFromLesson({}, {})", lessonId, groupId);
         try {
             jdbcTemplate.update(Query.DELETE_GROUP_FROM_LESSON.getText(), lessonId, groupId);

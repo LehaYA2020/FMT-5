@@ -1,18 +1,19 @@
-package ru.fmt.university.service;
+package ru.fmt.university.service.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.fmt.university.dao.CourseRepository;
+import ru.fmt.university.dao.ICourseRepository;
 import ru.fmt.university.dto.Course;
+import ru.fmt.university.service.ICourseService;
 
 import java.util.List;
 
 @Component
 @Log4j2
-public class CourseService {
+public class CourseService implements ICourseService {
     @Autowired
-    private CourseRepository courseRepository;
+    private ICourseRepository courseRepository;
 
     public void create(Course course) {
         log.debug("CourseService calls courseRepository.create({}).", course.getId());
@@ -24,7 +25,7 @@ public class CourseService {
         return courseRepository.getAll();
     }
 
-    public Course getById(int id) {
+    public Course getById(Integer id) {
         log.debug("CourseService calls courseRepository.getById({}).", id);
         return courseRepository.getById(id);
     }
@@ -34,12 +35,12 @@ public class CourseService {
         return courseRepository.update(forUpdate);
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.debug("CourseService calls courseRepository.delete({}).", id);
         return courseRepository.delete(id);
     }
 
-    public List<Course> getByGroupId(int id) {
+    public List<Course> getByGroupId(Integer id) {
         log.debug("CourseService calls courseRepository.getByGroupId({}).", id);
         return courseRepository.getByGroupId(id);
     }

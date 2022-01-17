@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
-import ru.fmt.university.service.TeacherService;
+import ru.fmt.university.service.implementation.TeacherService;
 
 import java.util.List;
 

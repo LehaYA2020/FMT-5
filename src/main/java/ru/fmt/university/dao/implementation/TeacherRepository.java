@@ -1,10 +1,11 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.ITeacherRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class TeacherRepository {
+public class TeacherRepository implements ITeacherRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -46,7 +47,7 @@ public class TeacherRepository {
         return teachers;
     }
 
-    public Teacher getById(int id) {
+    public Teacher getById(Integer id) {
         log.trace("getById({})", id);
         Teacher teacher;
         try {
@@ -72,7 +73,7 @@ public class TeacherRepository {
         return teacher;
     }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({})", id);
         try {
             jdbcTemplate.update(Query.DELETE_TEACHER.getText(), id);
@@ -84,7 +85,7 @@ public class TeacherRepository {
         return true;
     }
 
-    public List<Teacher> getByCourse(int courseId) {
+    public List<Teacher> getByCourse(Integer courseId) {
         log.trace("getByCourse({})", courseId);
         List<Teacher> teachers;
         try {
@@ -97,7 +98,7 @@ public class TeacherRepository {
         return teachers;
     }
 
-    public Teacher getByLesson(int lessonId) {
+    public Teacher getByLesson(Integer lessonId) {
         log.trace("getByLesson({})", lessonId);
         Teacher teacher;
         try {
