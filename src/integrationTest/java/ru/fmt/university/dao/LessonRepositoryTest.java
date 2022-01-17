@@ -5,7 +5,6 @@ import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.LessonType;
-import ru.fmt.university.dto.Student;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -59,21 +58,21 @@ public class LessonRepositoryTest extends RepositoryTest {
 
     @Test
     public void getByTeacher() {
-        assertEquals(testLessonList.subList(0, 2), lessonRepository.getByTeacher(testTeacherList.get(0)));
+        assertEquals(testLessonList.subList(0, 2), lessonRepository.getByTeacher(testTeacherList.get(0).getId()));
     }
 
     @Test
     public void getByCourse() {
-        assertEquals(testLessonList.subList(1, 3), lessonRepository.getByCourse(testCourseList.get(1)));
+        assertEquals(testLessonList.subList(1, 3), lessonRepository.getByCourse(testCourseList.get(1).getId()));
     }
 
     @Test
     public void getByStudent() {
-        assertEquals(testLessonList.subList(0, 2), lessonRepository.getByStudent(new Student(1)));
+        assertEquals(testLessonList.subList(0, 2), lessonRepository.getByStudent(1));
     }
 
     @Test
     public void getByGroup() {
-        assertEquals(testLessonList.subList(0, 2), lessonRepository.getByGroup(testGroupList.get(0)));
+        assertEquals(testLessonList.subList(0, 2), lessonRepository.getByGroup(testGroupList.get(0).getId()));
     }
 }

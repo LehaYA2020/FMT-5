@@ -1,10 +1,11 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.ICourseRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class CourseRepository {
+public class CourseRepository implements ICourseRepository {
     @Autowired
     private CourseMapper courseMapper;
     @Autowired
@@ -46,12 +47,11 @@ public class CourseRepository {
         return courses;
     }
 
-    public Course getById(int id) {
+    public Course getById(Integer id) {
         log.trace("getById({}).", id);
         Course course;
         try {
-            course = jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(),
-                    courseMapper, id);
+            course = jdbcTemplate.queryForObject(Query.GET_COURSE_BY_ID.getText(), courseMapper, id);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_COURSE_BY_ID, e);
@@ -72,7 +72,7 @@ public class CourseRepository {
         return course;
     }
 
-    public void delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({}).", id);
         try {
             jdbcTemplate.update(Query.DELETE_COURSE.getText(), id);
@@ -81,13 +81,14 @@ public class CourseRepository {
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);
         }
         log.debug("Course with id={} deleted.", id);
+        return true;
     }
 
-    public List<Course> getByGroupId(int id) {
+    public List<Course> getByGroupId(Integer groupId) {
         List<Course> courses;
-        log.trace("getByGroupIa({}).", id);
+        log.trace("getByGroupIa({}).", groupId);
         try {
-            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), courseMapper, id);
+            courses = jdbcTemplate.query(Query.GET_COURSES_BY_GROUP_ID.getText(), courseMapper, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_COURSE, e);

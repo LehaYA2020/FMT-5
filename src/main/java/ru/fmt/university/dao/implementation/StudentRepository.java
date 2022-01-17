@@ -1,4 +1,4 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,18 +6,18 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.IStudentRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
 import ru.fmt.university.dao.util.StudentMapper;
-import ru.fmt.university.dto.Group;
 import ru.fmt.university.dto.Student;
 
 import java.util.List;
 
 @Repository
 @Log4j2
-public class StudentRepository {
+public class StudentRepository implements IStudentRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -28,7 +28,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.INSERT_STUDENT.getText(), student.getFirstName(), student.getLastName());
             if (student.getGroupId() != 0) {
-                assignToGroup(student, student.getGroupId());
+                assignToGroup(student.getId(), student.getGroupId());
             }
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_INSERT_STUDENT, e);
@@ -51,7 +51,7 @@ public class StudentRepository {
         return students;
     }
 
-    public Student getById(int id) {
+    public Student getById(Integer id) {
         log.trace("getById({})", id);
         Student student;
         try {
@@ -69,7 +69,7 @@ public class StudentRepository {
         try {
             jdbcTemplate.update(Query.UPDATE_STUDENT.getText(), student.getFirstName(), student.getLastName(), student.getId());
             if (student.getGroupId() != 0) {
-                updateGroupAssignment(student, student.getGroupId());
+                updateGroupAssignment(student.getId(), student.getGroupId());
             }
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_UPDATE_STUDENT, e);
@@ -80,7 +80,7 @@ public class StudentRepository {
         return student;
     }
 
-    public void delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({})", id);
         try {
             jdbcTemplate.update(Query.DELETE_STUDENT.getText(), id);
@@ -89,31 +89,34 @@ public class StudentRepository {
             throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT, e);
         }
         log.debug("Student with id={} deleted", id);
+        return true;
     }
 
-    public void assignToGroup(Student student, int groupId) {
-        log.trace("assignToGroup({}, {})", student, groupId);
+    public boolean assignToGroup(Integer studentId, Integer groupId) {
+        log.trace("assignToGroup({}, {})", studentId, groupId);
         try {
-            jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), student.getId(), groupId);
+            jdbcTemplate.update(Query.ASSIGN_STUDENT_TO_GROUP.getText(), studentId, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_ASSIGN_TO_GROUP, e);
         }
-        log.debug("Student's {} assigned to group with id = {}", student, groupId);
+        log.debug("Student's {} assigned to group with id = {}", studentId, groupId);
+        return true;
     }
 
-    public void updateGroupAssignment(Student student, int groupId) {
-        log.trace("updateGroupAssignments({}, {})", student, groupId);
+    public boolean updateGroupAssignment(Integer studentId, Integer groupId) {
+        log.trace("updateGroupAssignments({}, {})", studentId, groupId);
         try {
-            jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), groupId, student.getId());
+            jdbcTemplate.update(Query.UPDATE_STUDENT_ASSIGNMENTS.getText(), groupId, studentId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
             throw new DaoException(MessagesConstants.CANNOT_UPDATE_STUDENT_ASSIGNMENTS, e);
         }
-        log.debug("Student's {} group assignments updated with {}", student, groupId);
+        log.debug("Student's {} group assignments updated with {}", studentId, groupId);
+        return true;
     }
 
-    public List<Student> getByGroupId(int groupId) {
+    public List<Student> getByGroupId(Integer groupId) {
         log.trace("getByGroupId({})", groupId);
         List<Student> students;
         try {
@@ -127,14 +130,15 @@ public class StudentRepository {
         return students;
     }
 
-    public void deleteFromGroup(Student student, Group group) {
-        log.trace("deleteFromGroup({}, {})", student, group);
+    public boolean deleteFromGroup(Integer studentId, Integer groupId) {
+        log.trace("deleteFromGroup({}, {})", studentId, groupId);
         try {
-            jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), student.getId(), group.getId());
+            jdbcTemplate.update(Query.DELETE_STUDENT_FROM_GROUP.getText(), studentId, groupId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
             throw new DaoException(MessagesConstants.CANNOT_DELETE_STUDENT_FROM_GROUP, e);
         }
-        log.debug("Student {} deleted from Group {})", student, group);
+        log.debug("Student {} deleted from Group {})", studentId, groupId);
+        return true;
     }
 }

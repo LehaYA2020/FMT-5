@@ -84,7 +84,6 @@ public class Lesson {
     }
 
 
-
     @Override
     public int hashCode() {
         return Objects.hash(id, courseId, teacherId, classRoom, dayOfWeek, startTime, type);

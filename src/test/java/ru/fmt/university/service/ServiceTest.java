@@ -34,29 +34,31 @@ public abstract class ServiceTest {
     protected static List<Student> expectedStudents = singletonList(expectedStudent);
     @InjectMocks
     @Autowired
-    protected CourseService courseService;
+    protected ICourseService courseService;
     @InjectMocks
     @Autowired
-    protected GroupService groupService;
+    protected IGroupService groupService;
     @InjectMocks
     @Autowired
-    protected LessonService lessonService;
+    protected ILessonService lessonService;
     @InjectMocks
     @Autowired
-    protected StudentService studentService;
+    protected IStudentService studentService;
     @InjectMocks
     @Autowired
-    protected TeacherService teacherService;
+    protected ITeacherService teacherService;
+
     @Mock
-    protected LessonService lessonServiceMock;
+    protected ILessonService lessonServiceMock;
+
     @Mock
-    protected CourseRepository courseRepository;
+    protected ICourseRepository courseRepository;
     @Mock
-    protected GroupRepository groupRepository;
+    protected IGroupRepository groupRepository;
     @Mock
-    protected LessonRepository lessonRepository;
+    protected ILessonRepository lessonRepository;
     @Mock
-    protected StudentRepository studentRepository;
+    protected IStudentRepository studentRepository;
     @Mock
-    protected TeacherRepository teacherRepository;
+    protected ITeacherRepository teacherRepository;
 }

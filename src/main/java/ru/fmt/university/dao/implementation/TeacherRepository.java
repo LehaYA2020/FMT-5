@@ -1,23 +1,22 @@
-package ru.fmt.university.dao;
+package ru.fmt.university.dao.implementation;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.fmt.university.dao.ITeacherRepository;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dao.sources.Query;
 import ru.fmt.university.dao.util.TeacherMapper;
-import ru.fmt.university.dto.Course;
-import ru.fmt.university.dto.Lesson;
 import ru.fmt.university.dto.Teacher;
 
 import java.util.List;
 
 @Repository
 @Log4j2
-public class TeacherRepository {
+public class TeacherRepository implements ITeacherRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -48,7 +47,7 @@ public class TeacherRepository {
         return teachers;
     }
 
-    public Teacher getById(int id) {
+    public Teacher getById(Integer id) {
         log.trace("getById({})", id);
         Teacher teacher;
         try {
@@ -74,7 +73,7 @@ public class TeacherRepository {
         return teacher;
     }
 
-    public void delete(int id) {
+    public boolean delete(Integer id) {
         log.trace("delete({})", id);
         try {
             jdbcTemplate.update(Query.DELETE_TEACHER.getText(), id);
@@ -83,13 +82,14 @@ public class TeacherRepository {
             throw new DaoException(MessagesConstants.CANNOT_DELETE_TEACHER, e);
         }
         log.debug("Teacher with id {} deleted", id);
+        return true;
     }
 
-    public List<Teacher> getByCourse(Course course) {
-        log.trace("getByCourse({})", course);
+    public List<Teacher> getByCourse(Integer courseId) {
+        log.trace("getByCourse({})", courseId);
         List<Teacher> teachers;
         try {
-            teachers = jdbcTemplate.query(Query.GET_TEACHERS_BY_COURSE.getText(), teacherMapper, course.getId());
+            teachers = jdbcTemplate.query(Query.GET_TEACHERS_BY_COURSE.getText(), teacherMapper, courseId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_TEACHERS_BY_COURSE, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_TEACHERS_BY_COURSE, e);
@@ -98,11 +98,11 @@ public class TeacherRepository {
         return teachers;
     }
 
-    public Teacher getByLesson(Lesson lesson) {
-        log.trace("getByLesson({})", lesson);
+    public Teacher getByLesson(Integer lessonId) {
+        log.trace("getByLesson({})", lessonId);
         Teacher teacher;
         try {
-            teacher = jdbcTemplate.queryForObject(Query.GET_TEACHERS_BY_LESSON.getText(), teacherMapper, lesson.getId());
+            teacher = jdbcTemplate.queryForObject(Query.GET_TEACHERS_BY_LESSON.getText(), teacherMapper, lessonId);
         } catch (DataAccessException e) {
             log.error(MessagesConstants.CANNOT_GET_TEACHERS_BY_LESSON, e);
             throw new DaoException(MessagesConstants.CANNOT_GET_TEACHERS_BY_LESSON, e);

@@ -56,23 +56,23 @@ public class StudentServiceTest extends ServiceTest{
 
     @Test
     public void assignToGroup_shouldCallStudentRepositoryGetByIdMethod() {
-        studentService.assignStudentToGroup(expectedStudent, expectedGroup);
-        verify(studentRepository).assignToGroup(expectedStudent, expectedGroup.getId());
+        studentService.assignStudentToGroup(expectedStudent.getId(), expectedGroup.getId());
+        verify(studentRepository).assignToGroup(expectedStudent.getId(), expectedGroup.getId());
     }
 
     @Test
     public void deleteFromGroup_shouldCallStudentRepositoryDeleteFromGroupMethod() {
-        studentService.updateGroupAssignment(expectedStudent, expectedGroup);
-        verify(studentRepository).updateGroupAssignment(expectedStudent, expectedGroup.getId());
+        studentService.updateGroupAssignment(expectedStudent.getId(), expectedGroup.getId());
+        verify(studentRepository).updateGroupAssignment(expectedStudent.getId(), expectedGroup.getId());
     }
 
     @Test
     public void getSchedule_shouldCallLessonServiceGetLessonsByStudentMethod() {
-        when(lessonServiceMock.getLessonsByStudent(expectedStudent)).thenReturn(expectedLessons);
+        when(lessonServiceMock.getLessonsByStudent(expectedStudent.getId())).thenReturn(expectedLessons);
 
-        List<Lesson> actualStudents = studentService.getSchedule(expectedStudent);
+        List<Lesson> actualStudents = studentService.getSchedule(expectedStudent.getId());
 
-        verify(lessonServiceMock).getLessonsByStudent(expectedStudent);
+        verify(lessonServiceMock).getLessonsByStudent(expectedStudent.getId());
         assertEquals(expectedLessons, actualStudents);
     }
 

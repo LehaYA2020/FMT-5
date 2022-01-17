@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import ru.fmt.university.dao.exceptions.DaoException;
 import ru.fmt.university.dao.exceptions.MessagesConstants;
 import ru.fmt.university.dto.Group;
-import ru.fmt.university.dto.Student;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,19 +46,21 @@ public class GroupRepositoryTest extends RepositoryTest {
 
     @Test
     public void assignToCourse() {
-        groupRepository.assignToCourse(testGroupList.get(0), testCourseList.get(2));
+        groupRepository.assignToCourse(testGroupList.get(0).getId(), testCourseList.get(2).getId());
         assertEquals(testCourseList, courseRepository.getByGroupId(1));
     }
 
     @Test
     public void assignToLesson() {
-        groupRepository.assignToLesson(lessonRepository.getById(1), testGroupList.subList(1, 2));
-        assertEquals(lessonRepository.getAll(), lessonRepository.getByGroup(testGroupList.get(1)));
+        for(Group group:testGroupList.subList(1, 2)) {
+            groupRepository.assignToLesson(1, group.getId());
+        }
+        assertEquals(lessonRepository.getAll(), lessonRepository.getByGroup(testGroupList.get(1).getId()));
     }
 
     @Test
     public void getByStudent() {
-        assertEquals(testGroupList.get(0), groupRepository.getByStudent(new Student(1)));
+        assertEquals(testGroupList.get(0), groupRepository.getByStudent(1));
     }
 
     @Test
@@ -78,23 +79,23 @@ public class GroupRepositoryTest extends RepositoryTest {
 
     @Test
     public void deleteFromCourse() {
-        groupRepository.deleteFromCourse(testGroupList.get(0), testCourseList.get(0));
+        groupRepository.deleteFromCourse(testGroupList.get(0).getId(), testCourseList.get(0).getId());
         assertEquals(testCourseList.subList(1, 2), courseRepository.getByGroupId(1));
     }
 
     @Test
     public void getByLesson() {
-        assertEquals(testGroupList.subList(0, 2), groupRepository.getByLesson(lessonRepository.getById(2)));
+        assertEquals(testGroupList.subList(0, 2), groupRepository.getByLesson(lessonRepository.getById(2).getId()));
     }
 
     @Test
     public void getByCourse() {
-        assertEquals(testGroupList.subList(0, 2), groupRepository.getByCourse(courseRepository.getById(2)));
+        assertEquals(testGroupList.subList(0, 2), groupRepository.getByCourse(2));
     }
 
     @Test
     public void deleteFromLesson() {
-        groupRepository.deleteFromLesson(lessonRepository.getById(2), testGroupList.get(0));
-        assertEquals(testGroupList.subList(1, 2), groupRepository.getByLesson(lessonRepository.getById(2)));
+        groupRepository.deleteFromLesson(2, testGroupList.get(0).getId());
+        assertEquals(testGroupList.subList(1, 2), groupRepository.getByLesson(lessonRepository.getById(2).getId()));
     }
 }
